@@ -27,10 +27,7 @@ jobs:
         #wget https://onedrive-hosts.learningman.top/dns.cache && mv dns.cache 1.host
         #自建host订阅
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/DIY.txt
-        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/EpicHosts.txt
-        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/GithubHosts.txt
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/Onedrive.txt
-        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/SteamDomains.txt
 
         sed -i '/'raw.githubusercontent.com'/d' *.txt
         sed -i '/':'/d' *.txt

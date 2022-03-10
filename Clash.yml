@@ -363,77 +363,6 @@ dns:
     - '*.mcdn.bilivideo.cn'
     - '+.media.dssott.com'
     - '+.subweb.ga'
-    - '+.hcaptcha.com'
-    - '+.epicgames.com'
-    - '+.imgs.hcaptcha.com'
-    - '+.cdn.unrealengine.com'
-    - '+.cdn1.unrealengine.com'
-    - '+.cdn2.unrealengine.com'
-    - '+.docs.unrealengine.com'
-    - '+.download.epicgames.com'
-    - '+.tracking.epicgames.com'
-    - '+.newassets.hcaptcha.com'
-    - '+.download2.epicgames.com'
-    - '+.download3.epicgames.com'
-    - '+.download4.epicgames.com'
-    - '+.media-cdn.epicgames.com'
-    - '+.store-launcher.epicgames.com'
-    - '+.store-content.ak.epicgames.com'
-    - '+.static-assets-prod.epicgames.com'
-    - '+.epicgames-download1.akamaized.net'
-    - '+.talon-website-prod.ak.epicgames.com'
-    - '+.store-site-backend-static.ak.epicgames.com'
-    - '+.account-public-service-prod03.ol.epicgames.com'
-    - '+.epic-social-social-modules-prod.ol.epicgames.com'
-    - '+.eulatracking-public-service-prod06.ol.epicgames.com'
-    - '+.assets-hcaptcha-proxy-service-prod.ak.epicgames.com'
-    - '+.weighted-zh-eulatracking-public-service-prod06.ol.epicgames.com'
-    - '+.github.com'
-    - '+.github.blog'
-    - '+.githubapp.com'
-    - '+.api.github.com'
-    - '+.raw.github.com'
-    - '+.gist.github.com'
-    - '+.octocaptcha.com'
-    - '+.help.github.com'
-    - '+.live.github.com'
-    - '+.github.community'
-    - '+.githubstatus.com'
-    - '+.pages.github.com'
-    - '+.status.github.com'
-    - '+.uploads.github.com'
-    - '+.nodeload.github.com'
-    - '+.training.github.com'
-    - '+.codeload.github.com'
-    - '+.assets-cdn.github.com'
-    - '+.github.githubassets.com'
-    - '+.documentcloud.github.com'
-    - '+.gist.githubusercontent.com'
-    - '+.camo.githubusercontent.com'
-    - '+.cloud.githubusercontent.com'
-    - '+.media.githubusercontent.com'
-    - '+.github-com.s3.amazonaws.com'
-    - '+.github.global.ssl.fastly.net'
-    - '+.desktop.githubusercontent.com'
-    - '+.github-cloud.s3.amazonaws.com'
-    - '+.avatars.githubusercontent.com'
-    - '+.favicons.githubusercontent.com'
-    - '+.avatars0.githubusercontent.com'
-    - '+.avatars1.githubusercontent.com'
-    - '+.avatars2.githubusercontent.com'
-    - '+.avatars3.githubusercontent.com'
-    - '+.avatars4.githubusercontent.com'
-    - '+.avatars5.githubusercontent.com'
-    - '+.avatars6.githubusercontent.com'
-    - '+.avatars7.githubusercontent.com'
-    - '+.avatars8.githubusercontent.com'
-    - '+.customer-stories-feed.github.com'
-    - '+.user-images.githubusercontent.com'
-    - '+.repository-images.githubusercontent.com'
-    - '+.marketplace-screenshots.githubusercontent.com'
-    - '+.github-production-user-asset-6210df.s3.amazonaws.com'
-    - '+.github-production-release-asset-2e65be.s3.amazonaws.com'
-    - '+.github-production-repository-file-5c1aeb.s3.amazonaws.com'
     - '+.contentstorage.osi.office.net'
     - '+.onedrive.live.com'
     - '+.login.live.com'
@@ -463,26 +392,6 @@ dns:
     - '+.officeimg.vo.msecnd.net'
     - '+.onenote.officeapps.live.com'
     - '+.bn1305.storage.live.com'
-    - '+.kamaihd.net'
-    - '+.steamgames.com'
-    - '+.steampowered.com'
-    - '+.steamcommunity.com'
-    - '+.cdn.steampowered.com'
-    - '+.api.steampowered.com'
-    - '+.help.steampowered.com'
-    - '+.steampoweredmedia.com'
-    - '+.cdn.steamcommunity.com'
-    - '+.media.steampowered.com'
-    - '+.store.steampowered.com'
-    - '+.cdn.akamai.steamstatic.com'
-    - '+.cdn.store.steampowered.com'
-    - '+.store.st.dl.bscstorage.net'
-    - '+.storefront.steampowered.com'
-    - '+.store.st.dl.pinyuncloud.com'
-    - '+.media.st.dl.pinyuncloud.com'
-    - '+.store.akamai.steamstatic.com'
-    - '+.steamcommunity-a.akamaihd.net'
-    - '+.community.akamai.steamstatic.com'
     - '+.cmbchina.com'
     - '+.haowu.link'
     - '+.cmbimg.com'
@@ -495,124 +404,33 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
-  'subweb.ga': 76.76.21.241
-  'hcaptcha.com': 104.16.168.131
-  'epicgames.com': 54.160.149.211
-  'imgs.hcaptcha.com': 104.16.168.131
-  'cdn.unrealengine.com': 13.35.127.153
-  'cdn1.unrealengine.com': 96.16.173.183
-  'cdn2.unrealengine.com': 96.16.173.183
-  'docs.unrealengine.com': 23.78.155.25
-  'download.epicgames.com': 99.84.235.39
-  'tracking.epicgames.com': 3.225.216.223
-  'newassets.hcaptcha.com': 104.16.169.131
-  'download2.epicgames.com': 143.204.135.54
-  'download3.epicgames.com': 108.138.244.53
-  'download4.epicgames.com': 143.204.135.54
-  'media-cdn.epicgames.com': 108.139.1.46
-  'store-launcher.epicgames.com': 108.138.246.27
-  'store-content.ak.epicgames.com': 104.86.3.71
-  'static-assets-prod.epicgames.com': 23.1.245.121
-  'epicgames-download1.akamaized.net': 184.28.221.18
-  'talon-website-prod.ak.epicgames.com': 104.86.3.71
-  'store-site-backend-static.ak.epicgames.com': 104.86.3.71
-  'account-public-service-prod03.ol.epicgames.com': 52.55.67.21
-  'epic-social-social-modules-prod.ol.epicgames.com': 108.139.1.12
-  'eulatracking-public-service-prod06.ol.epicgames.com': 54.173.72.42
-  'assets-hcaptcha-proxy-service-prod.ak.epicgames.com': 104.86.3.71
-  'weighted-zh-eulatracking-public-service-prod06.ol.epicgames.com': 124.156.126.32
-  'github.com': 192.30.255.113
-  'github.blog': 192.0.66.2
-  'githubapp.com': 140.82.112.29
-  'api.github.com': 192.30.255.116
-  'raw.github.com': 185.199.111.133
-  'gist.github.com': 192.30.255.113
-  'octocaptcha.com': 192.30.255.112
-  'help.github.com': 140.82.112.18
-  'live.github.com': 140.82.113.26
-  'github.community': 64.71.144.202
-  'githubstatus.com': 185.199.108.153
-  'pages.github.com': 185.199.111.153
-  'status.github.com': 140.82.112.17
-  'uploads.github.com': 192.30.255.99
-  'nodeload.github.com': 192.30.255.121
-  'training.github.com': 185.199.108.153
-  'codeload.github.com': 192.30.255.121
-  'assets-cdn.github.com': 185.199.109.153
-  'github.githubassets.com': 185.199.108.154
-  'documentcloud.github.com': 185.199.111.153
-  'gist.githubusercontent.com': 185.199.110.133
-  'camo.githubusercontent.com': 185.199.109.133
-  'cloud.githubusercontent.com': 185.199.110.133
-  'media.githubusercontent.com': 185.199.111.133
-  'github-com.s3.amazonaws.com': 54.231.130.153
-  'github.global.ssl.fastly.net': 151.101.41.194
-  'desktop.githubusercontent.com': 185.199.108.133
-  'github-cloud.s3.amazonaws.com': 52.217.204.145
-  'avatars.githubusercontent.com': 185.199.109.133
-  'favicons.githubusercontent.com': 185.199.108.133
-  'avatars0.githubusercontent.com': 185.199.108.133
-  'avatars1.githubusercontent.com': 185.199.109.133
-  'avatars2.githubusercontent.com': 185.199.111.133
-  'avatars3.githubusercontent.com': 185.199.108.133
-  'avatars4.githubusercontent.com': 185.199.108.133
-  'avatars5.githubusercontent.com': 185.199.108.133
-  'avatars6.githubusercontent.com': 185.199.108.133
-  'avatars7.githubusercontent.com': 185.199.108.133
-  'avatars8.githubusercontent.com': 185.199.110.133
-  'customer-stories-feed.github.com': 185.199.111.153
-  'user-images.githubusercontent.com': 185.199.110.133
-  'repository-images.githubusercontent.com': 185.199.108.133
-  'marketplace-screenshots.githubusercontent.com': 185.199.108.133
-  'github-production-user-asset-6210df.s3.amazonaws.com': 52.216.144.139
-  'github-production-release-asset-2e65be.s3.amazonaws.com': 54.231.195.129
-  'github-production-repository-file-5c1aeb.s3.amazonaws.com': 52.217.204.145
-  'contentstorage.osi.office.net': 104.86.4.99
+  'subweb.ga': 76.223.122.69
+  'contentstorage.osi.office.net': 104.71.186.29
   'onedrive.live.com': 13.107.42.13
-  'login.live.com': 20.190.154.16
-  'skyapi.onedrive.live.com': 40.90.130.192
+  'login.live.com': 20.190.154.138
+  'skyapi.onedrive.live.com': 157.55.109.232
   'd.docs.live.net': 13.107.42.12
-  'contentsync.onenote.com': 52.109.0.40
-  'hierarchyapi.onenote.com': 52.109.0.47
-  'ocws.officeapps.live.com': 52.109.2.52
-  'www.onenote.com': 52.109.0.58
-  'config.edge.skype.com': 13.107.42.16
-  'roaming.officeapps.live.com': 52.109.0.29
-  'pagecontentsync.onenote.com': 52.109.2.163
-  'api.onedrive.live.com': 104.96.19.48
-  'c1-onenote-15.cdn.office.net': 104.85.160.98
+  'contentsync.onenote.com': 52.109.12.163
+  'hierarchyapi.onenote.com': 52.109.12.15
+  'ocws.officeapps.live.com': 52.109.8.62
+  'www.onenote.com': 52.109.12.187
+  'config.edge.skype.com': 13.107.43.16
+  'roaming.officeapps.live.com': 52.109.16.5
+  'pagecontentsync.onenote.com': 52.109.12.208
+  'api.onedrive.live.com': 104.71.185.235
+  'c1-onenote-15.cdn.office.net': 184.29.129.251
   'docs.live.net': 13.107.42.12
-  'storage.live.com': 40.90.136.20
-  'skydrive.wns.windows.com': 40.83.240.146
-  'client.wns.windows.com': 40.83.240.146
-  'mobile.pipe.aria.microsoft.com': 13.89.178.27
-  'oneclient.sfx.ms': 96.16.113.6
-  'skydrivesync.policies.live.net': 40.90.136.1
+  'storage.live.com': 40.90.136.19
+  'skydrive.wns.windows.com': 52.226.139.121
+  'client.wns.windows.com': 52.226.139.121
+  'mobile.pipe.aria.microsoft.com': 20.189.173.1
+  'oneclient.sfx.ms': 23.41.169.39
+  'skydrivesync.policies.live.net': 13.105.28.16
   'api.onedrive.com': 13.107.42.12
   'public.bn.files.1drv.com': 13.107.42.12
-  'public.dm.files.1drv.com': 13.107.42.12
-  'cdn.onenote.net': 23.47.201.118
-  'ad.atdmt.com': 157.240.22.6
+  'public.dm.files.1drv.com': 13.107.43.12
+  'cdn.onenote.net': 23.66.228.68
+  'ad.atdmt.com': 157.240.229.14
   'officeimg.vo.msecnd.net': 152.199.4.33
   'onenote.officeapps.live.com': 13.107.6.171
   'bn1305.storage.live.com': 13.107.42.12
-  'kamaihd.net': 103.224.182.253
-  'steamgames.com': 184.50.10.74
-  'steampowered.com': 184.50.10.74
-  'steamcommunity.com': 23.78.144.31
-  'cdn.steampowered.com': 23.214.112.152
-  'api.steampowered.com': 23.78.144.31
-  'help.steampowered.com': 23.78.144.31
-  'steampoweredmedia.com': 198.49.23.144
-  'cdn.steamcommunity.com': 184.25.56.109
-  'media.steampowered.com': 23.218.80.184
-  'store.steampowered.com': 184.27.28.143
-  'cdn.akamai.steamstatic.com': 23.218.80.184
-  'cdn.store.steampowered.com': 23.218.80.168
-  'store.st.dl.bscstorage.net': 39.184.162.236
-  'storefront.steampowered.com': 184.50.10.74
-  'store.st.dl.pinyuncloud.com': 183.255.251.51
-  'media.st.dl.pinyuncloud.com': 116.136.249.4
-  'store.akamai.steamstatic.com': 23.194.116.114
-  'steamcommunity-a.akamaihd.net': 23.194.116.96
-  'community.akamai.steamstatic.com': 172.232.16.170

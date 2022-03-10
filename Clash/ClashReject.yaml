@@ -1,0 +1,6 @@
+payload:
+  - DOMAIN,ad.xiaomi.com
+  - DOMAIN,ad1.xiaomi.com
+  - DOMAIN,ad.mi.com
+  - DOMAIN,self.events.data.microsoft.com
+  - DOMAIN,browser.events.data.microsoft.com

@@ -1,0 +1,93 @@
+name: Update Checker
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 16 * * *
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: 判断fakeip
+      id: fakeip
+      run: | 
+        FIND_FILE="Clash.yml"
+        FIND_STR="enhanced-mode: fake-ip"
+        if [ `grep -c "$FIND_STR" "$FIND_FILE"` -ne '0' ] ;then
+            echo "::set-output name=fakeornot::true"
+            exit 0
+        fi
+    
+    - name: 更新hosts
+      run: |
+        # host
+        #host订阅onedrive
+        #wget https://onedrive-hosts.learningman.top/dns.cache && mv dns.cache 1.host
+        #自建host订阅
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/DIY.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/EpicHosts.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/GithubHosts.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/Onedrive.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/SteamDomains.txt
+
+        sed -i '/'raw.githubusercontent.com'/d' *.txt
+        sed -i '/':'/d' *.txt
+        sed -i '/'No'/d' *.txt
+        sed -i 's/[ ][ ]*/ /g' *.txt
+        sed -i '/^#/d' *.txt
+        sed -i '/^$/d' *.txt
+        awk -F "[ ]+" '!a[$2]++{print "'\''"$2"'\''" ":",$1}' > "my.host" *.txt
+        #合并所有host
+        cat *.host > host.list
+        sed -i 's/^/  /g' host.list && sed -i '1i\hosts:' host.list
+
+    - name: 更新fake-ip
+      if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
+      run: |
+        wget https://raw.githubusercontent.com/vernesong/OpenClash/master/luci-app-openclash/root/etc/openclash/custom/openclash_custom_fake_filter.list && mv openclash_custom_fake_filter.list default.fake
+        awk -F "[ ]+" '!a[$2]++{print "+."$2}' > "host.fake" *.txt
+        cat *.fake > fake.list
+        #自定义fake-ip
+        sed -i '$a\+.cmbchina.com' fake.list
+        sed -i '$a\+.haowu.link' fake.list
+        sed -i '$a\+.cmbimg.com' fake.list
+        sed -i '$a\+.digitalcertvalidation.com' fake.list
+        sed -i '$a\+.zhuanzfx.com' fake.list
+        sed -i '$a\+.cib.com.cn' fake.list
+        sed -i '$a\+.dcocsp.com' fake.list
+        sed -i '$a\+.95559.com.cn' fake.list
+        sed -i '$a\+.bankcomm.com' fake.list
+        sed -i '$a\+.digicert.com' fake.list
+        sed -i '$a\+.pingan.com.cn' fake.list
+        sed -i '/^#/d' fake.list && sed -i 's/^/    - '"'"'/g' fake.list && sed -i 's/$/'"'"'/g' fake.list
+        sed -i '1i\  fake-ip-filter:' fake.list
+
+    - name: 注入文件
+      run: |  
+        cat *.list > final.list
+        last=$(sed -n "/  use-hosts: true/=" Clash.yml)
+        sed -i ${last}',$d' Clash.yml
+        sed -i '$a\  use-hosts: true' Clash.yml
+        cat final.list >> Clash.yml
+
+        rm *.list & rm *.host & rm *.txt & rm *.fake
+
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+        retain_days: 1
+        keep_minimum_runs: 1
+        token: ${{ secrets.GER_TOKEN }}
+        repository: ${{ github.repository }}
+    
+    - name: 合并文件并commit
+      uses: EndBug/add-and-commit@v8
+      with:
+        author_name: GitHub Action
+        author_email: noreply@github.com
+        message: 'Update fake-ip and hosts'
+        add: "-A"
+      env:
+        token: ${{ secrets.GER_TOKEN }}

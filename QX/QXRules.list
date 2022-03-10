@@ -1,0 +1,25 @@
+HOST-SUFFIX, jsdelivr.net, DIRECT
+HOST-SUFFIX, epicgames.com, DIRECT
+HOST-SUFFIX, huya.com, DIRECT
+HOST-SUFFIX, workers.dev, DIRECT
+HOST-SUFFIX, subweb.ga, DIRECT
+
+HOST-SUFFIX, fast.com, 🎯 节点
+HOST-SUFFIX, mozilla.org, 🎯 节点
+HOST-SUFFIX, githubusercontent.com, 🎯 节点
+HOST-SUFFIX, azureedge.net, 🎯 节点
+HOST-SUFFIX, deepl.com, 🎯 节点
+HOST-SUFFIX, githubassets.com, 🎯 节点
+HOST, tracker.novage.com.ua, 🎯 节点
+HOST-SUFFIX, openwebtorrent.com, 🎯 节点
+HOST-SUFFIX, b5200.net, 🎯 节点
+
+HOST-SUFFIX, 91porn.com, 🌊 流媒体
+HOST-SUFFIX, ytimg.com, 🌊 流媒体
+HOST-SUFFIX, twimg.com, 🌊 流媒体
+HOST-SUFFIX, t6k.co, 🌊 流媒体
+HOST-KEYWORD, 91P, 🌊 流媒体
+HOST-SUFFIX, p04.space, 🌊 流媒体
+HOST-KEYWORD, nunuyy, 🌊 流媒体
+
+#host-suffix, dj0ts1x.cn, reject

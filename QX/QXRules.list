@@ -1,8 +1,6 @@
 HOST-SUFFIX, jsdelivr.net, DIRECT
 HOST-SUFFIX, epicgames.com, DIRECT
 HOST-SUFFIX, huya.com, DIRECT
-HOST-SUFFIX, workers.dev, DIRECT
-HOST-SUFFIX, subweb.ga, DIRECT
 IP-CIDR, 76.76.21.0/24, DIRECT
 IP-CIDR, 76.223.0.0/16, DIRECT
 
@@ -11,7 +9,6 @@ HOST-SUFFIX, mozilla.org, 🎯 节点
 HOST-SUFFIX, githubusercontent.com, 🎯 节点
 HOST-SUFFIX, azureedge.net, 🎯 节点
 HOST-SUFFIX, deepl.com, 🎯 节点
-HOST-SUFFIX, githubassets.com, 🎯 节点
 HOST, tracker.novage.com.ua, 🎯 节点
 HOST-SUFFIX, openwebtorrent.com, 🎯 节点
 HOST-SUFFIX, b5200.net, 🎯 节点

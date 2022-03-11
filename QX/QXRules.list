@@ -3,6 +3,8 @@ HOST-SUFFIX, epicgames.com, DIRECT
 HOST-SUFFIX, huya.com, DIRECT
 HOST-SUFFIX, workers.dev, DIRECT
 HOST-SUFFIX, subweb.ga, DIRECT
+IP-CIDR, 76.76.21.0/24, DIRECT
+IP-CIDR, 76.223.0.0/16, DIRECT
 
 HOST-SUFFIX, fast.com, 🎯 节点
 HOST-SUFFIX, mozilla.org, 🎯 节点

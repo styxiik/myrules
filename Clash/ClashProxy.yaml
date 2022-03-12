@@ -7,3 +7,4 @@ payload:
   - DOMAIN,tracker.novage.com.ua
   - DOMAIN-SUFFIX,openwebtorrent.com
   - DOMAIN-SUFFIX,b5200.net
+  - IP-CIDR,157.240.0.0/16

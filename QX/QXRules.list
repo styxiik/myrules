@@ -1,6 +1,7 @@
 HOST-SUFFIX, jsdelivr.net, DIRECT
 HOST-SUFFIX, epicgames.com, DIRECT
 HOST-SUFFIX, huya.com, DIRECT
+HOST-SUFFIX, hotmail.com, DIRECT
 IP-CIDR, 76.76.21.0/24, DIRECT
 IP-CIDR, 76.223.0.0/16, DIRECT
 
@@ -12,6 +13,7 @@ HOST-SUFFIX, deepl.com, 🎯 节点
 HOST, tracker.novage.com.ua, 🎯 节点
 HOST-SUFFIX, openwebtorrent.com, 🎯 节点
 HOST-SUFFIX, b5200.net, 🎯 节点
+IP-CIDR, 157.240.0.0/16, DIRECT
 
 HOST-SUFFIX, 91porn.com, 🌊 流媒体
 HOST-SUFFIX, ytimg.com, 🌊 流媒体

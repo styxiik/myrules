@@ -407,36 +407,36 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
-  'contentstorage.osi.office.net': 104.71.186.29
+  'contentstorage.osi.office.net': 104.96.19.74
   'onedrive.live.com': 13.107.42.13
-  'login.live.com': 40.126.26.133
-  'skyapi.onedrive.live.com': 157.55.109.224
+  'login.live.com': 20.190.151.131
+  'skyapi.onedrive.live.com': 40.90.136.163
   'd.docs.live.net': 13.107.42.12
-  'contentsync.onenote.com': 52.109.12.156
-  'hierarchyapi.onenote.com': 52.109.12.177
-  'ocws.officeapps.live.com': 52.109.6.21
-  'www.onenote.com': 52.109.12.188
+  'contentsync.onenote.com': 52.109.2.32
+  'hierarchyapi.onenote.com': 52.109.2.48
+  'ocws.officeapps.live.com': 52.109.2.52
+  'www.onenote.com': 52.109.0.58
   'config.edge.skype.com': 13.107.42.16
-  'roaming.officeapps.live.com': 52.109.6.26
-  'pagecontentsync.onenote.com': 52.109.12.207
-  'api.onedrive.live.com': 104.71.185.235
-  'c1-onenote-15.cdn.office.net': 23.41.169.199
+  'roaming.officeapps.live.com': 52.109.20.16
+  'pagecontentsync.onenote.com': 52.109.2.162
+  'api.onedrive.live.com': 104.86.4.88
+  'c1-onenote-15.cdn.office.net': 104.84.224.45
   'docs.live.net': 13.107.42.12
-  'storage.live.com': 157.55.109.224
-  'skydrive.wns.windows.com': 52.226.139.121
-  'client.wns.windows.com': 52.226.139.121
-  'mobile.pipe.aria.microsoft.com': 13.69.109.131
-  'oneclient.sfx.ms': 184.50.123.94
-  'skydrivesync.policies.live.net': 40.90.136.163
+  'storage.live.com': 104.44.88.28
+  'skydrive.wns.windows.com': 13.64.180.106
+  'client.wns.windows.com': 13.64.180.106
+  'mobile.pipe.aria.microsoft.com': 20.50.201.195
+  'oneclient.sfx.ms': 104.107.105.116
+  'skydrivesync.policies.live.net': 40.90.136.19
   'api.onedrive.com': 13.107.42.12
   'public.bn.files.1drv.com': 13.107.42.12
   'public.dm.files.1drv.com': 13.107.42.12
-  'cdn.onenote.net': 184.50.126.8
-  'ad.atdmt.com': 157.240.229.14
+  'cdn.onenote.net': 104.124.148.23
+  'ad.atdmt.com': 157.240.22.6
   'officeimg.vo.msecnd.net': 152.199.4.33
   'onenote.officeapps.live.com': 13.107.6.171
   'bn1305.storage.live.com': 13.107.42.12
-  'bn1305files.storage.live.com': 13.107.43.12
-  'modernb.akamai.odsp.cdn.office.net': 104.91.166.27
+  'bn1305files.storage.live.com': 13.107.42.12
+  'modernb.akamai.odsp.cdn.office.net': 104.114.76.200
   'eastus20.pushnp.svc.ms': 52.111.230.5
-  'c1.microsoft.com': 20.36.253.92
+  'c1.microsoft.com': 40.91.78.9

@@ -5,3 +5,4 @@ payload:
   - DOMAIN-SUFFIX,hotmail.com
   - IP-CIDR,76.76.21.0/24
   - IP-CIDR,76.223.0.0/16
+  # hosts ip

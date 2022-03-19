@@ -30,15 +30,20 @@ jobs:
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/Onedrive.txt
 
         sed -i '/'raw.githubusercontent.com'/d' *.txt
-        sed -i '/':'/d' *.txt
-        sed -i '/'No'/d' *.txt
-        sed -i 's/[ ][ ]*/ /g' *.txt
-        sed -i '/^#/d' *.txt
-        sed -i '/^$/d' *.txt
+        sed -i '/':'/d' *.txt & sed -i '/'No'/d' *.txt & sed -i 's/[ ][ ]*/ /g' *.txt & sed -i '/^#/d' *.txt & sed -i '/^$/d' *.txt
         awk -F "[ ]+" '!a[$2]++{print "'\''"$2"'\''" ":",$1}' > "my.host" *.txt
         #合并所有host
         cat *.host > host.list
         sed -i 's/^/  /g' host.list && sed -i '1i\hosts:' host.list
+
+    - name: 添加host ip到直连
+      run: |
+        awk -F "[: ]+" '!a[$2]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
+        sed -i '/^  - IP-CIDR,\/32/d' ins.host
+        sed -i '1i\  # hosts ip' ins.host
+        hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)
+        sed -i ${hostip}',$d' Clash/ClashDirect.yaml
+        cat ins.host >> Clash/ClashDirect.yaml
 
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()

@@ -38,7 +38,7 @@ jobs:
 
     - name: 添加host ip到直连
       run: |
-        awk -F "[: ]+" '!a[$2]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
+        awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
         sed -i '/^  - IP-CIDR,\/32/d' ins.host
         sed -i '1i\  # hosts ip' ins.host
         hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)

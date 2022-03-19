@@ -30,7 +30,7 @@ jobs:
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/Onedrive.txt
 
         sed -i '/'raw.githubusercontent.com'/d' *.txt
-        sed -i '/':'/d' *.txt & sed -i '/'No'/d' *.txt & sed -i 's/[ ][ ]*/ /g' *.txt & sed -i '/^#/d' *.txt & sed -i '/^$/d' *.txt
+        sed -i '/':'/d' *.txt && sed -i '/'No'/d' *.txt && sed -i 's/[ ][ ]*/ /g' *.txt && sed -i '/^#/d' *.txt && sed -i '/^$/d' *.txt && sed -i '/^ /d' *.txt
         awk -F "[ ]+" '!a[$2]++{print "'\''"$2"'\''" ":",$1}' > "my.host" *.txt
         #合并所有host
         cat *.host > host.list

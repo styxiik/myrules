@@ -362,7 +362,6 @@ dns:
     - 'ff.dorado.sdo.com'
     - '*.mcdn.bilivideo.cn'
     - '+.media.dssott.com'
-    - '+.'
     - '+.contentstorage.osi.office.net'
     - '+.onedrive.live.com'
     - '+.login.live.com'
@@ -412,7 +411,6 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
-  '': 
   'contentstorage.osi.office.net': 104.123.163.138
   'onedrive.live.com': 13.107.42.13
   'login.live.com': 20.190.154.137

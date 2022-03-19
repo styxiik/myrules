@@ -1,6 +1,6 @@
 payload:
   - DOMAIN-SUFFIX,fast.com
-  - DOMAIN-SUFFIX,gstaic.com
+  - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,githubusercontent.com
   - DOMAIN-SUFFIX,mozilla.org
   - DOMAIN-SUFFIX,azureedge.net

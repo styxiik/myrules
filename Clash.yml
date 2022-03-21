@@ -209,11 +209,25 @@ rule-providers:
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Unbreak.yaml"
     interval: 7200
 
+  Apple:
+    type: http
+    behavior: classical
+    path: ./RuleSet/Apple.yaml
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Apple/Apple.yaml"
+    interval: 7200
+
   Global:
     type: http
     behavior: classical
     path: ./RuleSet/Global.yaml
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
+    interval: 7200
+
+  Telegram:
+    type: http
+    behavior: classical
+    path: ./RuleSet/Telegram.yaml
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Telegram/Telegram.yaml"
     interval: 7200
 
   China:
@@ -242,7 +256,9 @@ rules:
   - RULE-SET,Streaming,流媒体
   - RULE-SET,AntiAd,REJECT
   - RULE-SET,Unbreak,DIRECT
+  - RULE-SET,Apple,DIRECT
   - RULE-SET,Global,PROXY
+  - RULE-SET,Telegram,PROXY
   - RULE-SET,China,DIRECT
   - RULE-SET,ChinaIP,DIRECT
   - GEOIP,CN,DIRECT

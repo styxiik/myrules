@@ -5,6 +5,8 @@ payload:
   - DOMAIN-SUFFIX,hotmail.com
   - IP-CIDR,76.76.21.0/24
   - IP-CIDR,76.223.0.0/16
+  - DOMAIN-SUFFIX,lencr.org
+  - DOMAIN-KEYWORD,ocsp
   # hosts ip
   - IP-CIDR,104.86.4.99/32
   - IP-CIDR,13.107.42.13/32

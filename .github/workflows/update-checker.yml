@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
       
     - name: 判断fakeip
       id: fakeip
@@ -77,7 +77,7 @@ jobs:
         rm *.list & rm *.host & rm *.txt & rm *.fake
 
     - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@v2
+      uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 1
         keep_minimum_runs: 1
@@ -85,7 +85,7 @@ jobs:
         repository: ${{ github.repository }}
     
     - name: 合并文件并commit
-      uses: EndBug/add-and-commit@v8
+      uses: EndBug/add-and-commit@main
       with:
         author_name: GitHub Action
         author_email: noreply@github.com

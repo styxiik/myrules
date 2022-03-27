@@ -220,7 +220,7 @@ rule-providers:
     type: http
     behavior: classical
     path: ./RuleSet/Global.yaml
-    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/Global.yaml"
     interval: 7200
 
   Telegram:

@@ -19,7 +19,19 @@ jobs:
             echo "::set-output name=fakeornot::true"
             exit 0
         fi
-    
+
+    - name: 更新gfwlist
+      run: |
+        curl https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt | base64 -d > gfwlist.list
+        sed -i '/^@/d' gfwlist.list && sed -i '/^!/d' gfwlist.list && sed -i 's/^||//g' gfwlist.list && sed -i '/^|/d' gfwlist.list && sed -i '/^$/d' gfwlist.list && sed -i '/':'/d' gfwlist.list && sed -i '/^[0-9]\{1,3\}\./d' gfwlist.list && sed -i '/]/d' gfwlist.list && sed -i '/%/d' gfwlist.list && sed -i '/*\//d' gfwlist.list && sed -i '/\./!d' gfwlist.list && sed -i 's/^\./  - DOMAIN-SUFFIX,/g' gfwlist.list && sed -i '/^[a-z]\{1,2\}/s/^/  - DOMAIN,/g' gfwlist.list && sed -i '/^[0-9]\{1\}/s/^/  - DOMAIN,/g' gfwlist.list
+        curl https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml > Global.list
+        cat gfwlist.list >> Global.list
+        awk -F "[,]+" '!a[$2]++{print}' > "Global.yaml" Global.list
+        sed 's/  - //g' Global.yaml > Global.list
+        sed -i '/:/d' Global.list
+        mv Global.list ./QX
+        mv Global.yaml ./Clash
+
     - name: 更新hosts
       run: |
         # host

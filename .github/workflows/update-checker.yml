@@ -23,7 +23,7 @@ jobs:
     - name: 更新gfwlist
       run: |
         curl https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt | base64 -d > gfwlist.list
-        sed -i '/^\//d' gfwlist.list && sed -i '/^\//d' gfwlist.list && sed -i '/^@/d' gfwlist.list && sed -i '/^!/d' gfwlist.list && sed -i 's/^||//g' gfwlist.list && sed -i '/^|/d' gfwlist.list && sed -i '/^$/d' gfwlist.list && sed -i '/':'/d' gfwlist.list && sed -i '/^[0-9]\{1,3\}\./d' gfwlist.list && sed -i '/]/d' gfwlist.list && sed -i '/%/d' gfwlist.list && sed -i '/*\//d' gfwlist.list && sed -i '/\./!d' gfwlist.list && sed -i 's/^\./  - DOMAIN-SUFFIX,/g' gfwlist.list && sed -i '/^[a-z]\{1,2\}/s/^/  - DOMAIN,/g' gfwlist.list && sed -i '/^[0-9]\{1\}/s/^/  - DOMAIN,/g' gfwlist.list && sed -i 's/\/.*//g' gfwlist.list
+        sed -i '/^\//d' gfwlist.list && sed -i '/^@/d' gfwlist.list && sed -i '/^!/d' gfwlist.list && sed -i '/^|/d' gfwlist.list && sed -i '/^$/d' gfwlist.list && sed -i '/':'/d' gfwlist.list && sed -i '/^[0-9]\{1,3\}\./d' gfwlist.list && sed -i '/]/d' gfwlist.list && sed -i '/%/d' gfwlist.list && sed -i '/*\//d' gfwlist.list && sed -i '/\./!d' gfwlist.list && sed -i 's/^\./  - DOMAIN-SUFFIX,/g' gfwlist.list && sed -i '/^[a-z]\{1,2\}/s/^/  - DOMAIN,/g' gfwlist.list && sed -i '/^[0-9]\{1\}/s/^/  - DOMAIN,/g' gfwlist.list && sed -i 's/\/.*//g' gfwlist.list
         curl https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml > Global.list
         cat gfwlist.list >> Global.list
         awk -F "[,]+" '!a[$2]++{print}' > "Global.yaml" Global.list

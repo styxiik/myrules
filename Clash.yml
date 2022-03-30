@@ -247,9 +247,7 @@ script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
     zerotier: network == 'udp' and dst_port == 9993
-    dnsfail: dst_ip == ""
 rules:
-  - SCRIPT,dnsfail,DIRECT
   - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
   - RULE-SET,ClashProxy,PROXY

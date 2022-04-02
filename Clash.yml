@@ -70,6 +70,16 @@ proxy-providers:
       enable: true
       interval: 15
       url: http://edge.microsoft.com/captiveportal/generate_204
+      
+  Myown: 
+    type: http
+    url: "Myown订阅链接" 
+    interval: 7200
+    path: ./Proxy/Myown.yaml 
+    health-check:
+      enable: true
+      interval: 15
+      url: http://edge.microsoft.com/captiveportal/generate_204
 
 
 proxy-groups:
@@ -100,6 +110,7 @@ proxy-groups:
     proxies:
       - Normal
       - Backup
+      - Myown
 
   - name: "Backup"
     type: url-test
@@ -109,6 +120,14 @@ proxy-groups:
     interval: 15
     tolerance: 20
 
+  - name: "Myown"
+    type: url-test
+    use:
+      - Myown
+    url: http://edge.microsoft.com/captiveportal/generate_204
+    interval: 15
+    tolerance: 20
+    
   - name: "Normal"
     type: url-test
     proxies:
@@ -437,47 +456,47 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
-  'contentstorage.osi.office.net': 104.96.19.74
+  'contentstorage.osi.office.net': 104.98.150.88
   'onedrive.live.com': 13.107.42.13
-  'login.live.com': 20.190.151.134
-  'checkappexec.microsoft.com': 65.52.5.117
+  'login.live.com': 20.190.151.8
+  'checkappexec.microsoft.com': 20.81.51.95
   'ecs.office.com': 52.113.194.132
-  'odc.officeapps.live.com': 52.109.2.1
-  'uci.cdn.office.net': 184.27.30.20
-  'wdcp.microsoft.com': 13.87.187.111
-  'wdcpalt.microsoft.com': 20.83.130.102
+  'odc.officeapps.live.com': 52.109.20.76
+  'uci.cdn.office.net': 23.212.72.43
+  'wdcp.microsoft.com': 20.83.130.102
+  'wdcpalt.microsoft.com': 13.87.187.111
   'pjp1-collabhubrtc.officeapps.live.com': 52.108.86.0
-  'skyapi.onedrive.live.com': 157.55.109.230
-  'skyapi.live.net': 40.90.130.192
+  'skyapi.onedrive.live.com': 13.105.28.18
+  'skyapi.live.net': 13.105.28.18
   'cid-bc643da51d20cb32.users.storage.live.com': 13.107.42.12
   'd.docs.live.net': 13.107.42.12
-  'self.events.data.microsoft.com': 20.189.173.15
+  'self.events.data.microsoft.com': 20.42.73.24
   'in.appcenter.ms': 52.177.138.113
   'public.bn.files.1drv.com': 13.107.42.12
-  'contentsync.onenote.com': 52.109.0.42
-  'hierarchyapi.onenote.com': 52.109.0.48
+  'contentsync.onenote.com': 52.109.0.36
+  'hierarchyapi.onenote.com': 52.109.0.47
   'ocws.officeapps.live.com': 52.109.20.72
   'www.onenote.com': 52.109.0.58
   'config.edge.skype.com': 13.107.42.16
   'roaming.officeapps.live.com': 52.109.0.29
   'pagecontentsync.onenote.com': 52.109.2.162
-  'api.onedrive.live.com': 104.96.19.48
-  'c1-onenote-15.cdn.office.net': 96.16.69.214
+  'api.onedrive.live.com': 104.98.150.80
+  'c1-onenote-15.cdn.office.net': 23.212.73.205
   'docs.live.net': 13.107.42.12
-  'storage.live.com': 13.105.28.16
+  'storage.live.com': 40.90.130.203
   'skydrive.wns.windows.com': 40.83.247.108
   'client.wns.windows.com': 40.83.247.108
-  'mobile.pipe.aria.microsoft.com': 52.168.117.169
-  'oneclient.sfx.ms': 184.27.29.141
-  'skydrivesync.policies.live.net': 40.79.207.80
+  'mobile.pipe.aria.microsoft.com': 51.104.15.253
+  'oneclient.sfx.ms': 23.212.73.35
+  'skydrivesync.policies.live.net': 40.90.130.203
   'api.onedrive.com': 13.107.42.12
   'public.dm.files.1drv.com': 13.107.42.12
-  'cdn.onenote.net': 104.94.210.125
-  'ad.atdmt.com': 157.240.220.13
+  'cdn.onenote.net': 104.96.193.200
+  'ad.atdmt.com': 157.240.22.6
   'officeimg.vo.msecnd.net': 152.199.4.33
   'onenote.officeapps.live.com': 13.107.6.171
   'bn1305.storage.live.com': 13.107.42.12
   'bn1305files.storage.live.com': 13.107.42.12
-  'modernb.akamai.odsp.cdn.office.net': 184.25.56.66
+  'modernb.akamai.odsp.cdn.office.net': 23.218.232.160
   'eastus20.pushnp.svc.ms': 52.111.230.5
   'c1.microsoft.com': 40.91.78.9

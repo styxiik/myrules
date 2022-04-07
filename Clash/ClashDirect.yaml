@@ -8,6 +8,7 @@ payload:
   - IP-CIDR,76.223.0.0/16
   - DOMAIN-SUFFIX,lencr.org
   - DOMAIN-KEYWORD,ocsp
+  - DOMAIN-SUFFIX,apple.cn
   # hosts ip
   - IP-CIDR,104.123.163.138/32
   - IP-CIDR,13.107.43.13/32

@@ -7,6 +7,7 @@ HOST-SUFFIX, lencr.org, DIRECT
 HOST-KEYWORD, ocsp, DIRECT
 IP-CIDR, 76.76.21.0/24, DIRECT
 IP-CIDR, 76.223.0.0/16, DIRECT
+HOST-SUFFIX, apple.cn, DIRECT
 
 HOST-SUFFIX, fast.com, 🎯 节点
 HOST-SUFFIX, gstaic.com, 🎯 节点

@@ -219,7 +219,7 @@ dns:
     - https://223.5.5.5/dns-query
     - tls://223.5.5.5:853
   fallback:
-    - 202.181.224.2
+    - MywonDNS
   fallback-filter:
     geoip: true
     geoip-code: CN

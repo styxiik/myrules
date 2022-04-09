@@ -1,13 +1,4 @@
-HOST-SUFFIX, jsdelivr.net, DIRECT
-HOST-SUFFIX, k2pddns.ga, DIRECT
-HOST-SUFFIX, epicgames.com, DIRECT
-HOST-SUFFIX, huya.com, DIRECT
-HOST-SUFFIX, hotmail.com, DIRECT
-HOST-SUFFIX, lencr.org, DIRECT
-HOST-KEYWORD, ocsp, DIRECT
-IP-CIDR, 76.76.21.0/24, DIRECT
-IP-CIDR, 76.223.0.0/16, DIRECT
-HOST-SUFFIX, apple.cn, DIRECT
+#host-suffix, dj0ts1x.cn, reject
 
 HOST-SUFFIX, fast.com, 🎯 节点
 HOST-SUFFIX, gstaic.com, 🎯 节点
@@ -19,13 +10,27 @@ HOST, tracker.novage.com.ua, 🎯 节点
 HOST-SUFFIX, openwebtorrent.com, 🎯 节点
 HOST-SUFFIX, b5200.net, 🎯 节点
 IP-CIDR, 157.240.0.0/16, 🎯 节点
+HOST-SUFFIX, 91porn.com, 🎯 节点
+HOST-SUFFIX, ytimg.com, 🎯 节点
+HOST-SUFFIX, twimg.com, 🎯 节点
+HOST-SUFFIX, t6k.co, 🎯 节点
+HOST-KEYWORD, 91P, 🎯 节点
+HOST-SUFFIX, p04.space, 🎯 节点
+HOST-KEYWORD, nunuyy, 🎯 节点
 
-HOST-SUFFIX, 91porn.com, 🌊 流媒体
-HOST-SUFFIX, ytimg.com, 🌊 流媒体
-HOST-SUFFIX, twimg.com, 🌊 流媒体
-HOST-SUFFIX, t6k.co, 🌊 流媒体
-HOST-KEYWORD, 91P, 🌊 流媒体
-HOST-SUFFIX, p04.space, 🌊 流媒体
-HOST-KEYWORD, nunuyy, 🌊 流媒体
 
-#host-suffix, dj0ts1x.cn, reject
+HOST-SUFFIX, jsdelivr.net, DIRECT
+HOST-SUFFIX, k2pddns.ga, DIRECT
+HOST-SUFFIX, epicgames.com, DIRECT
+HOST-SUFFIX, huya.com, DIRECT
+HOST-SUFFIX, hotmail.com, DIRECT
+HOST-SUFFIX, lencr.org, DIRECT
+HOST-KEYWORD, ocsp, DIRECT
+IP-CIDR, 76.76.21.0/24, DIRECT
+IP-CIDR, 76.223.0.0/16, DIRECT
+HOST-SUFFIX, apple.cn, DIRECT
+
+
+
+
+

@@ -135,13 +135,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Telegram/Telegram.yaml"
     interval: 7200
 
-  ClashStreaming:
-    type: http
-    behavior: classical
-    path: ./RuleSet/ClashStreaming.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashStreaming.yaml"
-    interval: 7200
-
   StreamingSE:
     type: http
     behavior: classical
@@ -197,7 +190,6 @@ rules:
   - RULE-SET,Global,PROXY
   - RULE-SET,Telegram,PROXY
   - RULE-SET,Streaming,PROXY
-  - RULE-SET,ClashStreaming,PROXY
   - RULE-SET,StreamingSE,哔哩哔哩
   - RULE-SET,ClashDirect,DIRECT
   - RULE-SET,Unbreak,DIRECT

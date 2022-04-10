@@ -41,7 +41,7 @@ proxy-providers:
       
   Myown: 
     type: http
-    url: "MyownClash订阅链接" 
+    url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/Myown.yaml 
     health-check:

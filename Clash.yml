@@ -17,7 +17,7 @@ tun:
   auto-detect-interface: true
 
 proxy-providers:
-  All: 
+  Other: 
     type: http
     url: "Clash订阅链接" 
     interval: 7200
@@ -65,8 +65,8 @@ proxy-groups:
   - name: "PROXY"
     type: select
     proxies:
-      - All
       - Myown
+      - Other
 
   - name: "Myown"
     type: url-test
@@ -76,10 +76,10 @@ proxy-groups:
     interval: 15
     tolerance: 20
     
-  - name: "All"
+  - name: "Other"
     type: url-test
     use:
-      - All
+      - Other
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
     tolerance: 280

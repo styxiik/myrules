@@ -33,7 +33,7 @@ proxy-providers:
     url: "Clash订阅链接" 
     interval: 7200
     path: ./Proxy/TW.yaml 
-    filter: '(台湾|tw)'
+    filter: '(TW|台湾)'
     health-check:
       enable: true
       interval: 15

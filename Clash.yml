@@ -360,7 +360,6 @@ dns:
     - '+.skyapi.live.net'
     - '+.cid-bc643da51d20cb32.users.storage.live.com'
     - '+.d.docs.live.net'
-    - '+.self.events.data.microsoft.com'
     - '+.in.appcenter.ms'
     - '+.public.bn.files.1drv.com'
     - '+.contentsync.onenote.com'
@@ -400,45 +399,44 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
-  'contentstorage.osi.office.net': 104.106.237.5
+  'contentstorage.osi.office.net': 23.50.38.76
   'onedrive.live.com': 13.107.42.13
-  'login.live.com': 20.190.154.17
-  'checkappexec.microsoft.com': 65.52.5.117
+  'login.live.com': 20.190.154.19
+  'checkappexec.microsoft.com': 52.153.255.222
   'ecs.office.com': 52.113.194.132
-  'odc.officeapps.live.com': 52.109.6.45
-  'uci.cdn.office.net': 23.205.72.29
+  'odc.officeapps.live.com': 52.109.2.1
+  'uci.cdn.office.net': 96.16.68.43
   'wdcp.microsoft.com': 20.62.149.92
-  'wdcpalt.microsoft.com': 52.147.223.103
+  'wdcpalt.microsoft.com': 13.87.187.111
   'pjp1-collabhubrtc.officeapps.live.com': 52.108.86.0
-  'skyapi.onedrive.live.com': 40.90.136.166
-  'skyapi.live.net': 40.90.136.166
-  'cid-bc643da51d20cb32.users.storage.live.com': 157.55.109.230
-  'd.docs.live.net': 13.105.74.49
-  'self.events.data.microsoft.com': 20.50.80.209
+  'skyapi.onedrive.live.com': 13.105.74.50
+  'skyapi.live.net': 13.105.74.50
+  'cid-bc643da51d20cb32.users.storage.live.com': 157.55.109.228
+  'd.docs.live.net': 157.55.109.228
   'in.appcenter.ms': 40.70.161.7
-  'public.bn.files.1drv.com': 131.253.14.230
-  'contentsync.onenote.com': 52.109.12.165
-  'hierarchyapi.onenote.com': 52.109.12.99
-  'ocws.officeapps.live.com': 52.109.8.62
-  'www.onenote.com': 52.109.12.187
+  'public.bn.files.1drv.com': 131.253.14.229
+  'contentsync.onenote.com': 52.109.2.123
+  'hierarchyapi.onenote.com': 52.109.2.57
+  'ocws.officeapps.live.com': 52.109.2.52
+  'www.onenote.com': 52.109.0.58
   'config.edge.skype.com': 13.107.42.16
-  'roaming.officeapps.live.com': 52.109.8.71
-  'pagecontentsync.onenote.com': 52.109.12.208
-  'api.onedrive.live.com': 104.71.185.235
-  'c1-onenote-15.cdn.office.net': 23.220.121.200
-  'docs.live.net': 40.90.136.166
-  'storage.live.com': 13.105.74.49
-  'skydrive.wns.windows.com': 52.226.139.180
-  'client.wns.windows.com': 52.226.139.180
-  'mobile.pipe.aria.microsoft.com': 20.50.80.210
-  'oneclient.sfx.ms': 23.220.121.38
-  'skydrivesync.policies.live.net': 13.105.74.49
-  'api.onedrive.com': 40.90.133.97
-  'public.dm.files.1drv.com': 157.55.109.230
-  'cdn.onenote.net': 23.66.228.68
+  'roaming.officeapps.live.com': 52.109.20.16
+  'pagecontentsync.onenote.com': 52.109.2.162
+  'api.onedrive.live.com': 23.50.38.59
+  'c1-onenote-15.cdn.office.net': 96.16.69.214
+  'docs.live.net': 157.55.109.228
+  'storage.live.com': 13.105.74.50
+  'skydrive.wns.windows.com': 40.83.247.108
+  'client.wns.windows.com': 40.83.247.108
+  'mobile.pipe.aria.microsoft.com': 20.189.173.5
+  'oneclient.sfx.ms': 96.16.69.48
+  'skydrivesync.policies.live.net': 13.105.74.50
+  'api.onedrive.com': 13.105.74.50
+  'public.dm.files.1drv.com': 40.90.130.192
+  'cdn.onenote.net': 173.223.12.175
   'officeimg.vo.msecnd.net': 152.199.4.33
   'onenote.officeapps.live.com': 13.107.6.171
   'bn1305.storage.live.com': 131.253.14.229
   'bn1305files.storage.live.com': 131.253.14.229
-  'modernb.akamai.odsp.cdn.office.net': 23.222.5.145
+  'modernb.akamai.odsp.cdn.office.net': 96.16.55.22
   'eastus20.pushnp.svc.ms': 52.111.230.5

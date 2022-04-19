@@ -21,7 +21,7 @@ proxy-providers:
     type: http
     url: "Clash订阅链接" 
     interval: 7200
-    path: ./Proxy/All.yaml 
+    path: ./Proxy/Other.yaml 
     # filter: '(1.5|2.0|2.5)'
     health-check:
       enable: true

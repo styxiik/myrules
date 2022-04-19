@@ -181,9 +181,13 @@ script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
     zerotier: network == 'udp' and dst_port == 9993
+    printer: network == 'tcp' and dst_port == 445
+    snmp: network == 'udp' and dst_port == 161
 rules:
   - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
+  - SCRIPT,printer,DIRECT
+  - SCRIPT,snmp,REJECT
   - RULE-SET,AntiAd,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashProxy,PROXY

@@ -188,8 +188,8 @@ rules:
   - RULE-SET,AntiAd,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashProxy,PROXY
-  - DOMAIN-KEYWORD,pornhub,JP
-  - DOMAIN-KEYWORD,xvideos,JP
+  - DOMAIN-SUFFIX,pornhub.com,JP
+  - DOMAIN-SUFFIX,xvideos.com,JP
   - RULE-SET,Global,PROXY
   - RULE-SET,Telegram,PROXY
   - RULE-SET,Streaming,PROXY

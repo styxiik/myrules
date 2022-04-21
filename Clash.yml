@@ -17,6 +17,16 @@ tun:
   auto-detect-interface: true
 
 proxy-providers:
+  Myown: 
+    type: http
+    url: "MyownClash订阅" 
+    interval: 7200
+    path: ./Proxy/Myown.yaml 
+    health-check:
+      enable: true
+      interval: 15
+      url: http://edge.microsoft.com/captiveportal/generate_204
+
   Other: 
     type: http
     url: "Clash订阅链接" 
@@ -28,22 +38,12 @@ proxy-providers:
       interval: 15
       url: http://edge.microsoft.com/captiveportal/generate_204
 
-  TW: 
-    type: http
-    url: "Clash订阅链接" 
-    interval: 7200
-    path: ./Proxy/TW.yaml 
-    filter: '(TW|台湾)'
-    health-check:
-      enable: true
-      interval: 15
-      url: http://edge.microsoft.com/captiveportal/generate_204
-      
-  Myown: 
+  JP: 
     type: http
     url: "MyownClash订阅" 
     interval: 7200
-    path: ./Proxy/Myown.yaml 
+    path: ./Proxy/JP.yaml 
+    filter: '(JP|日本)'
     health-check:
       enable: true
       interval: 15
@@ -56,16 +56,11 @@ proxy-groups:
       - DIRECT
       - PROXY
 
-  - name: "哔哩哔哩"
-    type: select
-    proxies:
-      - DIRECT
-      - 台湾
-
   - name: "PROXY"
     type: select
     proxies:
       - Myown
+      - JP
       - Other
 
   - name: "Myown"
@@ -75,7 +70,15 @@ proxy-groups:
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
     tolerance: 20
-    
+
+  - name: "JP"
+    type: url-test
+    use:
+      - JP
+    url: http://edge.microsoft.com/captiveportal/generate_204
+    interval: 15
+    tolerance: 280
+
   - name: "Other"
     type: url-test
     use:
@@ -84,15 +87,8 @@ proxy-groups:
     interval: 15
     tolerance: 280
 
-  - name: "台湾"
-    use:
-      - TW
-    type: url-test
-    url: http://edge.microsoft.com/captiveportal/generate_204
-    interval: 15
-    tolerance: 50
-
 rule-providers:
+
   AntiAd:
     type: http
     behavior: domain
@@ -194,7 +190,6 @@ rules:
   - RULE-SET,Global,PROXY
   - RULE-SET,Telegram,PROXY
   - RULE-SET,Streaming,PROXY
-  - RULE-SET,StreamingSE,哔哩哔哩
   - RULE-SET,ClashDirect,DIRECT
   - RULE-SET,Unbreak,DIRECT
   - RULE-SET,Apple,DIRECT

@@ -22,6 +22,7 @@ proxy-providers:
     url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/Myown.yaml 
+    filter: '(KR|韩国)'
     health-check:
       enable: true
       interval: 15
@@ -69,7 +70,7 @@ proxy-groups:
       - Myown
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
-    tolerance: 20
+    tolerance: 100
 
   - name: "JP"
     type: url-test
@@ -77,7 +78,7 @@ proxy-groups:
       - JP
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
-    tolerance: 280
+    tolerance: 100
 
   - name: "Other"
     type: url-test
@@ -85,7 +86,7 @@ proxy-groups:
       - Other
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
-    tolerance: 280
+    tolerance: 200
 
 rule-providers:
 
@@ -187,6 +188,8 @@ rules:
   - RULE-SET,AntiAd,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashProxy,PROXY
+  - DOMAIN-KEYWORD,pornhub,JP
+  - DOMAIN-KEYWORD,xvideos,JP
   - RULE-SET,Global,PROXY
   - RULE-SET,Telegram,PROXY
   - RULE-SET,Streaming,PROXY

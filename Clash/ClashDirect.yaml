@@ -9,6 +9,9 @@ payload:
   - DOMAIN-SUFFIX,lencr.org
   - DOMAIN-KEYWORD,ocsp
   - DOMAIN-SUFFIX,apple.cn
+  - DOMAIN-SUFFIX,oracle.com
+  - DOMAIN-SUFFIX,oraclecloud.com
+  - DOMAIN-SUFFIX,solink.ga
   # hosts ip
   - IP-CIDR,104.96.19.74/32
   - IP-CIDR,13.107.42.13/32

@@ -359,3 +359,4 @@ dns:
     - '+.bankcomm.com'
     - '+.digicert.com'
     - '+.pingan.com.cn'
+hosts:

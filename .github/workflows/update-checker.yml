@@ -47,13 +47,14 @@ jobs:
         awk -F "[ ]+" '!a[$2]++{print "'\''"$2"'\''" ":",$1}' > "my.host" *.txt
         #合并所有host
         cat *.host > host.list
-        sed -i 's/^/  /g' host.list && sed -i '1i\hosts:' host.list
+        sed -i 's/^/  /g' host.list
+        test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
 
     - name: 添加host ip到直连
       run: |
         awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
         sed -i '/^  - IP-CIDR,\/32/d' ins.host
-        sed -i '1i\  # hosts ip' ins.host
+        test -s ins.host && sed -i '1i\  # hosts ip' ins.host || echo "  # hosts ip" >> ins.host
         hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)
         sed -i ${hostip}',$d' Clash/ClashDirect.yaml
         cat ins.host >> Clash/ClashDirect.yaml

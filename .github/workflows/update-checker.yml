@@ -55,6 +55,7 @@ jobs:
         awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
         awk -F "[: ]+" '!a[$3]++{print "IP-CIDR, "$3"\/32, DIRECT"}' > "insqx.host" host.list
         sed -i '/^  - IP-CIDR,\/32/d' *.host
+        sed -i '/^IP-CIDR, \/32, DIRECT/d' *.host
         test -s ins.host && sed -i '1i\  # hosts ip' ins.host || echo "  # hosts ip" >> ins.host
         test -s insqx.host && sed -i '1i\# hosts ip' insqx.host || echo "# hosts ip" >> insqx.host
         hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)

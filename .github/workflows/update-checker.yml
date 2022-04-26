@@ -53,11 +53,17 @@ jobs:
     - name: 添加host ip到直连
       run: |
         awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
-        sed -i '/^  - IP-CIDR,\/32/d' ins.host
+        awk -F "[: ]+" '!a[$3]++{print "IP-CIDR, "$3"\/32, DIRECT"}' > "insqx.host" host.list
+        sed -i '/^  - IP-CIDR,\/32/d' *.host
         test -s ins.host && sed -i '1i\  # hosts ip' ins.host || echo "  # hosts ip" >> ins.host
+        test -s insqx.host && sed -i '1i\# hosts ip' insqx.host || echo "# hosts ip" >> insqx.host
         hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)
+        hostipqx=$(sed -n "/# hosts ip/=" QX/QXRules.list)
         sed -i ${hostip}',$d' Clash/ClashDirect.yaml
+        sed -i ${hostipqx}',$d' QX/QXRules.list
         cat ins.host >> Clash/ClashDirect.yaml
+        cat insqx.host >> QX/QXRules.list
+
 
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()

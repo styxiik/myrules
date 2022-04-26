@@ -348,6 +348,13 @@ dns:
     - '*.mcdn.bilivideo.cn'
     - '+.media.dssott.com'
     - 'shark007.net'
+    - '+.n1.k2pddns.ga'
+    - '+.n2.k2pddns.ga'
+    - '+.n3.k2pddns.ga'
+    - '+.n4.k2pddns.ga'
+    - '+.n5.k2pddns.ga'
+    - '+.n6.k2pddns.ga'
+    - '+.to.k2pddns.ga'
     - '+.cmbchina.com'
     - '+.haowu.link'
     - '+.cmbimg.com'
@@ -360,3 +367,10 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
 hosts:
+  'n1.k2pddns.ga': 146.56.110.108
+  'n2.k2pddns.ga': 144.24.71.55
+  'n3.k2pddns.ga': 144.24.74.48
+  'n4.k2pddns.ga': 138.2.117.99
+  'n5.k2pddns.ga': 152.67.211.174
+  'n6.k2pddns.ga': 152.67.217.183
+  'to.k2pddns.ga': 155.248.163.112

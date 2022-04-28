@@ -52,11 +52,6 @@ jobs:
         cat *.host > host.list
         sed -i 's/^/  /g' host.list
         test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
-        
-    - name: 判断是否添加host
-      if: env.HOST == 'false' && !cancelled()
-      run: |
-        rm host.list && touch host.list && echo "hosts:" >> host.list
       
     - name: 添加host ip到直连
       run: |
@@ -73,7 +68,11 @@ jobs:
         cat ins.host >> Clash/ClashDirect.yaml
         cat insqx.host >> QX/QXRules.list
 
-
+    - name: 判断是否使用host及添加host到fake-ip
+      if: env.HOST == 'false' && !cancelled()
+      run: |
+        rm host.list & rm *.txt && touch host.list && echo "hosts:" >> host.list
+        
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
       run: |

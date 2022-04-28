@@ -90,13 +90,6 @@ proxy-groups:
 
 rule-providers:
 
-  AntiAd:
-    type: http
-    behavior: domain
-    path: ./RuleSet/AntiAd.yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
-    interval: 7200
-
   ClashReject:
     type: http
     behavior: classical
@@ -185,7 +178,6 @@ rules:
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
-  - RULE-SET,AntiAd,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashProxy,PROXY
   - DOMAIN-SUFFIX,pornhub.com,JP

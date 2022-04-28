@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 16 * * *
+env: 
+  HOST: false
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -49,7 +52,12 @@ jobs:
         cat *.host > host.list
         sed -i 's/^/  /g' host.list
         test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
-
+        
+    - name: 判断是否添加host
+      if: env.HOST == 'false' && !cancelled()
+      run: |
+        rm host.list && touch host.list && echo "hosts:" >> host.list
+      
     - name: 添加host ip到直连
       run: |
         awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list

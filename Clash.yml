@@ -12,7 +12,8 @@ tun:
   enable: true
   stack: system # or gvisor system
   dns-hijack:
-    - 198.18.0.2:53
+    - any:53
+    - tcp://any:53
   auto-route: true
   auto-detect-interface: true
 

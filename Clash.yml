@@ -90,13 +90,6 @@ proxy-groups:
     tolerance: 200
 
 rule-providers:
-  reject:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
-    path: ./ruleset/reject.yaml
-    interval: 7200
-
   ClashReject:
     type: http
     behavior: classical
@@ -104,18 +97,11 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml"
     interval: 7200
 
-  proxy:
+  ClashDirect:
     type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
-    path: ./ruleset/proxy.yaml
-    interval: 7200
-
-  telegramcidr:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-    path: ./ruleset/telegramcidr.yaml
+    behavior: classical
+    path: ./RuleSet/ClashDirect.yaml
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
     interval: 7200
 
   ClashProxy:
@@ -125,6 +111,12 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml"
     interval: 7200
 
+  reject:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+    path: ./ruleset/reject.yaml
+    interval: 7200
   direct:
     type: http
     behavior: domain
@@ -160,11 +152,18 @@ rule-providers:
     path: ./ruleset/lancidr.yaml
     interval: 7200
 
-  ClashDirect:
+  proxy:
     type: http
-    behavior: classical
-    path: ./RuleSet/ClashDirect.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+    path: ./ruleset/proxy.yaml
+    interval: 7200
+
+  telegramcidr:
+    type: http
+    behavior: ipcidr
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+    path: ./ruleset/telegramcidr.yaml
     interval: 7200
 
 script:
@@ -180,17 +179,17 @@ rules:
   - SCRIPT,snmp,REJECT
   - DOMAIN-SUFFIX,mydomain1,DIRECT
   - DOMAIN-SUFFIX,mydomain2,DIRECT
-  - RULE-SET,reject,REJECT
   - RULE-SET,ClashReject,REJECT
-  - RULE-SET,proxy,PROXY
-  - RULE-SET,telegramcidr,PROXY
+  - RULE-SET,ClashDirect,DIRECT
   - RULE-SET,ClashProxy,PROXY
+  - RULE-SET,reject,REJECT
   - RULE-SET,direct,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
-  - RULE-SET,ClashDirect,DIRECT
+  - RULE-SET,proxy,PROXY
+  - RULE-SET,telegramcidr,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

@@ -111,20 +111,6 @@ rule-providers:
     path: ./ruleset/proxy.yaml
     interval: 7200
 
-  gfw:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
-    path: ./ruleset/gfw.yaml
-    interval: 7200
-
-  greatfire:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/greatfire.txt"
-    path: ./ruleset/greatfire.yaml
-    interval: 7200
-
   telegramcidr:
     type: http
     behavior: ipcidr
@@ -195,8 +181,6 @@ rules:
   - RULE-SET,reject,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,proxy,PROXY
-  - RULE-SET,gfw,PROXY
-  - RULE-SET,greatfire,PROXY
   - RULE-SET,telegramcidr,PROXY
   - RULE-SET,ClashProxy,PROXY
   - RULE-SET,direct,DIRECT

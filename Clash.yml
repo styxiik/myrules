@@ -178,6 +178,8 @@ rules:
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
+  - DOMAIN-SUFFIX,mydomain1,DIRECT
+  - DOMAIN-SUFFIX,mydomain2,DIRECT
   - RULE-SET,reject,REJECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,proxy,PROXY

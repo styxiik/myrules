@@ -16,7 +16,7 @@ jobs:
     - name: 判断fakeip
       id: fakeip
       run: | 
-        FIND_FILE="Clash.yml"
+        FIND_FILE="Clash.yaml"
         FIND_STR="enhanced-mode: fake-ip"
         if [ `grep -c "$FIND_STR" "$FIND_FILE"` -ne '0' ] ;then
             echo "::set-output name=fakeornot::true"
@@ -75,10 +75,10 @@ jobs:
     - name: 注入文件
       run: |  
         cat *.list > final.list
-        last=$(sed -n "/  use-hosts: true/=" Clash.yml)
-        sed -i ${last}',$d' Clash.yml
-        sed -i '$a\  use-hosts: true' Clash.yml
-        cat final.list >> Clash.yml
+        last=$(sed -n "/  use-hosts: true/=" Clash.yaml)
+        sed -i ${last}',$d' Clash.yaml
+        sed -i '$a\  use-hosts: true' Clash.yaml
+        cat final.list >> Clash.yaml
 
         rm *.list & rm *.host & rm *.txt & rm *.fake
 

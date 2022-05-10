@@ -117,6 +117,7 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
     path: ./ruleset/reject.yaml
     interval: 7200
+
   direct:
     type: http
     behavior: domain
@@ -155,7 +156,7 @@ rule-providers:
   proxy:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
     path: ./ruleset/proxy.yaml
     interval: 7200
 

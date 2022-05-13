@@ -135,7 +135,7 @@ rule-providers:
   cncidr:
     type: http
     behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/ChinaIP.yaml"
     path: ./ruleset/cncidr.yaml
     interval: 7200
 

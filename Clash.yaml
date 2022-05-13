@@ -146,11 +146,11 @@ rule-providers:
     path: ./ruleset/lancidr.yaml
     interval: 7200
 
-  proxy:
+  Global:
     type: http
     behavior: domain
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
-    path: ./ruleset/proxy.yaml
+    path: ./ruleset/global.yaml
     interval: 7200
 
 script:
@@ -174,7 +174,7 @@ rules:
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
-  - RULE-SET,proxy,PROXY
+  - RULE-SET,Global,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

@@ -148,7 +148,7 @@ rule-providers:
 
   Global:
     type: http
-    behavior: domain
+    behavior: classical
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
     path: ./ruleset/global.yaml
     interval: 7200

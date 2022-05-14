@@ -162,7 +162,7 @@ rule-providers:
 
   gfw:
     type: http
-    behavior: classical
+    behavior: domain
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
     path: ./ruleset/gfw.yaml
     interval: 7200

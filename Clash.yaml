@@ -160,6 +160,13 @@ rule-providers:
     path: ./ruleset/global.yaml
     interval: 7200
 
+  gfw:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+    path: ./ruleset/gfw.yaml
+    interval: 7200
+
 script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
@@ -183,6 +190,7 @@ rules:
   - RULE-SET,lancidr,DIRECT
   - RULE-SET,Global,PROXY
   - RULE-SET,StreamingMedia,PROXY
+  - RULE-SET,gfw,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

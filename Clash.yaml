@@ -153,6 +153,13 @@ rule-providers:
     path: ./ruleset/global.yaml
     interval: 7200
 
+  StreamingMedia:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/StreamingMedia/Streaming.yaml"
+    path: ./ruleset/global.yaml
+    interval: 7200
+
 script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
@@ -175,6 +182,7 @@ rules:
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
   - RULE-SET,Global,PROXY
+  - RULE-SET,StreamingMedia,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

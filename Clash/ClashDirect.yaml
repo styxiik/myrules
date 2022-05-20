@@ -1,6 +1,4 @@
 payload:
-  - DOMAIN-SUFFIX,k2pddns.ga
-  - DOMAIN-SUFFIX,jsdelivr.net
   - DOMAIN-SUFFIX,huya.com
   - DOMAIN-SUFFIX,epicgames.com
   - DOMAIN-SUFFIX,hotmail.com
@@ -8,7 +6,6 @@ payload:
   - IP-CIDR,76.223.0.0/16
   - IP-CIDR,239.255.255.250/32
   - DOMAIN-SUFFIX,lencr.org
-  - DOMAIN-KEYWORD,ocsp
   - DOMAIN-SUFFIX,apple.cn
   - DOMAIN-SUFFIX,oracle.com
   - DOMAIN-SUFFIX,oraclecloud.com

@@ -198,6 +198,7 @@ rules:
   - RULE-SET,Global,PROXY
   - RULE-SET,StreamingMedia,PROXY
   - RULE-SET,gfw,PROXY
+  - RULE-SET,Telegram,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

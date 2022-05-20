@@ -167,6 +167,13 @@ rule-providers:
     path: ./ruleset/gfw.yaml
     interval: 7200
 
+  Telegram:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Telegram/Telegram.yaml"
+    path: ./ruleset/telegram.yaml
+    interval: 7200
+
 script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443

@@ -18,11 +18,11 @@ tun:
   auto-detect-interface: true
 
 proxy-providers:
-  Myown: 
+  KR: 
     type: http
     url: "MyownClash订阅" 
     interval: 7200
-    path: ./Proxy/Myown.yaml 
+    path: ./Proxy/KR.yaml 
     filter: '(KR|韩国)'
     health-check:
       enable: true
@@ -61,14 +61,14 @@ proxy-groups:
   - name: "PROXY"
     type: select
     proxies:
-      - Myown
+      - KR
       - JP
       - Other
 
-  - name: "Myown"
+  - name: "KR"
     type: url-test
     use:
-      - Myown
+      - KR
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
     tolerance: 100

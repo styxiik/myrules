@@ -18,11 +18,11 @@ tun:
   auto-detect-interface: true
 
 proxy-providers:
-  KR: 
+  MYKR: 
     type: http
     url: "MyownClash订阅" 
     interval: 7200
-    path: ./Proxy/KR.yaml 
+    path: ./Proxy/MYKR.yaml 
     filter: '(KR|韩国)'
     health-check:
       enable: true
@@ -40,11 +40,11 @@ proxy-providers:
       interval: 15
       url: http://edge.microsoft.com/captiveportal/generate_204
 
-  JP: 
+  MYJP: 
     type: http
     url: "MyownClash订阅" 
     interval: 7200
-    path: ./Proxy/JP.yaml 
+    path: ./Proxy/MYJP.yaml 
     filter: '(JP|日本)'
     health-check:
       enable: true
@@ -68,7 +68,7 @@ proxy-groups:
   - name: "KR"
     type: url-test
     use:
-      - KR
+      - MYKR
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
     tolerance: 100
@@ -76,7 +76,7 @@ proxy-groups:
   - name: "JP"
     type: url-test
     use:
-      - JP
+      - MYJP
     url: http://edge.microsoft.com/captiveportal/generate_204
     interval: 15
     tolerance: 100

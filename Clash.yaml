@@ -20,7 +20,7 @@ tun:
 proxy-providers:
   MYOWN: 
     type: http
-    url: "MyownClash订阅" 
+    url: "https://st.solink.ga/Clash" 
     interval: 7200
     path: ./Proxy/MYOWN.yaml 
     health-check:
@@ -30,7 +30,7 @@ proxy-providers:
       
   MYKR: 
     type: http
-    url: "MyownClash订阅" 
+    url: "https://st.solink.ga/Clash" 
     interval: 7200
     path: ./Proxy/MYKR.yaml 
     filter: '(KR|韩国)'
@@ -41,7 +41,7 @@ proxy-providers:
 
   MYJP: 
     type: http
-    url: "MyownClash订阅" 
+    url: "https://st.solink.ga/Clash" 
     interval: 7200
     path: ./Proxy/MYJP.yaml 
     filter: '(JP|日本)'
@@ -52,7 +52,7 @@ proxy-providers:
 
   Other: 
     type: http
-    url: "Clash订阅链接" 
+    url: "https://solink.ga/AfK6pP" 
     interval: 7200
     path: ./Proxy/Other.yaml 
     # filter: '(1.5|2.0|2.5)'
@@ -112,86 +112,107 @@ rule-providers:
   ClashReject:
     type: http
     behavior: classical
-    path: ./RuleSet/ClashReject.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml"
+    path: ./ruleSet/ClashReject.yaml
+    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashReject.yaml"
     interval: 7200
 
   ClashDirect:
     type: http
     behavior: classical
-    path: ./RuleSet/ClashDirect.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
+    path: ./ruleSet/ClashDirect.yaml
+    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashDirect.yaml"
     interval: 7200
 
   ClashProxy:
     type: http
     behavior: classical
-    path: ./RuleSet/ClashProxy.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml"
+    path: ./ruleSet/ClashProxy.yaml
+    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashProxy.yaml"
     interval: 7200
+
+  reject:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+    path: ./ruleset/reject.yaml
+    interval: 86400
+
+  private:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
+    path: ./ruleset/private.yaml
+    interval: 86400
 
   direct:
     type: http
     behavior: domain
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
     path: ./ruleset/direct.yaml
-    interval: 7200
+    interval: 86400
 
   icloud:
     type: http
     behavior: domain
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt"
     path: ./ruleset/icloud.yaml
-    interval: 7200
+    interval: 86400
 
   apple:
     type: http
     behavior: domain
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
     path: ./ruleset/apple.yaml
-    interval: 7200
+    interval: 86400
 
   cncidr:
     type: http
     behavior: ipcidr
-    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/ChinaIP.yaml"
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
     path: ./ruleset/cncidr.yaml
-    interval: 7200
+    interval: 86400
 
   lancidr:
     type: http
     behavior: ipcidr
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
     path: ./ruleset/lancidr.yaml
-    interval: 7200
+    interval: 86400
 
-  Global:
+  proxy:
     type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Global.yaml"
-    path: ./ruleset/global.yaml
-    interval: 7200
-
-  StreamingMedia:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/StreamingMedia/Streaming.yaml"
-    path: ./ruleset/global.yaml
-    interval: 7200
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+    path: ./ruleset/proxy.yaml
+    interval: 86400
 
   gfw:
     type: http
     behavior: domain
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
     path: ./ruleset/gfw.yaml
-    interval: 7200
+    interval: 86400
 
-  Telegram:
+  google:
     type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Telegram/Telegram.yaml"
-    path: ./ruleset/telegram.yaml
-    interval: 7200
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+    path: ./ruleset/google.yaml
+    interval: 86400
+
+  greatfire:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/greatfire.txt"
+    path: ./ruleset/greatfire.yaml
+    interval: 86400
+
+  telegramcidr:
+    type: http
+    behavior: ipcidr
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+    path: ./ruleset/telegramcidr.yaml
+    interval: 86400
 
 script:
   shortcuts:
@@ -204,20 +225,23 @@ rules:
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
-  - DOMAIN-SUFFIX,mydomain1,DIRECT
-  - DOMAIN-SUFFIX,mydomain2,DIRECT
+  - DOMAIN-SUFFIX,k2pddns.ga,DIRECT
+  - DOMAIN-SUFFIX,solink.ga,DIRECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashDirect,DIRECT
-  - RULE-SET,ClashProxy,PROXY
+  - RULE-SET,ClashProxy,PROXY,no-resolve
+  - RULE-SET,reject,REJECT
+  - RULE-SET,private,REJECT
   - RULE-SET,direct,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
-  - RULE-SET,Global,PROXY
-  - RULE-SET,StreamingMedia,PROXY
+  - RULE-SET,proxy,PROXY
   - RULE-SET,gfw,PROXY
-  - RULE-SET,Telegram,PROXY
+  - RULE-SET,google,PROXY
+  - RULE-SET,greatfire,PROXY
+  - RULE-SET,telegramcidr,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

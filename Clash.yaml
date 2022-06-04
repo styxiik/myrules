@@ -71,6 +71,7 @@ proxy-groups:
   - name: "PROXY"
     type: select
     proxies:
+      - MY
       - KR
       - JP
       - Other

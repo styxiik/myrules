@@ -188,7 +188,7 @@ rule-providers:
 
   Telegram:
     type: http
-    behavior: domain
+    behavior: classical
     url: "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/Extra/Telegram/Telegram.yaml"
     path: ./ruleset/telegram.yaml
     interval: 7200

@@ -208,15 +208,15 @@ rules:
   - DOMAIN-SUFFIX,mydomain2,DIRECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashDirect,DIRECT
-  - RULE-SET,ClashProxy,PROXY
+  - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,direct,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
-  - RULE-SET,Global,PROXY
-  - RULE-SET,StreamingMedia,PROXY
-  - RULE-SET,gfw,PROXY
+  - RULE-SET,Global,PROXY,no-resolve
+  - RULE-SET,StreamingMedia,PROXY,no-resolve
+  - RULE-SET,gfw,PROXY,no-resolve
   - RULE-SET,Telegram,PROXY
   - GEOIP,CN,DIRECT
   - MATCH,最终选择

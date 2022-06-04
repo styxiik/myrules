@@ -18,23 +18,22 @@ tun:
   auto-detect-interface: true
 
 proxy-providers:
+  MYOWN: 
+    type: http
+    url: "MyownClash订阅" 
+    interval: 7200
+    path: ./Proxy/MYOWN.yaml 
+    health-check:
+      enable: true
+      interval: 15
+      url: http://edge.microsoft.com/captiveportal/generate_204
+      
   MYKR: 
     type: http
     url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYKR.yaml 
     filter: '(KR|韩国)'
-    health-check:
-      enable: true
-      interval: 15
-      url: http://edge.microsoft.com/captiveportal/generate_204
-
-  Other: 
-    type: http
-    url: "Clash订阅链接" 
-    interval: 7200
-    path: ./Proxy/Other.yaml 
-    # filter: '(1.5|2.0|2.5)'
     health-check:
       enable: true
       interval: 15
@@ -51,6 +50,17 @@ proxy-providers:
       interval: 15
       url: http://edge.microsoft.com/captiveportal/generate_204
 
+  Other: 
+    type: http
+    url: "Clash订阅链接" 
+    interval: 7200
+    path: ./Proxy/Other.yaml 
+    # filter: '(1.5|2.0|2.5)'
+    health-check:
+      enable: true
+      interval: 15
+      url: http://edge.microsoft.com/captiveportal/generate_204
+      
 proxy-groups:
   - name: "最终选择"
     type: select
@@ -65,8 +75,16 @@ proxy-groups:
       - JP
       - Other
 
+  - name: "MY"
+    type: select
+    use:
+      - MYOWN
+    url: http://edge.microsoft.com/captiveportal/generate_204
+    interval: 15
+    tolerance: 100
+    
   - name: "KR"
-    type: url-test
+    type: fallback
     use:
       - MYKR
     url: http://edge.microsoft.com/captiveportal/generate_204
@@ -74,7 +92,7 @@ proxy-groups:
     tolerance: 100
 
   - name: "JP"
-    type: url-test
+    type: fallback
     use:
       - MYJP
     url: http://edge.microsoft.com/captiveportal/generate_204

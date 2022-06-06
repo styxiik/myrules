@@ -232,8 +232,6 @@ rules:
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
-  - DOMAIN-SUFFIX,k2pddns.ga,DIRECT
-  - DOMAIN-SUFFIX,solink.ga,DIRECT
   - RULE-SET,ClashReject,REJECT
   - RULE-SET,ClashDirect,DIRECT
   - RULE-SET,ClashProxy,PROXY,no-resolve

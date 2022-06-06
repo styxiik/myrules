@@ -1,4 +1,6 @@
 payload:
+  - DOMAIN-SUFFIX,mydomain1
+  - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,huya.com
   - DOMAIN-SUFFIX,epicgames.com
   - DOMAIN-SUFFIX,hotmail.com

@@ -243,11 +243,11 @@ rules:
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,lancidr,DIRECT
   - RULE-SET,applications,DIRECT
-  - RULE-SET,proxy,PROXY
-  - RULE-SET,gfw,PROXY
-  - RULE-SET,google,PROXY
-  - RULE-SET,greatfire,PROXY
-  - RULE-SET,telegramcidr,PROXY
+  - RULE-SET,proxy,PROXY,no-resolve
+  - RULE-SET,gfw,PROXY,no-resolve
+  - RULE-SET,google,PROXY,no-resolve
+  - RULE-SET,greatfire,PROXY,no-resolve
+  - RULE-SET,telegramcidr,PROXY,no-resolve
   - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:

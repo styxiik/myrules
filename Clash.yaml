@@ -20,7 +20,7 @@ tun:
 proxy-providers:
   MYOWN: 
     type: http
-    url: "https://st.solink.ga/Clash" 
+    url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYOWN.yaml 
     health-check:
@@ -30,7 +30,7 @@ proxy-providers:
       
   MYKR: 
     type: http
-    url: "https://st.solink.ga/Clash" 
+    url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYKR.yaml 
     filter: '(KR|韩国)'
@@ -41,7 +41,7 @@ proxy-providers:
 
   MYJP: 
     type: http
-    url: "https://st.solink.ga/Clash" 
+    url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYJP.yaml 
     filter: '(JP|日本)'
@@ -52,7 +52,7 @@ proxy-providers:
 
   Other: 
     type: http
-    url: "https://solink.ga/AfK6pP" 
+    url: "Clash订阅链接" 
     interval: 7200
     path: ./Proxy/Other.yaml 
     # filter: '(1.5|2.0|2.5)'

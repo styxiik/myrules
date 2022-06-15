@@ -113,21 +113,21 @@ rule-providers:
     type: http
     behavior: classical
     path: ./ruleSet/ClashReject.yaml
-    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashReject.yaml"
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml"
     interval: 7200
 
   ClashDirect:
     type: http
     behavior: classical
     path: ./ruleSet/ClashDirect.yaml
-    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashDirect.yaml"
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
     interval: 7200
 
   ClashProxy:
     type: http
     behavior: classical
     path: ./ruleSet/ClashProxy.yaml
-    url: "https://re.solink.ga/styxiik/myrules/main/Clash/ClashProxy.yaml"
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml"
     interval: 7200
 
   reject:

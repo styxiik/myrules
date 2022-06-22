@@ -1,4 +1,7 @@
 mixed-port: 7890
+auto-redir:
+  enable: true
+  auto-route: true
 allow-lan: true
 bind-address: '*'
 mode: rule

@@ -224,7 +224,7 @@ script:
     printer: network == 'tcp' and dst_port == 445
     snmp: network == 'udp' and dst_port == 161
 rules:
-  # - SCRIPT,quic,REJECT
+  - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT

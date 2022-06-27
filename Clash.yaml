@@ -76,22 +76,20 @@ proxy-groups:
     tolerance: 100
     
   - name: "KR"
-    type: load-balance
+    type: fallback
     use:
       - MYKR
     url: http://www.google.com/generate_204
     interval: 60
     tolerance: 100
-    strategy: consistent-hashing # or round-robin
 
   - name: "JP"
-    type: load-balance
+    type: fallback
     use:
       - MYJP
     url: http://www.google.com/generate_204
     interval: 60
     tolerance: 100
-    strategy: consistent-hashing # or round-robin
 
 rule-providers:
   ClashReject:

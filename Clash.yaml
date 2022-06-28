@@ -36,7 +36,7 @@ proxy-providers:
     url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYKR.yaml 
-    filter: '(KR|韩国)'
+    filter: '(韩国.*ss)'
     health-check:
       enable: true
       interval: 300
@@ -47,7 +47,7 @@ proxy-providers:
     url: "MyownClash订阅" 
     interval: 7200
     path: ./Proxy/MYJP.yaml 
-    filter: '(JP|日本)'
+    filter: '(日本.*ss)'
     health-check:
       enable: true
       interval: 300

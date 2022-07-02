@@ -19,6 +19,7 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
+  - PROCESS-NAME,OneDrive.exe
   - DOMAIN-SUFFIX,push.apple.com
   - DOMAIN-SUFFIX,huya.com
   - DOMAIN-SUFFIX,epicgames.com

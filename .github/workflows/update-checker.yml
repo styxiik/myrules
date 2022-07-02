@@ -81,7 +81,9 @@ jobs:
         cat final.list >> Clash.yaml
 
         rm *.list & rm *.host & rm *.txt & rm *.fake
-
+        cd Clash
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/gfwlist2adg/main/gfwlist64.txt
+        
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
       with:

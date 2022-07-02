@@ -154,13 +154,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
     path: ./ruleset/cncidr.yaml
     interval: 86400
-
-  lancidr:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
-    path: ./ruleset/lancidr.yaml
-    interval: 86400
     
   applications:
     type: http
@@ -217,7 +210,6 @@ rules:
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
-  - RULE-SET,lancidr,DIRECT
   - RULE-SET,applications,DIRECT
   - RULE-SET,gfw,PROXY,no-resolve
   - RULE-SET,google,PROXY,no-resolve

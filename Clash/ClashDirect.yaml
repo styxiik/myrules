@@ -13,9 +13,9 @@ payload:
   - IP-CIDR,198.51.100.0/24
   - IP-CIDR,203.0.113.0/24
   - IP-CIDR,224.0.0.0/3
-  - IP-CIDR6,::1/128'
-  - IP-CIDR6,fc00::/7'
-  - IP-CIDR6,fe80::/10'
+  - IP-CIDR6,::1/128
+  - IP-CIDR6,fc00::/7
+  - IP-CIDR6,fe80::/10
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2

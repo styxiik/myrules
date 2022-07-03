@@ -32,6 +32,8 @@ payload:
   - IP-CIDR,76.223.0.0/16
   - IP-CIDR,239.255.255.250/32
   - DOMAIN-SUFFIX,lencr.org
+  - DOMAIN-SUFFIX,apple.com
+  - DOMAIN-SUFFIX,icloud.com
   - DOMAIN-SUFFIX,apple.cn
   - DOMAIN-SUFFIX,ls.apple.com
   - DOMAIN-SUFFIX,oracle.com

@@ -15,9 +15,7 @@ tun:
   enable: true
   stack: system # or gvisor system
   dns-hijack:
-    - https://any:443/dns-query
     - any:53
-    - tls://any:853
     - tcp://any:53
     - tcp://any:5353
   auto-route: true

@@ -7,6 +7,9 @@ payload:
   - DOMAIN-SUFFIX,deepl.com
   - DOMAIN-SUFFIX,b5200.net
   - IP-CIDR,157.240.0.0/16
+  - IP-CIDR,8.8.8.8/32
+  - IP-CIDR,8.8.4.4/32
+  - IP-CIDR,1.1.1.1/32
   - DOMAIN-KEYWORD,91p
   - DOMAIN-SUFFIX,91porn.com
   - DOMAIN-SUFFIX,t6k.co

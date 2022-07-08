@@ -1,3 +1,5 @@
+experimental:
+  ignore-resolve-fail: true
 mixed-port: 7890
 auto-redir:
   enable: true

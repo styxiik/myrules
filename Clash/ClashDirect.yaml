@@ -19,7 +19,6 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
-  - DOMAIN-SUFFIX,dns.google
   - DOMAIN-SUFFIX,windows.com
   - DOMAIN-SUFFIX,microsoft.com
   - PROCESS-NAME,OneDrive.exe

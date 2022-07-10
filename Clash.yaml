@@ -87,7 +87,7 @@ proxy-groups:
     tolerance: 100
 
   - name: "JP"
-    type: select
+    type: fallback
     use:
       - MYJP
     url: http://www.google.com/generate_204

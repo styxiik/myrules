@@ -4,7 +4,7 @@
      *
      */
 
-    const list = ["addwhite1", "addwhite2", "addwhite13"];
+    const list = ["addwhite1", "addwhite2", "addwhite3"];
     const method = "POST";
     const headers = {"Field": "test-header-param"};
     const data = {"info": "abc"};

@@ -214,11 +214,11 @@ rules:
   - RULE-SET,apple,DIRECT
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,applications,DIRECT
+  - GEOIP,CN,DIRECT
   - RULE-SET,gfw,PROXY
   - RULE-SET,google,PROXY
   - RULE-SET,greatfire,PROXY
   - RULE-SET,telegramcidr,PROXY
-  - GEOIP,CN,DIRECT
   - MATCH,最终选择
 dns:
   enable: true

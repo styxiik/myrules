@@ -39,6 +39,7 @@ payload:
   - DOMAIN-SUFFIX,oracle.com
   - DOMAIN-SUFFIX,oraclecloud.com
   - DOMAIN-SUFFIX,solink.ga
+  - DOMAIN-SUFFIX,k2pddns.ga
   # hosts ip
   - IP-CIDR,138.2.119.110/32
   - IP-CIDR,138.2.122.87/32

@@ -78,7 +78,7 @@ jobs:
         sed -i 's/^/  - '"'"'/g' cnipv6.txt
         sed -i 's/$/'"'"'/g' cnipv6.txt
         sed -i '1i\payload:'  cnipv6.txt
-        rm ./Clash/cnipv6.txt
+        rm -f ./Clash/cnipv6.txt
         mv cnipv6.txt ./Clash
 
     - name: 注入文件
@@ -91,7 +91,7 @@ jobs:
 
         rm *.list & rm *.host & rm *.txt & rm *.fake
         cd Clash
-        rm gfwlist64.txt
+        rm -f gfwlist64.txt
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/gfwlist2adg/main/gfwlist64.txt
         
     - name: Delete workflow runs

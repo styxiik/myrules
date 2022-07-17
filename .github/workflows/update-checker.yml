@@ -72,6 +72,15 @@ jobs:
         sed -i '/^#/d' fake.list && sed -i 's/^/    - '"'"'/g' fake.list && sed -i 's/$/'"'"'/g' fake.list
         sed -i '1i\  fake-ip-filter:' fake.list
 
+    - name: 更新ipv6
+      run: |
+        wget https://ispip.clang.cn/all_cn_ipv6.txt -O cnipv6.txt
+        sed -i 's/^/  - '"'"'/g' cnipv6.txt
+        sed -i 's/$/'"'"'/g' cnipv6.txt
+        sed -i '1i\payload:'  cnipv6.txt
+        rm ./Clash/cnipv6.txt
+        mv cnipv6.txt ./Clash
+
     - name: 注入文件
       run: |  
         cat *.list > final.list

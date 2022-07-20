@@ -6,6 +6,7 @@ payload:
   - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,ocsp.pki.goog
   - DOMAIN-SUFFIX,gstatic.cn
+  - DOMAIN-SUFFIX,mp.microsoft.com
   - DOMAIN-SUFFIX,githubusercontent.com
   - DOMAIN-SUFFIX,mozilla.org
   - DOMAIN-SUFFIX,deepl.com

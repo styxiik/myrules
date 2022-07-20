@@ -4,6 +4,8 @@ payload:
   - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,gvt1.com
   - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,ocsp.pki.goog
+  - DOMAIN-SUFFIX,gstatic.cn
   - DOMAIN-SUFFIX,githubusercontent.com
   - DOMAIN-SUFFIX,mozilla.org
   - DOMAIN-SUFFIX,deepl.com
@@ -14,6 +16,7 @@ payload:
   - IP-CIDR,8.8.8.8/32
   - IP-CIDR,8.8.4.4/32
   - IP-CIDR,1.1.1.1/32
+  - IP-CIDR,5.28.195.0/24
   - DOMAIN-KEYWORD,91p
   - DOMAIN-SUFFIX,91porn.com
   - DOMAIN-SUFFIX,t6k.co

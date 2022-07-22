@@ -7,6 +7,7 @@ payload:
   - DOMAIN-SUFFIX,ocsp.pki.goog
   - DOMAIN-SUFFIX,gstatic.cn
   - DOMAIN-SUFFIX,mp.microsoft.com
+  - DOMAIN-SUFFIX,azureedge.net
   - DOMAIN-SUFFIX,githubusercontent.com
   - DOMAIN-SUFFIX,mozilla.org
   - DOMAIN-SUFFIX,deepl.com
@@ -15,6 +16,7 @@ payload:
   - DOMAIN-SUFFIX,dns.google
   - IP-CIDR,157.240.0.0/16
   - IP-CIDR,8.8.8.8/32
+  - IP-CIDR,103.114.126.33/32
   - IP-CIDR,8.8.4.4/32
   - IP-CIDR,1.1.1.1/32
   - IP-CIDR,5.28.195.0/24

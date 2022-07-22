@@ -19,6 +19,7 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
+  - DOMAIN-SUFFIX,dl.delivery.mp.microsoft.com
   - DOMAIN-SUFFIX,windows.com
   - PROCESS-NAME,OneDrive.exe
   - DOMAIN-SUFFIX,push.apple.com

@@ -1,0 +1,187 @@
+name: Update Checker
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 16 * * *
+env: 
+  HOST: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+      
+    - name: 判断fakeip
+      id: fakeip
+      run: | 
+        FIND_FILE="Clash.yaml"
+        FIND_STR="enhanced-mode: fake-ip"
+        if [ `grep -c "$FIND_STR" "$FIND_FILE"` -ne '0' ] ;then
+            echo "::set-output name=fakeornot::true"
+            exit 0
+        fi
+
+    - name: 更新hosts
+      run: |
+        #自建host订阅
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/DIY.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/Onedrive.txt
+
+        sed -i '/'raw.githubusercontent.com'/d' *.txt
+        sed -i '/':'/d' *.txt && sed -i '/'No'/d' *.txt && sed -i 's/[ ][ ]*/ /g' *.txt && sed -i '/^#/d' *.txt && sed -i '/^$/d' *.txt && sed -i '/^ /d' *.txt
+        awk -F "[ ]+" '!a[$2]++{print "'\''"$2"'\''" ":",$1}' > "my.host" *.txt
+        #合并所有host
+        cat *.host > host.list
+        sed -i 's/^/  /g' host.list
+        test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
+      
+    - name: 添加host ip到直连
+      run: |
+        awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
+        sed -i '/^  - IP-CIDR,\/32/d' *.host
+        test -s ins.host && sed -i '1i\  # hosts ip' ins.host || echo "  # hosts ip" >> ins.host
+        hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)
+        sed -i ${hostip}',$d' Clash/ClashDirect.yaml
+        cat ins.host >> Clash/ClashDirect.yaml
+
+    - name: 判断是否使用host及添加host到fake-ip
+      if: env.HOST == 'false' && !cancelled()
+      run: |
+        rm host.list & sed -i '1,$d' *.txt && touch host.list && echo "hosts:" >> host.list
+        
+    - name: 自定义host
+      run: |
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/hosts.txt
+        sed -i '/^#/d' hosts.txt & sed '/^[  ]*$/d' hosts.txt
+        CF_IP=`grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" hosts.txt`
+        cat >> host.list <<EOF
+           'dns.google': 8.8.8.8
+           '+.workers.dev': $CF_IP
+           '+.cloudflare.com': $CF_IP
+           '+.cloudflareworkers.com': $CF_IP
+        EOF
+        rm -rf hosts.txt
+    - name: 更新fake-ip
+      if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
+      run: |
+        wget https://raw.githubusercontent.com/vernesong/OpenClash/master/luci-app-openclash/root/etc/openclash/custom/openclash_custom_fake_filter.list && mv openclash_custom_fake_filter.list default.fake
+        awk -F "[ ]+" '!a[$2]++{print "+."$2}' > "host.fake" *.txt
+        cat *.fake > fake.list
+        #自定义fake-ip
+        sed -i '$a\+.cmbchina.com' fake.list
+        sed -i '$a\+.haowu.link' fake.list
+        sed -i '$a\+.cmbimg.com' fake.list
+        sed -i '$a\+.digitalcertvalidation.com' fake.list
+        sed -i '$a\+.zhuanzfx.com' fake.list
+        sed -i '$a\+.cib.com.cn' fake.list
+        sed -i '$a\+.dcocsp.com' fake.list
+        sed -i '$a\+.95559.com.cn' fake.list
+        sed -i '$a\+.bankcomm.com' fake.list
+        sed -i '$a\+.digicert.com' fake.list
+        sed -i '$a\+.pingan.com.cn' fake.list
+        sed -i '$a\+.stun.l.google.com' fake.list
+        sed -i '/^#/d' fake.list && sed -i 's/^/    - '"'"'/g' fake.list && sed -i 's/$/'"'"'/g' fake.list
+        sed -i '1i\  fake-ip-filter:' fake.list
+
+    - name: 更新ipv6
+      run: |
+        wget https://ispip.clang.cn/all_cn_ipv6.txt -O cnipv6.txt
+        # QX
+        rm -f ./QX/cnipv6.txt
+        cp cnipv6.txt ./QX/cnipv6.txt
+        sed -i 's/^/ip6-cidr, /g' ./QX/cnipv6.txt
+        # Clash
+        sed -i 's/^/  - '"'"'/g' cnipv6.txt
+        sed -i 's/$/'"'"'/g' cnipv6.txt
+        sed -i '1i\payload:'  cnipv6.txt
+        rm -f ./Clash/cnipv6.txt
+        mv -f cnipv6.txt ./Clash
+
+    - name: 更新cfip
+      run: |
+        wget https://www.cloudflare.com/ips-v4 -O cfip.cf
+        wget https://www.cloudflare.com/ips-v6 -O cfip6.cf
+        echo -e "\n" >> cfip.cf
+        # QX
+        rm -f ./QX/cfip.txt
+        cp *.cf ./QX
+        sed -i '/^[  ]*$/d' ./QX/*.cf
+        sed -i 's/^/ip6-cidr, /g' ./QX/cfip6.cf
+        sed -i 's/^/ip-cidr, /g' ./QX/cfip.cf
+        cat ./QX/*.cf > ./QX/cfip.txt
+        rm -f ./QX/*.cf
+        # Clash
+        cat *.cf > cfip.txt
+        sed -i '/^\s*$/d' cfip.txt
+        sed -i 's/^/  - '"'"'/g' cfip.txt
+        sed -i 's/$/'"'"'/g' cfip.txt
+        sed -i '1i\payload:'  cfip.txt
+        rm -f ./Clash/cfip.txt
+        mv -f cfip.txt ./Clash
+
+    - name: 更新googleip
+      run: |
+        wget -O googleraw.txt https://www.gstatic.com/ipranges/goog.json
+        grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/[0-9]{1,2}' googleraw.txt > googleip.goog
+        grep -Po '[\w:]+:+[\w:]+/[0-9]{1,2}' googleraw.txt > googleip6.goog
+        # QX
+        cp *.goog ./QX
+        sed -i '/^[  ]*$/d' ./QX/*.goog
+        sed -i 's/^/ip6-cidr, /g' ./QX/googleip6.goog
+        sed -i 's/^/ip-cidr, /g' ./QX/googleip.goog
+        cat ./QX/*.goog > ./QX/googleip.txt
+        rm -f ./QX/*.goog
+        # Clash
+        cat *.goog > googleip.txt
+        sed -i 's/^/  - '"'"'/g' googleip.txt
+        sed -i 's/$/'"'"'/g' googleip.txt
+        sed -i '1i\payload:' googleip.txt
+        rm -f *.goog
+        rm -f ./googleraw.txt
+        mv -f googleip.txt ./Clash
+
+    - name: 注入文件
+      run: |  
+        cat *.list > final.list
+        last=$(sed -n "/  use-hosts: true/=" Clash.yaml)
+        sed -i ${last}',$d' Clash.yaml
+        sed -i '$a\  use-hosts: true' Clash.yaml
+        cat final.list >> Clash.yaml
+        rm -f *.list & rm -f *.host & rm -f *.txt & rm -f *.fake & rm -f *.cf & rm -f *.goog
+        cd Clash
+        rm -f gfwlist64.txt
+        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/gfwlist2adg/main/gfwlist64.txt
+
+    - name: META
+      run: |
+        divide=$(sed -n "/# 分割线....../=" META.yaml)
+        sed -i ${divide}',$d' META.yaml
+        sed -i '$a\# 分割线......' META.yaml
+        cat Clash.yaml >> META.yaml
+        sed -i 's/SCRIPT,quic/AND,((DST-PORT,443),(NETWORK,UDP))/g' META.yaml
+        sed -i 's/SCRIPT,zerotier/AND,((DST-PORT,9993),(NETWORK,UDP))/g' META.yaml
+        sed -i 's/SCRIPT,printer/AND,((DST-PORT,445),(NETWORK,TCP))/g' META.yaml
+        sed -i 's/SCRIPT,snmp/AND,((DST-PORT,161),(NETWORK,UDP))/g' META.yaml
+        sed -i "/^ *script:/,/^ *    snmp:/c#delete" META.yaml
+        sed -i 's/MyownClash订阅/MyownMETA订阅/g' META.yaml
+        sed -i 's/MYOWN.yaml/MyownMETA.yaml/g' META.yaml
+        
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 1
+        token: ${{ secrets.GER_TOKEN }}
+        repository: ${{ github.repository }}
+    
+    - name: 合并文件并commit
+      uses: EndBug/add-and-commit@main
+      with:
+        author_name: GitHub Action
+        author_email: noreply@github.com
+        message: 'Update fake-ip and hosts'
+        add: "-A"
+      env:
+        token: ${{ secrets.GER_TOKEN }}

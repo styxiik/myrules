@@ -401,6 +401,6 @@ dns:
     - '+.stun.l.google.com'
 hosts:
    'dns.google': 8.8.8.8
-   '+.workers.dev': 104.19.62.170
-   '+.cloudflare.com': 104.19.62.170
-   '+.cloudflareworkers.com': 104.19.62.170
+   '+.workers.dev': 104.17.113.132
+   '+.cloudflare.com': 104.17.113.132
+   '+.cloudflareworkers.com': 104.17.113.132

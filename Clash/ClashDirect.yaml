@@ -43,4 +43,4 @@ payload:
   - DOMAIN-SUFFIX,oracle.com
   - DOMAIN-SUFFIX,oraclecloud.com
   # hosts ip
-  - IP-CIDR,104.16.126.151/32
+  - IP-CIDR,104.16.207.69/32

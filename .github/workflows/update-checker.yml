@@ -101,8 +101,8 @@ jobs:
 
     - name: 更新cfip
       run: |
-        wget https://www.cloudflare.com/ips-v4 -O cfip.cf
-        wget https://www.cloudflare.com/ips-v6 -O cfip6.cf
+        wget https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ip.txt -O cfip.cf
+        wget https://raw.githubusercontent.com/XIU2/CloudflareSpeedTest/master/ipv6.txt -O cfip6.cf
         echo -e "\n" >> cfip.cf
         # QX
         rm -f ./QX/cfip.txt

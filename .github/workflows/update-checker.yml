@@ -114,6 +114,7 @@ jobs:
         rm -f ./QX/*.cf
         # Clash
         cat *.cf > cfip.txt
+        sed -i 's/\r//g' cfip.txt #删除windows换行符/r
         sed -i '/^[  ]*$/d' cfip.txt
         sed -i 's/^/  - '"'"'/g' cfip.txt
         sed -i 's/$/'"'"'/g' cfip.txt

@@ -114,7 +114,7 @@ jobs:
         rm -f ./QX/*.cf
         # Clash
         cat *.cf > cfip.txt
-        sed -i '/^\s*$/d' cfip.txt
+        sed -i '/^[  ]*$/d' cfip.txt
         sed -i 's/^/  - '"'"'/g' cfip.txt
         sed -i 's/$/'"'"'/g' cfip.txt
         sed -i '1i\payload:'  cfip.txt

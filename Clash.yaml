@@ -367,6 +367,7 @@ dns:
     - 'Mijia Cloud'
     - '+.cmbchina.com'
     - '+.cmbimg.com'
+    - 'local.adguard.org'
     - '+.cmbchina.com'
     - '+.haowu.link'
     - '+.cmbimg.com'
@@ -381,6 +382,6 @@ dns:
     - '+.stun.l.google.com'
 hosts:
    'dns.google': 8.8.8.8
-   '+.workers.dev': 104.19.21.60
-   '+.cloudflare.com': 104.19.21.60
-   '+.cloudflareworkers.com': 104.19.21.60
+   '+.workers.dev': 104.16.120.213
+   '+.cloudflare.com': 104.16.120.213
+   '+.cloudflareworkers.com': 104.16.120.213

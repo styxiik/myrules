@@ -58,11 +58,9 @@ jobs:
         CF_IP=`grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" hosts.txt`
         cat >> host.list <<EOF
            'dns.google': 8.8.8.8
-           '+.workers.dev': $CF_IP
-           '+.cloudflare.com': $CF_IP
-           '+.cloudflareworkers.com': $CF_IP
         EOF
         rm -rf hosts.txt
+        
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
       run: |

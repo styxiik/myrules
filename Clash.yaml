@@ -212,7 +212,7 @@ script:
     
 rules:
   - SCRIPT,quic,REJECT
-  - SCRIPT,zerotier,PROXY
+  - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
   - RULE-SET,ClashReject,REJECT

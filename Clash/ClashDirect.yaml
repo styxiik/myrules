@@ -21,6 +21,8 @@ payload:
   - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,al.chirmyram.com
   - DOMAIN-SUFFIX,bitwarden.com
+  - DOMAIN-SUFFIX,ford.com
+  - DOMAIN-SUFFIX,ford.com.cn
   - DOMAIN-SUFFIX,msedge.net
   - DOMAIN-SUFFIX,go.microsoft.com
   - DOMAIN-SUFFIX,windows.com

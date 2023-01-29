@@ -20,6 +20,7 @@ payload:
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,al.chirmyram.com
+  - DOMAIN-SUFFIX,qq.com
   - DOMAIN-SUFFIX,bitwarden.com
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn

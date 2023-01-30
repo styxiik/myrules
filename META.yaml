@@ -235,23 +235,25 @@ rules:
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
   - AND,((DST-PORT,445),(NETWORK,TCP)),DIRECT
   - AND,((DST-PORT,161),(NETWORK,UDP)),REJECT
-  - RULE-SET,ClashReject,REJECT
-  - RULE-SET,ClashDirect,DIRECT
-  - RULE-SET,ClashProxy,PROXY
-  - RULE-SET,reject,REJECT
-  - RULE-SET,private,REJECT
-  - RULE-SET,direct,DIRECT
-  - RULE-SET,icloud,DIRECT
-  - RULE-SET,apple,DIRECT
+  - RULE-SET,ClashReject,REJECT,no-resolve
+  - RULE-SET,ClashDirect,DIRECT,no-resolve
+  - RULE-SET,ClashProxy,PROXY,no-resolve
+  - RULE-SET,reject,REJECT,no-resolve
+  - RULE-SET,private,REJECT,no-resolve
+  - RULE-SET,direct,DIRECT,no-resolve
+  - RULE-SET,icloud,DIRECT,no-resolve
+  - RULE-SET,apple,DIRECT,no-resolve
   - RULE-SET,cncidr,DIRECT
   - RULE-SET,cnipv6,DIRECT
   - RULE-SET,applications,DIRECT
   - GEOIP,CN,DIRECT
-  - RULE-SET,gfw,PROXY
-  - RULE-SET,cryptocurrency,PROXY
-  - RULE-SET,google,PROXY
-  - RULE-SET,greatfire,PROXY
-  - RULE-SET,telegramcidr,PROXY
+  - GEOIP,LAN,DIRECT
+  - DOMAIN-SUFFIX,.cn,DIRECT
+  - RULE-SET,gfw,PROXY,no-resolve
+  - RULE-SET,cryptocurrency,PROXY,no-resolve
+  - RULE-SET,google,PROXY,no-resolve
+  - RULE-SET,greatfire,PROXY,no-resolve
+  - RULE-SET,telegramcidr,PROXY,no-resolve
   - RULE-SET,cfip,PROXY
   - RULE-SET,googleip,PROXY
   - MATCH,最终选择

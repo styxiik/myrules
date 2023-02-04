@@ -1,4 +1,29 @@
 payload:
+  - DOMAIN-SUFFIX,googleapis-cn.com
+  - DOMAIN-SUFFIX,googlesyndication-cn.com
+  - DOMAIN-SUFFIX,googletagservices-cn.com
+  - DOMAIN-SUFFIX,googleadsserving.cn
+  - DOMAIN-SUFFIX,googlecnapps.cn
+  - DOMAIN-SUFFIX,googleapis.cn
+  - DOMAIN-SUFFIX,googleadservices-cn.com
+  - DOMAIN-SUFFIX,gongyichuangyi.net
+  - DOMAIN-SUFFIX,googleoptimize-cn.com
+  - DOMAIN-SUFFIX,app-measurement-cn.com
+  - DOMAIN-SUFFIX,gstatic.cn
+  - DOMAIN-SUFFIX,googletagmanager-cn.com
+  - DOMAIN-SUFFIX,2mdn-cn.net
+  - DOMAIN-SUFFIX,google-analytics-cn.com
+  - DOMAIN-SUFFIX,googlevads-cn.com
+  - DOMAIN-SUFFIX,admob-cn.com
+  - DOMAIN-SUFFIX,doubleclick-cn.net
+  - DOMAIN-SUFFIX,ggpht.cn
+  - DOMAIN-SUFFIX,googledownloads.cn
+  - DOMAIN-SUFFIX,googleminiapps.cn
+  - DOMAIN-SUFFIX,dartsearch-cn.net
+  - DOMAIN-SUFFIX,gstaticcnapps.cn
+  - DOMAIN-SUFFIX,gstaticapps.cn
+  - DOMAIN-SUFFIX,recaptcha.net.cn
+  - DOMAIN-SUFFIX,ampproject.org.cn
   - DOMAIN,video.market.xiaomi.com
   - DOMAIN,de.pandora.xiaomi.com
   - DOMAIN,mishop.pandora.xiaomi.com

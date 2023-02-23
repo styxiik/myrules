@@ -8,6 +8,9 @@ payload:
   - DOMAIN-SUFFIX,adtidy.org
   - DOMAIN-SUFFIX,ghcr.io
   - DOMAIN-SUFFIX,fast.com
+  - DOMAIN-SUFFIX,bing.com
+  - DOMAIN-SUFFIX,ai.com
+  - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,zerotier.com
   - DOMAIN-SUFFIX,languagetoolplus.com
   - DOMAIN-SUFFIX,visualstudio.com

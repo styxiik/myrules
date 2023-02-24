@@ -203,6 +203,13 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/googleip.txt"
     interval: 7200
 
+  cloudfrontip:
+    type: http
+    behavior: ipcidr
+    path: ./ruleSet/cloudfrontip.yaml
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/cft.txt"
+    interval: 7200
+
 script:
   shortcuts:
     quic: network == 'udp' and dst_port == 443
@@ -236,6 +243,7 @@ rules:
   - RULE-SET,telegramcidr,PROXY,no-resolve
   - RULE-SET,cfip,PROXY
   - RULE-SET,googleip,PROXY
+  - RULE-SET,cloudfrontip,DIRECT
   - MATCH,最终选择
 dns:
   enable: true

@@ -19,6 +19,7 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
+  - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,al.chirmyram.com
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN-SUFFIX,bitwarden.com

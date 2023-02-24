@@ -141,6 +141,27 @@ jobs:
         rm -f ./googleraw.txt
         mv -f googleip.txt ./Clash
 
+    - name: 更新cloudfrontip
+      run: |
+        wget https://ip-ranges.amazonaws.com/ip-ranges.json
+        grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/[0-9]{1,2}' ip-ranges.json > cft4.cft
+        grep -Po '[\w:]+:+[\w:]+/[0-9]{1,2}' ip-ranges.json > cft6.cft
+        # QX
+        cp *.cft ./QX
+        sed -i '/^[  ]*$/d' ./QX/*.cft
+        sed -i 's/^/ip6-cidr, /g' ./QX/cft6.cft
+        sed -i 's/^/ip-cidr, /g' ./QX/cft4.cft
+        cat ./QX/*.cft > ./QX/cft.txt
+        rm -f ./QX/*.cft
+        # Clash
+        cat *.cft > cft.txt
+        sed -i 's/^/  - '"'"'/g' cft.txt
+        sed -i 's/$/'"'"'/g' cft.txt
+        sed -i '1i\payload:' cft.txt
+        rm -f *.cft
+        rm -f ./ip-ranges.json
+        mv -f cft.txt ./Clash
+        
     - name: 注入文件
       run: |  
         cat *.list > final.list

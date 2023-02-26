@@ -1,10 +1,17 @@
+global-client-fingerprint: random
 geodata-mode: true
 tcp-concurrent: false
 sniffer:
   enable: true
-  sniffing:
-    - tls
-    - http
+  force-dns-mapping: false
+  parse-pure-ip: false
+  override-destination: false
+  sniff:
+    TLS:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: false
   skip-domain:
     - 'Mijia Cloud'
     - 'dlg.io.mi.com'
@@ -18,6 +25,7 @@ sniffer:
     - '+.nflxvideo.net'
     - '+.amazonaws.com'
     - '+.media.dssott.com'
+    - '+.v2ex.com'
   port-whitelist:
   - 80
   - 443

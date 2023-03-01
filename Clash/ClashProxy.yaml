@@ -3,6 +3,7 @@ payload:
   - DOMAIN-SUFFIX,www.msftconnecttest.com
   - DOMAIN-SUFFIX,ipv6.msftconnecttest.com
   - DOMAIN-SUFFIX,webnovel.com
+  - DOMAIN-SUFFIX,royalroad.com
   - DOMAIN-SUFFIX,workers.dev
   - DOMAIN-SUFFIX,cloudflare.com
   - DOMAIN-SUFFIX,cloudflareworkers.com

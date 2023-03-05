@@ -66,7 +66,7 @@ proxy-providers:
     interval: 7200
     path: ./Proxy/MyownMETA.yaml 
     health-check:
-      enable: true
+      enable: false
       interval: 300
       url: http://www.google.com/generate_204
 
@@ -76,7 +76,7 @@ proxy-providers:
     interval: 7200
     path: ./Proxy/Backup.yaml 
     health-check:
-      enable: true
+      enable: false
       interval: 300
       url: http://www.google.com/generate_204
       
@@ -97,17 +97,17 @@ proxy-groups:
     type: select
     use:
       - MYOWN
-    url: http://www.google.com/generate_204
-    interval: 60
-    tolerance: 100
+    # url: http://www.google.com/generate_204
+    # interval: 60
+    # tolerance: 100
 
   - name: "BK"
     type: select
     use:
       - Backup
-    url: http://www.google.com/generate_204
-    interval: 60
-    tolerance: 100
+    # url: http://www.google.com/generate_204
+    # interval: 60
+    # tolerance: 100
 
 rule-providers:
   ClashReject:

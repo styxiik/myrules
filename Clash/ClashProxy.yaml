@@ -9,6 +9,7 @@ payload:
   - DOMAIN-SUFFIX,cloudflareworkers.com
   - DOMAIN-SUFFIX,adtidy.org
   - DOMAIN-SUFFIX,ghcr.io
+  - DOMAIN-SUFFIX,freenom.com
   - DOMAIN-SUFFIX,fast.com
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,ai.com

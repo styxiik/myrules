@@ -26,7 +26,7 @@ payload:
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn
   - DOMAIN-SUFFIX,msedge.net
-  - DOMAIN-SUFFIX,go.microsoft.com
+  - DOMAIN-SUFFIX,microsoft.com
   - DOMAIN-SUFFIX,windows.com
   - DOMAIN-SUFFIX,msftauth.net
   - DOMAIN-SUFFIX,microsoftonline.com

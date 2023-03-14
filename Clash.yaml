@@ -64,7 +64,7 @@ proxy-groups:
     type: select
     use:
       - MYOWN
-    # url: http://www.google.com/generate_204
+    url: http://www.google.com/generate_204
     # interval: 60
     # tolerance: 100
 
@@ -72,7 +72,7 @@ proxy-groups:
     type: select
     use:
       - Backup
-    # url: http://www.google.com/generate_204
+    url: http://www.google.com/generate_204
     # interval: 60
     # tolerance: 100
 

@@ -395,3 +395,8 @@ dns:
     - '+.zerotier.com'
 hosts:
    'dns.google': 8.8.8.8
+   'al.mydomain1': 192.168.2.100
+   'alist.mydomain1': 192.168.2.100
+   'nec.mydomain1': 192.168.2.100
+   'lo.mydomain1': 192.168.2.100
+   'lo.mydomain2': 192.168.2.100

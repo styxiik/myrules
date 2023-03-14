@@ -35,7 +35,7 @@ proxy-providers:
     health-check:
       enable: false
       interval: 300
-      url: https://cp.cloudflare.com/generate_204
+      url: http://captive.apple.com
 
   Backup: 
     type: http
@@ -45,7 +45,7 @@ proxy-providers:
     health-check:
       enable: false
       interval: 300
-      url: https://cp.cloudflare.com/generate_204
+      url: http://captive.apple.com
       
 proxy-groups:
   - name: "最终选择"
@@ -64,7 +64,7 @@ proxy-groups:
     type: select
     use:
       - MYOWN
-    # url: https://cp.cloudflare.com/generate_204
+    # url: http://captive.apple.com
     # interval: 60
     # tolerance: 100
 
@@ -72,7 +72,7 @@ proxy-groups:
     type: select
     use:
       - Backup
-    # url: https://cp.cloudflare.com/generate_204
+    # url: http://captive.apple.com
     # interval: 60
     # tolerance: 100
 

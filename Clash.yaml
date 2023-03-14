@@ -35,7 +35,7 @@ proxy-providers:
     health-check:
       enable: false
       interval: 300
-      url: http://www.google.com/generate_204
+      url: https://cp.cloudflare.com/generate_204
 
   Backup: 
     type: http
@@ -45,7 +45,7 @@ proxy-providers:
     health-check:
       enable: false
       interval: 300
-      url: http://www.google.com/generate_204
+      url: https://cp.cloudflare.com/generate_204
       
 proxy-groups:
   - name: "最终选择"
@@ -64,7 +64,7 @@ proxy-groups:
     type: select
     use:
       - MYOWN
-    # url: http://www.google.com/generate_204
+    # url: https://cp.cloudflare.com/generate_204
     # interval: 60
     # tolerance: 100
 
@@ -72,7 +72,7 @@ proxy-groups:
     type: select
     use:
       - Backup
-    # url: http://www.google.com/generate_204
+    # url: https://cp.cloudflare.com/generate_204
     # interval: 60
     # tolerance: 100
 

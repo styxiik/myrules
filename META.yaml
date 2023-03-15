@@ -1,8 +1,13 @@
 global-client-fingerprint: random
+#自定义 geodata url
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
 geodata-mode: true
 tcp-concurrent: false
 sniffer:
-  enable: true
+  enable: false
   force-dns-mapping: false
   parse-pure-ip: false
   override-destination: false
@@ -18,6 +23,8 @@ sniffer:
     - '+.apple.com'
     - '*.baidu.com'
     - '+.jd.com'
+    - '+.mydomain1'
+    - '+.mydomain12'
   force-domain:
   # - '+'                        #去掉注释后等于全局嗅探
     - 'google.com'
@@ -26,10 +33,6 @@ sniffer:
     - '+.amazonaws.com'
     - '+.media.dssott.com'
     - '+.v2ex.com'
-  port-whitelist:
-  - 80
-  - 443
-# - 8000-9000
 # 分割线......
 bypass:
   - "www.msftconnecttest.com"

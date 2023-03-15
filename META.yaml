@@ -7,13 +7,14 @@ geox-url:
 geodata-mode: true
 tcp-concurrent: false
 sniffer:
-  enable: false
+  enable: true
   force-dns-mapping: false
   parse-pure-ip: false
   override-destination: false
   sniff:
     TLS:
       ports: [443, 8443]
+      override-destination: false
     HTTP:
       ports: [80, 8080-8880]
       override-destination: false

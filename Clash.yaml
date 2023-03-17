@@ -84,18 +84,18 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml"
     interval: 7200
 
-  ClashDirect:
-    type: http
-    behavior: classical
-    path: ./ruleSet/ClashDirect.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
-    interval: 7200
-
   ClashProxy:
     type: http
     behavior: classical
     path: ./ruleSet/ClashProxy.yaml
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml"
+    interval: 7200
+
+  ClashDirect:
+    type: http
+    behavior: classical
+    path: ./ruleSet/ClashDirect.yaml
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
     interval: 7200
 
   reject:
@@ -224,8 +224,8 @@ rules:
   - SCRIPT,printer,DIRECT
   - SCRIPT,snmp,REJECT
   - RULE-SET,ClashReject,REJECT,no-resolve
-  - RULE-SET,ClashDirect,DIRECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
+  - RULE-SET,ClashDirect,DIRECT,no-resolve
   - RULE-SET,reject,REJECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,direct,DIRECT,no-resolve

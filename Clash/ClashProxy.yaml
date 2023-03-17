@@ -1,4 +1,5 @@
 payload:
+  - DOMAIN,mydomain3
   - DOMAIN-SUFFIX,msftncsi.com
   - DOMAIN-SUFFIX,www.msftconnecttest.com
   - DOMAIN-SUFFIX,ipv6.msftconnecttest.com

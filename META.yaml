@@ -250,6 +250,7 @@ rule-providers:
 #delete
     
 rules:
+  - DOMAIN,mydomain3,PROXY,no-resolve
   - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
   - AND,((DST-PORT,445),(NETWORK,TCP)),DIRECT

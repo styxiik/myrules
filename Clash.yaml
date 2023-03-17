@@ -218,6 +218,7 @@ script:
     snmp: network == 'udp' and dst_port == 161
     
 rules:
+  - DOMAIN,mydomain3,PROXY,no-resolve
   - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT

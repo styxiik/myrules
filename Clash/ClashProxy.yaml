@@ -43,6 +43,7 @@ payload:
   - DOMAIN-SUFFIX,dns.google
   - DOMAIN-SUFFIX,lencr.org
   - DOMAIN-SUFFIX,xiaoya.pro
+  - IP-CIDR,my_ip1
   - IP-CIDR,157.240.0.0/16
   - IP-CIDR,8.8.8.8/32
   - IP-CIDR,103.114.126.33/32

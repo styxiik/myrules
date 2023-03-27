@@ -411,6 +411,8 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
     - '+.stun.l.google.com'
+    - '+.mydomain1'
+    - '+.mydomain2'
     - '+.zerotier.com'
 hosts:
    'dns.google': 8.8.8.8

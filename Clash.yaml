@@ -218,7 +218,6 @@ script:
     snmp: network == 'udp' and dst_port == 161
     
 rules:
-  - DOMAIN,mydomain3,PROXY,no-resolve
   - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
@@ -411,8 +410,6 @@ dns:
     - '+.digicert.com'
     - '+.pingan.com.cn'
     - '+.stun.l.google.com'
-    - '+.mydomain1'
-    - '+.mydomain2'
     - '+.zerotier.com'
 hosts:
    'dns.google': 8.8.8.8

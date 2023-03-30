@@ -84,8 +84,6 @@ jobs:
         sed -i '$a\+.digicert.com' fake.list
         sed -i '$a\+.pingan.com.cn' fake.list
         sed -i '$a\+.stun.l.google.com' fake.list
-        sed -i '$a\+.mydomain1' fake.list
-        sed -i '$a\+.mydomain2' fake.list
         sed -i '$a\+.zerotier.com' fake.list
         sed -i '/^#/d' fake.list && sed -i 's/^/    - '"'"'/g' fake.list && sed -i 's/$/'"'"'/g' fake.list
         sed -i '1i\  fake-ip-filter:' fake.list

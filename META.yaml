@@ -443,6 +443,10 @@ dns:
     - '+.pingan.com.cn'
     - '+.stun.l.google.com'
     - '+.zerotier.com'
+    - 'al.mydomain1'
+    - 'alist.mydomain1'
+    - 'nec.mydomain1'
+    - 'lo.mydomain1'
 hosts:
    'dns.google': 8.8.8.8
    'al.mydomain1': 192.168.2.100

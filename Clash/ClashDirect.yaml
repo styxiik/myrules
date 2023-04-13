@@ -22,6 +22,7 @@ payload:
   - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,al.chirmyram.com
   - DOMAIN-SUFFIX,qq.com
+  - DOMAIN,cn.archive.ubuntu.com
   - DOMAIN-SUFFIX,bitwarden.com
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn

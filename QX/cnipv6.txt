@@ -24,7 +24,6 @@ ip6-cidr, 2001:df0:27e::/48
 ip6-cidr, 2001:df0:423::/48
 ip6-cidr, 2001:df0:9c0::/48
 ip6-cidr, 2001:df0:1bc0::/48
-ip6-cidr, 2001:df0:2180::/48
 ip6-cidr, 2001:df0:25c0::/48
 ip6-cidr, 2001:df0:26c0::/48
 ip6-cidr, 2001:df0:2d80::/48

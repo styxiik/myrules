@@ -76,6 +76,7 @@ jobs:
         sed -i '$a\+.apple.com' fake.list
         sed -i '$a\+.icloud.com' fake.list
         sed -i '$a\+.mzstatic.com' fake.list
+        sed -i '$a\+.cdn-apple.com' fake.list
         sed -i '$a\+.haowu.link' fake.list
         sed -i '$a\+.cmbimg.com' fake.list
         sed -i '$a\+.digitalcertvalidation.com' fake.list

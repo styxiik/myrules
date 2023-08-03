@@ -403,6 +403,7 @@ dns:
     - '+.apple.com'
     - '+.icloud.com'
     - '+.mzstatic.com'
+    - '+.cdn-apple.com'
     - '+.haowu.link'
     - '+.cmbimg.com'
     - '+.digitalcertvalidation.com'

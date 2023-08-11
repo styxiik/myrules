@@ -215,12 +215,14 @@ script:
     quic: network == 'udp' and dst_port == 443
     zerotier: network == 'udp' and dst_port == 9993
     printer: network == 'tcp' and dst_port == 445
+    Dosvc: network == 'tcp' and dst_port == 7680
     snmp: network == 'udp' and dst_port == 161
     
 rules:
   - SCRIPT,quic,REJECT
   - SCRIPT,zerotier,DIRECT
   - SCRIPT,printer,DIRECT
+  - SCRIPT,Dosvc,REJECT
   - SCRIPT,snmp,REJECT
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve

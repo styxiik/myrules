@@ -196,6 +196,7 @@ jobs:
         sed -i 's/SCRIPT,quic/AND,((DST-PORT,443),(NETWORK,UDP))/g' META.yaml
         sed -i 's/SCRIPT,zerotier/AND,((DST-PORT,9993),(NETWORK,UDP))/g' META.yaml
         sed -i 's/SCRIPT,printer/AND,((DST-PORT,445),(NETWORK,TCP))/g' META.yaml
+        sed -i 's/SCRIPT,Dosvc/AND,((DST-PORT,7680),(NETWORK,tcp))/g' META.yaml
         sed -i 's/SCRIPT,snmp/AND,((DST-PORT,161),(NETWORK,UDP))/g' META.yaml
         sed -i "/^ *script:/,/^ *    snmp:/c#delete" META.yaml
         sed -i 's/MyownClash订阅/MyownMETA订阅/g' META.yaml

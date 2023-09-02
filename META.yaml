@@ -255,6 +255,7 @@ rules:
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,cn,DIRECT
   # - RULE-SET,reject,REJECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,direct,DIRECT,no-resolve

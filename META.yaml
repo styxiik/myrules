@@ -266,7 +266,6 @@ rules:
   - RULE-SET,applications,DIRECT
   - GEOIP,CN,DIRECT
   - GEOIP,LAN,DIRECT
-  - DOMAIN-SUFFIX,.cn,DIRECT
   - RULE-SET,gfw,PROXY,no-resolve
   - RULE-SET,cryptocurrency,PROXY,no-resolve
   - RULE-SET,google,PROXY,no-resolve

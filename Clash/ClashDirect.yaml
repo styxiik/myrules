@@ -23,6 +23,7 @@ payload:
   - DOMAIN-SUFFIX,al.chirmyram.com
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN,cn.archive.ubuntu.com
+  - DOMAIN-KEYWORD,lz-cdn
   - DOMAIN-SUFFIX,bitwarden.com
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn

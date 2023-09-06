@@ -22,6 +22,7 @@ payload:
   - DOMAIN-KEYWORD,vscode
   - DOMAIN-KEYWORD,stripe
   - DOMAIN-KEYWORD,ookla
+  - DOMAIN-KEYWORD,ceres9350.com
   - DOMAIN-SUFFIX,vscode-cdn.net
   - DOMAIN-SUFFIX,github.dev
   - DOMAIN-SUFFIX,openwrt.org

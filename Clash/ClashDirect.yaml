@@ -24,6 +24,7 @@ payload:
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN,cn.archive.ubuntu.com
   - DOMAIN-KEYWORD,lz-cdn
+  - DOMAIN-KEYWORD,cdnlz
   - DOMAIN-SUFFIX,bitwarden.com
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn

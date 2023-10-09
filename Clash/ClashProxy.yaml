@@ -19,6 +19,7 @@ payload:
   - DOMAIN-SUFFIX,zerotier.com
   - DOMAIN-SUFFIX,languagetoolplus.com
   - DOMAIN-SUFFIX,visualstudio.com
+  - DOMAIN-SUFFIX,recaptcha.net
   - DOMAIN-KEYWORD,vscode
   - DOMAIN-KEYWORD,stripe
   - DOMAIN-KEYWORD,ookla

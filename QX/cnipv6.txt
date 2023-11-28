@@ -1147,6 +1147,7 @@ ip6-cidr, 2403:fe80::/32
 ip6-cidr, 2403:fec0::/32
 ip6-cidr, 2403:ff80::/32
 ip6-cidr, 2403:ffc0::/32
+ip6-cidr, 2403:ffc1::/32
 ip6-cidr, 2404:100::/32
 ip6-cidr, 2404:158::/32
 ip6-cidr, 2404:240::/32

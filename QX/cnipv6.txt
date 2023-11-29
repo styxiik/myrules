@@ -757,7 +757,6 @@ ip6-cidr, 2402:a680::/32
 ip6-cidr, 2402:a6c0::/32
 ip6-cidr, 2402:a840::/32
 ip6-cidr, 2402:a880::/32
-ip6-cidr, 2402:a9c0::/32
 ip6-cidr, 2402:aa80::/32
 ip6-cidr, 2402:ab80::/32
 ip6-cidr, 2402:ae00::/32

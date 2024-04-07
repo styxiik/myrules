@@ -240,8 +240,8 @@ dns:
     - tls://dot.pub:853
     - https://223.5.5.5/dns-query
     - tls://223.5.5.5:853
-  fallback:
-    - G_DNS
+  # fallback:
+  #   - G_DNS
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -404,7 +404,6 @@ dns:
     - '+.zerotier.com'
     - 'al.mydomain1'
     - 'alist.mydomain1'
-    - 'nec.mydomain1'
     - 'lo.mydomain1'
 hosts:
    'dns.google': 8.8.8.8

@@ -1,6 +1,4 @@
 payload:
-  - DOMAIN,mydomain3
-  - DOMAIN,mydomain4
   - DOMAIN-SUFFIX,spotifycdn.com
   - DOMAIN-SUFFIX,scdn.co
   - DOMAIN-SUFFIX,msftncsi.com

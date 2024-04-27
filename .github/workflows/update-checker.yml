@@ -16,7 +16,7 @@ jobs:
     - name: 判断fakeip
       id: fakeip
       run: | 
-        FIND_FILE="Clash.yaml"
+        FIND_FILE="META.yaml"
         FIND_STR="enhanced-mode: fake-ip"
         if [ `grep -c "$FIND_STR" "$FIND_FILE"` -ne '0' ] ;then
             echo "::set-output name=fakeornot::true"
@@ -173,29 +173,14 @@ jobs:
     - name: 注入文件
       run: |  
         cat *.list > final.list
-        last=$(sed -n "/  use-hosts: true/=" Clash.yaml)
-        sed -i ${last}',$d' Clash.yaml
-        sed -i '$a\  use-hosts: true' Clash.yaml
-        cat final.list >> Clash.yaml
+        last=$(sed -n "/  use-hosts: true/=" META.yaml)
+        sed -i ${last}',$d' META.yaml
+        sed -i '$a\  use-hosts: true' META.yaml
+        cat final.list >> META.yaml
         rm -f *.list & rm -f *.host & rm -f *.txt & rm -f *.fake & rm -f *.cf & rm -f *.goog
         cd Clash
         rm -f gfwlist64.txt
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/gfwlist2adg/main/gfwlist64.txt
-
-    - name: META
-      run: |
-        divide=$(sed -n "/# 分割线....../=" META.yaml)
-        sed -i ${divide}',$d' META.yaml
-        sed -i '$a\# 分割线......' META.yaml
-        cat Clash.yaml >> META.yaml
-        sed -i 's/SCRIPT,quic/AND,((DST-PORT,443),(NETWORK,UDP))/g' META.yaml
-        sed -i 's/SCRIPT,zerotier/AND,((DST-PORT,9993),(NETWORK,UDP))/g' META.yaml
-        sed -i 's/SCRIPT,printer/AND,((DST-PORT,445),(NETWORK,TCP))/g' META.yaml
-        sed -i 's/SCRIPT,Dosvc/AND,((DST-PORT,7680),(NETWORK,tcp))/g' META.yaml
-        sed -i 's/SCRIPT,snmp/AND,((DST-PORT,161),(NETWORK,UDP))/g' META.yaml
-        sed -i "/^ *script:/,/^ *    snmp:/c#delete" META.yaml
-        sed -i 's/MyownClash订阅/MyownMETA订阅/g' META.yaml
-        sed -i 's/MYOWN.yaml/MyownMETA.yaml/g' META.yaml
         
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main

@@ -1,62 +1,57 @@
-global-client-fingerprint: random
-#自定义 geodata url
-geox-url:
-  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
-  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
-  mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
-geodata-mode: true
-tcp-concurrent: false
-# 嗅探域名 可选配置
-sniffer:
-  enable: false
-  ## 对 redir-host 类型识别的流量进行强制嗅探
-  ## 如：Tun、Redir 和 TProxy 并 DNS 为 redir-host 皆属于
-  # force-dns-mapping: false
-  ## 对所有未获取到域名的流量进行强制嗅探
-  parse-pure-ip: true
-  # 是否使用嗅探结果作为实际访问，默认 true
-  # 全局配置，优先级低于 sniffer.sniff 实际配置
-  override-destination: false
-  sniff: # TLS 默认如果不配置 ports 默认嗅探 443
-    TLS:
-      ports: [443, 8443]
-
-    # 默认嗅探 80
-    HTTP: # 需要嗅探的端口
-      ports: [80, 8080-8880]
-      # 可覆盖 sniffer.override-destination
-      override-destination: false
-  force-domain:
-    - +.v2ex.com
-  ## 对嗅探结果进行跳过
-  skip-domain:
-    - Mijia Cloud
-# 分割线......
-bypass:
-  - "www.msftconnecttest.com"
-  - "ipv6.msftconnecttest.com"
-  - "dns.msftncsi.com"
-  - "131.107.255.255"
 mixed-port: 7890
-auto-redir:
-  enable: true
-  auto-route: true
 allow-lan: true
 bind-address: '*'
 mode: rule
 ipv6: true
 log-level: error
+keep-alive-interval: 30
+find-process-mode: off
 external-controller: 127.0.0.1:9090
+secret: "123456"
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 profile:
-  store-selected: false
+  store-selected: true
   store-fake-ip: true
+unified-delay: true
+tcp-concurrent: true
+routing-mark: 6666
+global-client-fingerprint: random
+geodata-mode: true
+geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+#自定义 geodata url
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
+  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+global-ua: clash.meta
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: false
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "Mijia Cloud"
+
 tun:
   enable: true
-  stack: gvisor # or gvisor system
+  stack: mixed # or gvisor system
   dns-hijack:
     - any:53
     - tcp://any:53
-    - tcp://any:5353
   auto-route: true
   auto-detect-interface: true
 
@@ -87,6 +82,15 @@ proxy-groups:
     type: select
     use:
       - MYOWN
+    url: http://www.google.com/generate_204
+    # interval: 60
+    # tolerance: 100
+
+  - name: "DNS-PROXY"
+    type: select
+    use:
+      - PROXY
+      - DIRECT
     url: http://www.google.com/generate_204
     # interval: 60
     # tolerance: 100
@@ -258,18 +262,29 @@ rules:
   - MATCH,最终选择
 dns:
   enable: true
-  listen: 0.0.0.0:53
+  listen: :53
   ipv6: true
   default-nameserver:
     - 119.29.29.29
     - 223.5.5.5
+    - system
   nameserver:
     - https://doh.pub/dns-query
     - tls://dot.pub:853
-    - https://223.5.5.5/dns-query
+    - https://223.5.5.5/dns-query#h3=true
     - tls://223.5.5.5:853
-  # fallback:
-  #   - G_DNS
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+  nameserver-policy:
+    "rule-set:cn_domain,private":
+      - https://doh.pub/dns-query
+      - tls://dot.pub:853
+      - https://223.5.5.5/dns-query#h3=true
+      - tls://223.5.5.5:853
+    "rule-set:geolocation-!cn":
+      - "https://1.1.1.1/dns-query#DNS-PROXY"
+      - "https://8.8.8.8/dns-query#DNS-PROXY"
+      - "tls://8.8.4.4:853#DNS-PROXY"
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -300,7 +315,7 @@ dns:
       - '+.msftncsi.com'
   #fake-ip or redir-host
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
+  fake-ip-range: 28.0.0.1/8
   use-hosts: true
   fake-ip-filter:
     - '*.lan'

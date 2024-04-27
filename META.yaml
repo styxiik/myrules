@@ -88,7 +88,7 @@ proxy-groups:
 
   - name: "DNS-PROXY"
     type: select
-    use:
+    proxies:
       - PROXY
       - DIRECT
     url: http://www.google.com/generate_204

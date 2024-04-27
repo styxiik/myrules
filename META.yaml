@@ -229,7 +229,12 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/cft.txt"
     interval: 7200
 
-#delete
+  geolocation-!cn:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.yaml"
+    path: ./geolocation-uncn.yaml
+    interval: 86400
     
 rules:
   - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT

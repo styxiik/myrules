@@ -9,7 +9,7 @@ keep-alive-interval: 30
 external-controller: 127.0.0.1:9090
 secret: "123456"
 external-ui: ui
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "myghproxyhttps://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 profile:
   store-selected: true
   store-fake-ip: true

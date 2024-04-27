@@ -5,7 +5,7 @@ mode: rule
 ipv6: true
 log-level: error
 keep-alive-interval: 30
-find-process-mode: off
+# find-process-mode: off
 external-controller: 127.0.0.1:9090
 secret: "123456"
 external-ui: ui

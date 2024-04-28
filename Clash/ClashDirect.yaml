@@ -35,6 +35,8 @@ payload:
   - DOMAIN-SUFFIX,microsoftonline.com
   - DOMAIN-SUFFIX,bn1305.storage.live.com
   - PROCESS-NAME,OneDrive.exe
+  - DOMAIN,api.onedrive.com
+  - DOMAIN,outlook.office365.com:993	
   - DOMAIN-SUFFIX,grammarly.com
   - DOMAIN-SUFFIX,huya.com
   - DOMAIN-SUFFIX,epicgames.com

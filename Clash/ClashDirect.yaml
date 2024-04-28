@@ -21,6 +21,8 @@ payload:
   - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,al.chirmyram.com
+  - DOMAIN-SUFFIX,office.com
+  - DOMAIN-SUFFIX,live.com
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN,cn.archive.ubuntu.com
   - DOMAIN-KEYWORD,lz-cdn
@@ -36,7 +38,7 @@ payload:
   - DOMAIN-SUFFIX,bn1305.storage.live.com
   - PROCESS-NAME,OneDrive.exe
   - DOMAIN,api.onedrive.com
-  - DOMAIN,outlook.office365.com:993	
+  - DOMAIN,outlook.office365.com
   - DOMAIN-SUFFIX,grammarly.com
   - DOMAIN-SUFFIX,huya.com
   - DOMAIN-SUFFIX,epicgames.com

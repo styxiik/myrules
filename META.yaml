@@ -239,9 +239,6 @@ rule-providers:
 rules:
   - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
-  - AND,((DST-PORT,445),(NETWORK,TCP)),DIRECT
-  - AND,((DST-PORT,7680),(NETWORK,tcp)),REJECT
-  - AND,((DST-PORT,161),(NETWORK,UDP)),REJECT
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve

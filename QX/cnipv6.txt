@@ -20,7 +20,6 @@ ip6-cidr, 2001:dd8:1::/48
 ip6-cidr, 2001:dd8:5::/48
 ip6-cidr, 2001:dd8:1a::/48
 ip6-cidr, 2001:dd9::/48
-ip6-cidr, 2001:df0:27e::/48
 ip6-cidr, 2001:df0:423::/48
 ip6-cidr, 2001:df0:9c0::/48
 ip6-cidr, 2001:df0:1bc0::/48
@@ -590,6 +589,7 @@ ip6-cidr, 2401:a940::/32
 ip6-cidr, 2401:a980::/32
 ip6-cidr, 2401:a9a0::/32
 ip6-cidr, 2401:aa00::/32
+ip6-cidr, 2401:aa20::/32
 ip6-cidr, 2401:aa40::/32
 ip6-cidr, 2401:acc0::/32
 ip6-cidr, 2401:ad40::/32

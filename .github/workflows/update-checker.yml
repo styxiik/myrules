@@ -67,6 +67,8 @@ jobs:
         awk -F "[ ]+" '!a[$2]++{print "+."$2}' > "host.fake" *.txt
         cat *.fake > fake.list
         #自定义fake-ip
+        sed -i '$a\+.cn' fake.list
+        sed -i '$a\+.com.cn' fake.list
         sed -i '$a\+.cmbchina.com' fake.list
         sed -i '$a\+.apple.com' fake.list
         sed -i '$a\+.icloud.com' fake.list

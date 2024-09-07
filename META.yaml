@@ -23,8 +23,8 @@ geo-auto-update: true
 geo-update-interval: 24
 #自定义 geodata url
 geox-url:
-  geoip: "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
-  geosite: "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat"
+  geoip: "myghproxyhttps://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+  geosite: "myghproxyhttps://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
   mmdb: "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb"
   asn: "myghproxyhttps://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 global-ua: clash.meta
@@ -130,7 +130,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
     path: ./ruleset/private.yaml
     interval: 86400
-
+    
+  lancidr:
+    type: http
+    behavior: ipcidr
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
+    path: ./ruleset/lancidr.yaml
+    interval: 86400
+    
   direct:
     type: http
     behavior: domain
@@ -242,10 +249,10 @@ rules:
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve
-  - GEOIP,LAN,DIRECT
   - DOMAIN-SUFFIX,cn,DIRECT
   # - RULE-SET,reject,REJECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
+  - RULE-SET,lancidr,DIRECT,no-resolve
   - RULE-SET,direct,DIRECT,no-resolve
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve

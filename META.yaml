@@ -244,7 +244,7 @@ rule-providers:
     interval: 86400
     
 rules:
-  - AND,((DST-PORT,443),(NETWORK,UDP)),REJECT
+  - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
@@ -252,23 +252,31 @@ rules:
   - DOMAIN-SUFFIX,cn,DIRECT
   # - RULE-SET,reject,REJECT,no-resolve
   - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,lancidr,DIRECT,no-resolve
+  - RULE-SET,lancidr,DIRECT,no-resolve,no-resolve
   - RULE-SET,direct,DIRECT,no-resolve
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve
   - RULE-SET,applications,DIRECT
   - RULE-SET,gfw,PROXY,no-resolve
-  - RULE-SET,cryptocurrency,PROXY,no-resolve
-  - RULE-SET,google,PROXY,no-resolve
-  - RULE-SET,greatfire,PROXY,no-resolve
+  - RULE-SET,cryptocurrency,PROXY
+  - RULE-SET,google,PROXY
+  - RULE-SET,greatfire,PROXY
   - RULE-SET,telegramcidr,PROXY,no-resolve
-  - RULE-SET,cfip,PROXY
-  - RULE-SET,googleip,PROXY
-  - RULE-SET,cloudfrontip,DIRECT
-  - RULE-SET,cncidr,DIRECT
-  - RULE-SET,cnipv6,DIRECT
-  - GEOIP,CN,DIRECT
+  - RULE-SET,cfip,PROXY,no-resolve
+  - RULE-SET,googleip,PROXY,no-resolve
+  - RULE-SET,cloudfrontip,DIRECT,no-resolve
+  - RULE-SET,cncidr,DIRECT,no-resolve
+  - RULE-SET,cnipv6,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT,no-resolve
   - MATCH,最终选择
+sub-rules:
+  QUIC:
+    - IP-CIDR,1.12.12.12/32,DIRECT,no-resolve
+    - IP-CIDR,120.53.53.53/32,DIRECT,no-resolve
+    - IP-CIDR,223.5.5.5/32,DIRECT,no-resolve
+    - IP-CIDR,223.6.6.6/32,DIRECT,no-resolve
+    - MATCH,REJECT
+    
 dns:
   enable: true
   listen: :53
@@ -282,14 +290,14 @@ dns:
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-    - https://223.5.5.5/dns-query#h3=true
+    - https://223.6.6.6/dns-query#h3=true
     - tls://223.5.5.5:853
   proxy-server-nameserver:
     - https://1.12.12.12/dns-query
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-    - https://223.5.5.5/dns-query#h3=true
+    - https://223.6.6.6/dns-query#h3=true
     - tls://223.5.5.5:853
   nameserver-policy:
     "rule-set:direct,icloud,apple,applications,private":

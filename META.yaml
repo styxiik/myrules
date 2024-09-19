@@ -454,6 +454,8 @@ dns:
     - '+.n0808.com'
     - '+.uu.163.com'
     - 'ps.res.netease.com'
+    - '+.pub.3gppnetwork.org'
+    - 'geosite:category-games'
     - '+.cn'
     - '+.com.cn'
     - '+.cmbchina.com'

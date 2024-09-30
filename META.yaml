@@ -257,7 +257,8 @@ rules:
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve
   - RULE-SET,applications,DIRECT
-  - RULE-SET,gfw,PROXY,no-resolve
+  - DOMAIN-SUFFIX,goog,PROXY
+  - RULE-SET,gfw,PROXY
   - RULE-SET,cryptocurrency,PROXY
   - RULE-SET,google,PROXY
   - RULE-SET,greatfire,PROXY

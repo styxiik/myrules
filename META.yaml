@@ -96,6 +96,13 @@ proxy-groups:
     # tolerance: 100
 
 rule-providers:
+  Unbreak:
+    type: http
+    behavior: classical
+    path: ./ruleSet/Unbreak.yaml
+    url: "https://raw.githubusercontent.com/ddgksf2013/Filter/master/Unbreak.list"
+    interval: 7200
+    
   ClashReject:
     type: http
     behavior: classical
@@ -246,6 +253,7 @@ rule-providers:
 rules:
   - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
+  - RULE-SET,Unbreak,DIRECT,no-resolve
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve

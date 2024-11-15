@@ -19,6 +19,8 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
+  - DOMAIN-SUFFIX,trip.com
+  - DOMAIN-SUFFIX,tripcdn.com
   - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,al.chirmyram.com
   - DOMAIN-SUFFIX,office.com

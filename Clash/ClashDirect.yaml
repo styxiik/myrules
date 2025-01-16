@@ -29,6 +29,7 @@ payload:
   - DOMAIN,cn.archive.ubuntu.com
   - DOMAIN-KEYWORD,lz-cdn
   - DOMAIN-KEYWORD,cdnlz
+  - DOMAIN-KEYWORD,-ea.com
   - DOMAIN-SUFFIX,bitwarden.com
   - DOMAIN-SUFFIX,ford.com
   - DOMAIN-SUFFIX,ford.com.cn

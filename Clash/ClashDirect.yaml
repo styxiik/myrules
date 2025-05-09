@@ -17,6 +17,7 @@ payload:
   - IP-CIDR6,fc00::/7
   - IP-CIDR6,fe80::/10
   # 自定义规则
+  - DOMAIN-SUFFIX,hf.co
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,sentinelone.net

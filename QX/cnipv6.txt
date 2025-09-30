@@ -1294,6 +1294,7 @@ ip6-cidr, 2a0b:2542::/48
 ip6-cidr, 2a0b:4b81:1001::/48
 ip6-cidr, 2a0b:4e07:b8::/47
 ip6-cidr, 2a0c:9a40:84e0::/48
+ip6-cidr, 2a0c:9a40:8fc1::/48
 ip6-cidr, 2a0c:9a40:8fc2::/47
 ip6-cidr, 2a0c:9a40:8fc4::/48
 ip6-cidr, 2a0c:b641:571::/48

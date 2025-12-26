@@ -289,7 +289,7 @@ sub-rules:
 dns:
   enable: true
   listen: :53
-  ipv6: false
+  ipv6: true
   default-nameserver:
     - 119.29.29.29
     - 223.5.5.5

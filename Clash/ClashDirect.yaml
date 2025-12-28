@@ -19,7 +19,6 @@ payload:
   # 自定义规则
   - DOMAIN-SUFFIX,hf.co
   - DOMAIN-SUFFIX,mydomain1
-  - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,sentinelone.net
   - DOMAIN-SUFFIX,office.net
   - DOMAIN-SUFFIX,trip.com

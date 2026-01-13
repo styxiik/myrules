@@ -264,7 +264,7 @@ rules:
   - RULE-SET,direct,DIRECT,no-resolve
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve
-  - RULE-SET,applications,DIRECT
+  # - RULE-SET,applications,DIRECT
   - DOMAIN-SUFFIX,goog,PROXY
   - RULE-SET,gfw,PROXY
   - RULE-SET,cryptocurrency,PROXY

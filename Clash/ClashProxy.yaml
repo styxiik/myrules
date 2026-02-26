@@ -1,7 +1,5 @@
 payload:
   - DOMAIN-SUFFIX,mydomain2
-  - DOMAIN-SUFFIX,spotifycdn.com
-  - DOMAIN-SUFFIX,scdn.co
   - DOMAIN-SUFFIX,msftncsi.com
   - DOMAIN-SUFFIX,www.msftconnecttest.com
   - DOMAIN-SUFFIX,ipv6.msftconnecttest.com

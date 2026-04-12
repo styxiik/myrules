@@ -1452,7 +1452,7 @@ ip6-cidr, 2a0f:1cc5:1d11::/48
 ip6-cidr, 2a0f:1cc5:1d14::/48
 ip6-cidr, 2a0f:1cc5:2510::/44
 ip6-cidr, 2a0f:1cc5:2600::/42
-ip6-cidr, 2a0f:1cc5:2640::/44
+ip6-cidr, 2a0f:1cc5:2640::/43
 ip6-cidr, 2a0f:1cc5:2d01::/48
 ip6-cidr, 2a0f:1cc5:2d03::/48
 ip6-cidr, 2a0f:1cc6:b110::/48

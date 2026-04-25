@@ -180,7 +180,6 @@ ip6-cidr, 2401:d780::/32
 ip6-cidr, 2401:d920::/48
 ip6-cidr, 2401:de00::/32
 ip6-cidr, 2401:ec00::/32
-ip6-cidr, 2401:f860:85::/48
 ip6-cidr, 2401:f860:87::/48
 ip6-cidr, 2401:f860:88::/47
 ip6-cidr, 2401:f860:90::/46
@@ -516,7 +515,6 @@ ip6-cidr, 2406:840:480::/48
 ip6-cidr, 2406:840:540::/48
 ip6-cidr, 2406:840:600::/48
 ip6-cidr, 2406:840:680::/48
-ip6-cidr, 2406:840:6c1::/48
 ip6-cidr, 2406:840:710::/48
 ip6-cidr, 2406:840:800::/46
 ip6-cidr, 2406:840:805::/48
@@ -1341,7 +1339,6 @@ ip6-cidr, 240c:4000::/22
 ip6-cidr, 240c:c000::/20
 ip6-cidr, 240d:4000::/21
 ip6-cidr, 240e::/20
-ip6-cidr, 2602:f46d:6::/48
 ip6-cidr, 2602:f92a:a46d::/48
 ip6-cidr, 2602:f92a:a46f::/48
 ip6-cidr, 2602:f92a:a474::/48
@@ -1350,7 +1347,6 @@ ip6-cidr, 2602:f9ba:10c::/48
 ip6-cidr, 2602:f9f6::/48
 ip6-cidr, 2602:f9f6:400::/47
 ip6-cidr, 2602:f9f6:450::/48
-ip6-cidr, 2602:fbda:600::/48
 ip6-cidr, 2602:fbda:610::/48
 ip6-cidr, 2602:fbda:620::/48
 ip6-cidr, 2602:fbda:660::/44
@@ -1439,7 +1435,7 @@ ip6-cidr, 2a0f:1cc5:662::/48
 ip6-cidr, 2a0f:1cc5:690::/48
 ip6-cidr, 2a0f:1cc5:6a0::/48
 ip6-cidr, 2a0f:1cc5:f00::/45
-ip6-cidr, 2a0f:1cc5:f08::/47
+ip6-cidr, 2a0f:1cc5:f08::/48
 ip6-cidr, 2a0f:1cc5:fff::/48
 ip6-cidr, 2a0f:1cc5:1600::/44
 ip6-cidr, 2a0f:1cc5:1c00::/47
@@ -1453,6 +1449,8 @@ ip6-cidr, 2a0f:1cc5:2520::/44
 ip6-cidr, 2a0f:1cc5:2600::/40
 ip6-cidr, 2a0f:1cc5:2d01::/48
 ip6-cidr, 2a0f:1cc5:2d03::/48
+ip6-cidr, 2a0f:1cc5:3200::/47
+ip6-cidr, 2a0f:1cc5:3202::/48
 ip6-cidr, 2a0f:1cc6:b110::/47
 ip6-cidr, 2a0f:2706::/32
 ip6-cidr, 2a0f:6284:4c00::/44
@@ -1480,8 +1478,8 @@ ip6-cidr, 2a13:8c87::/32
 ip6-cidr, 2a13:a5c3:ff50::/44
 ip6-cidr, 2a13:a5c5::/48
 ip6-cidr, 2a13:aac4:f000::/44
-ip6-cidr, 2a13:b487:1200::/42
-ip6-cidr, 2a14:67c1:a110::/44
+ip6-cidr, 2a13:b487:1210::/44
+ip6-cidr, 2a13:b487:1220::/43
 ip6-cidr, 2a14:67c1:b500::/47
 ip6-cidr, 2a14:67c1:b511::/48
 ip6-cidr, 2a14:67c1:b514::/48

@@ -18,6 +18,7 @@ payload:
   - IP-CIDR6,fe80::/10
   # 自定义规则
   - PROCESS-NAME,qbittorrent.exe
+  - DOMAIN-SUFFIX,waditu.com
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,sentinelone.net
   - DOMAIN-SUFFIX,office.net

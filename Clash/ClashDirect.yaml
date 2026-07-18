@@ -20,7 +20,6 @@ payload:
   - PROCESS-NAME,qbittorrent.exe
   - DOMAIN-SUFFIX,waditu.com
   - DOMAIN-SUFFIX,mydomain1
-  - DOMAIN-SUFFIX,sentinelone.net
   - DOMAIN-SUFFIX,office.net
   - DOMAIN-SUFFIX,trip.com
   - DOMAIN-SUFFIX,tripcdn.com

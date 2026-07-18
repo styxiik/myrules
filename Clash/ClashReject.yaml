@@ -1,4 +1,5 @@
 payload:
+  - DOMAIN-KEYWORD,sentinel
   - DOMAIN-SUFFIX,googleapis-cn.com
   - DOMAIN-SUFFIX,googlesyndication-cn.com
   - DOMAIN-SUFFIX,googletagservices-cn.com

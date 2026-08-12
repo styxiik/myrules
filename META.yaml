@@ -291,26 +291,25 @@ dns:
   default-nameserver:
     - 119.29.29.29
     - 120.53.53.53
+    - 1.12.12.12
+    - 114.114.114.114
     - system
   nameserver:
     - https://1.12.12.12/dns-query
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-
   proxy-server-nameserver:
     - https://1.12.12.12/dns-query
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-
   nameserver-policy:
     "rule-set:direct,icloud,apple,applications,private":
       - https://1.12.12.12/dns-query
       - tls://1.12.12.12
       - https://120.53.53.53/dns-query
       - tls://120.53.53.53
-
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"

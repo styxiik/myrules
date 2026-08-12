@@ -282,8 +282,6 @@ sub-rules:
   QUIC:
     - IP-CIDR,1.12.12.12/32,DIRECT,no-resolve
     - IP-CIDR,120.53.53.53/32,DIRECT,no-resolve
-    - IP-CIDR,223.5.5.5/32,DIRECT,no-resolve
-    - IP-CIDR,223.6.6.6/32,DIRECT,no-resolve
     - MATCH,REJECT
     
 dns:
@@ -292,30 +290,27 @@ dns:
   ipv6: true
   default-nameserver:
     - 119.29.29.29
-    - 223.5.5.5
+    - 120.53.53.53
     - system
   nameserver:
     - https://1.12.12.12/dns-query
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-    - https://223.6.6.6/dns-query#h3=true
-    - tls://223.5.5.5:853
+
   proxy-server-nameserver:
     - https://1.12.12.12/dns-query
     - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
-    - https://223.6.6.6/dns-query#h3=true
-    - tls://223.5.5.5:853
+
   nameserver-policy:
     "rule-set:direct,icloud,apple,applications,private":
       - https://1.12.12.12/dns-query
       - tls://1.12.12.12
       - https://120.53.53.53/dns-query
       - tls://120.53.53.53
-      - https://223.5.5.5/dns-query#h3=true
-      - tls://223.5.5.5:853
+
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"

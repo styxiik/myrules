@@ -99,6 +99,7 @@ rule-providers:
   Unbreak:
     type: http
     behavior: classical
+    format: text
     path: ./ruleSet/Unbreak.yaml
     url: "https://raw.githubusercontent.com/ddgksf2013/Filter/master/Unbreak.list"
     interval: 7200

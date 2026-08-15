@@ -180,9 +180,6 @@ jobs:
         sed -i '$a\  use-hosts: true' META.yaml
         cat final.list >> META.yaml
         rm -f *.list & rm -f *.host & rm -f *.txt & rm -f *.fake & rm -f *.cf & rm -f *.goog
-        cd Clash
-        rm -f gfwlist64.txt
-        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/gfwlist2adg/main/gfwlist64.txt
         
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main

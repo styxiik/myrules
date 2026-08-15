@@ -190,11 +190,14 @@ jobs:
         repository: ${{ github.repository }}
     
     - name: 合并文件并commit
-      uses: EndBug/add-and-commit@main
-      with:
-        author_name: GitHub Action
-        author_email: noreply@github.com
-        message: 'Update fake-ip and hosts'
-        add: "-A"
-      env:
-        token: ${{ secrets.GER_TOKEN }}
+      shell: bash
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "noreply@github.com"
+        git add -A
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        git commit -m "Update fake-ip and hosts"
+        git push

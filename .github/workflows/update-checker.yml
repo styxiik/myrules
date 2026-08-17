@@ -3,23 +3,28 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 16 * * *
-env: 
+
+env:
   HOST: false
+
+permissions:
+  contents: write
+  actions: write
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@main
-      
+      uses: actions/checkout@v4
+
     - name: 判断fakeip
       id: fakeip
-      run: | 
+      run: |
         FIND_FILE="META.yaml"
         FIND_STR="enhanced-mode: fake-ip"
         if [ `grep -c "$FIND_STR" "$FIND_FILE"` -ne '0' ] ;then
-            echo "::set-output name=fakeornot::true"
+            echo "fakeornot=true" >> "$GITHUB_OUTPUT"
             exit 0
         fi
 
@@ -36,7 +41,7 @@ jobs:
         cat *.host > host.list
         sed -i 's/^/  /g' host.list
         test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
-      
+
     - name: 添加host ip到直连
       run: |
         awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
@@ -50,7 +55,7 @@ jobs:
       if: env.HOST == 'false' && !cancelled()
       run: |
         rm host.list & sed -i '1,$d' *.txt && touch host.list && echo "hosts:" >> host.list
-        
+
     - name: 自定义host
       run: |
         wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/hosts.txt
@@ -59,7 +64,7 @@ jobs:
            'dns.google': 8.8.8.8
         EOF
         rm -rf hosts.txt
-        
+
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
       run: |
@@ -171,24 +176,34 @@ jobs:
         rm -f *.cft
         rm -f ./ip-ranges.json
         mv -f cft.txt ./Clash
-        
+
     - name: 注入文件
-      run: |  
+      run: |
         cat *.list > final.list
         last=$(sed -n "/  use-hosts: true/=" META.yaml)
         sed -i ${last}',$d' META.yaml
         sed -i '$a\  use-hosts: true' META.yaml
         cat final.list >> META.yaml
         rm -f *.list & rm -f *.host & rm -f *.txt & rm -f *.fake & rm -f *.cf & rm -f *.goog
-        
-    - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 1
-        token: ${{ secrets.GER_TOKEN }}
-        repository: ${{ github.repository }}
-    
+
+    - name: Delete old workflow runs
+      continue-on-error: true
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+      run: |
+        cutoff="$(date -u -d '1 day ago' +%s)"
+        current="${{ github.run_id }}"
+        gh api --paginate "repos/${GH_REPO}/actions/runs?per_page=100" --jq '.workflow_runs[] | [.id,.created_at] | @tsv' |
+        while IFS=$'\t' read -r id created_at; do
+          [ "$id" = "$current" ] && continue
+          created_ts="$(date -u -d "$created_at" +%s)"
+          if [ "$created_ts" -lt "$cutoff" ]; then
+            gh api --method DELETE "repos/${GH_REPO}/actions/runs/${id}" || true
+          fi
+        done
+
     - name: 合并文件并commit
       shell: bash
       run: |

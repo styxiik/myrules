@@ -13,7 +13,7 @@
 # source: YouTubeEnhance -> https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
 
 [General]
-force-http-engine-hosts = %APPEND% 119.29.29.29:80,dns.weixin.qq.com:443,dns.weixin.qq.com:80,dns.weixin.qq.com:8080
+force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, 119.29.29.29:80, dns.weixin.qq.com:443, dns.weixin.qq.com:80, dns.weixin.qq.com:8080
 
 [Rule]
 DOMAIN-WILDCARD,tail*.ts.net,TAILSCALE

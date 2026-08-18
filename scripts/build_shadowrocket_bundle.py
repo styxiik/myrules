@@ -25,6 +25,12 @@ PREFERRED_SECTION_ORDER = [
     "MITM",
 ]
 
+# Local baseline rewrites that should always be present even when upstream modules change.
+BASE_URL_REWRITES = [
+    r"^https?://(www\.)?g\.cn https://www.google.com 302",
+    r"^https?://(www\.)?google\.cn https://www.google.com 302",
+]
+
 
 def fetch_text(url: str) -> str:
     last_error: Exception | None = None
@@ -137,6 +143,12 @@ def main() -> None:
         if hostnames:
             merged["MITM"].append("hostname = %APPEND% " + ", ".join(hostnames))
 
+    # Keep local Google CN redirects first so they remain stable regardless of upstream ordering.
+    upstream_rewrites = merged.get("URL Rewrite", [])
+    merged["URL Rewrite"] = BASE_URL_REWRITES + [
+        line for line in upstream_rewrites if line not in BASE_URL_REWRITES
+    ]
+
     # Keep Tailscale routing first so it wins before generic rules bundled from other sources.
     rules = merged.get("Rule", [])
     tailscale_rules = [line for line in rules if ",TAILSCALE" in line]
@@ -149,7 +161,7 @@ def main() -> None:
 
     lines = [
         "#!name=MyRules All-in-One",
-        "#!desc=Tailscale + BlockHTTPDNS + Zhihu + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
+        "#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
         "#!author=styxiik/myrules",
     ]
     if combined_arguments:
@@ -189,6 +201,8 @@ def main() -> None:
 
     required = [
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
+        r"^https?://(www\.)?g\.cn https://www.google.com 302",
+        r"^https?://(www\.)?google\.cn https://www.google.com 302",
         "force-http-engine-hosts = %APPEND%",
         "tiebac.baidu.com",
         "spotify-proto =",

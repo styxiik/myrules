@@ -1,5 +1,5 @@
 #!name=MyRules All-in-One
-#!desc=Tailscale + BlockHTTPDNS + Zhihu + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.
+#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.
 #!author=styxiik/myrules
 #!arguments=per_filter_video:0,屏蔽上传按钮:true,屏蔽选段按钮:true,屏蔽Shorts按钮:false,字幕翻译语言:off,启用调试模式:false
 #!arguments-desc=per_filter_video:设置为1则推荐页不展示视频贴\n\n- 屏蔽参数：[true, false] \n- 翻译参数：[语言代码, off] \n\n1. 语言代码遵循 Google Translate Languages Codes, 当填入 off 时关闭翻译\n2. 开启调试模式用于输出更多日志
@@ -101,6 +101,8 @@ USER-AGENT,AVOS*,REJECT
 RULE-SET,https://raw.githubusercontent.com/app2smile/rules/master/rule/tieba-ad.list,REJECT-DROP
 
 [URL Rewrite]
+^https?://(www\.)?g\.cn https://www.google.com 302
+^https?://(www\.)?google\.cn https://www.google.com 302
 ^http:\/\/101\.35\.204\.35\/d - reject
 ^http:\/\/103\.37\.155\.60\/fetch - reject
 ^http:\/\/114\.110\.96\.26\/d - reject

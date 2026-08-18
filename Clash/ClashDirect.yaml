@@ -62,12 +62,16 @@ payload:
   - DOMAIN-SUFFIX,apple.cn
   - DOMAIN-SUFFIX,oracle.com
   - DOMAIN-SUFFIX,oraclecloud.com
-  # Charles Schwab: website, app/API, CDN and associated official domains
+  # Charles Schwab + thinkorswim: website, app/API, CDN and associated official domains
   - DOMAIN-SUFFIX,schwab.com
   - DOMAIN-SUFFIX,schwabcdn.com
   - DOMAIN-SUFFIX,schwabapi.com
   - DOMAIN-SUFFIX,schwaballiance.com
   - DOMAIN-SUFFIX,aboutschwab.com
   - DOMAIN-SUFFIX,schwab.net
+  - DOMAIN-SUFFIX,schwab.tech
+  - DOMAIN-SUFFIX,thinkorswim.com
+  - DOMAIN-SUFFIX,tos.mx
   - DOMAIN-SUFFIX,tdameritrade.com
+  - DOMAIN-SUFFIX,ameritrade.com
   # hosts ip

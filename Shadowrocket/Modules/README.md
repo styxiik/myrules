@@ -2,11 +2,32 @@
 
 Shadowrocket 直接导入仓库根目录的 `META.yaml` 作为主配置，不再维护单独的 `Shadowrocket-META.yaml`。
 
-主配置保持 Mihomo / Shadowrocket 共用；所有 Shadowrocket 专属能力都放在「配置 -> 模块」中单独订阅。这样不会把 Shadowrocket 专属语法写进 Mihomo 配置。
+主配置保持 Mihomo / Shadowrocket 共用；所有 Shadowrocket 专属能力都放在「配置 -> 模块」中。这样不会把 Shadowrocket 专属语法写进 Mihomo 配置。
+
+## 推荐：一个链接更新全部模块
+
+只需要在 Shadowrocket「配置 -> 模块 -> 右上角 +」添加下面这个远程模块：
+
+https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-in-One.sgmodule
+
+`All-in-One.sgmodule` 自动聚合以下内容：
+
+- Tailscale
+- BlockHTTPDNS / blackmatrix7
+- ZhihuAssistantPlus / blackmatrix7
+- Tieba / app2smile
+- Spotify / app2smile
+- YouTube Enhance / Maasea
+
+`.github/workflows/update-shadowrocket-bundle.yml` 每天拉取这些上游的最新模块，由 `scripts/build_shadowrocket_bundle.py` 按 section 重新生成 `All-in-One.sgmodule`。生成器不会直接拼接多个 `[MITM]`，而是合并并去重 hostname，统一使用 `%APPEND%`；模块参数也会合并保留。
+
+因此 Shadowrocket 端只维护这一条远程模块 URL。以后使用模块页面的「更新模块」或自动后台更新，就会刷新整套聚合模块。
+
+如果某个上游临时失效，生成 workflow 会失败并保留上一版可用的 `All-in-One.sgmodule`，不会把空文件覆盖到主分支。
 
 ## Tailscale
 
-Shadowrocket 原生 Tailscale 全局模组使用专属 `TAILSCALE` 规则策略，而 Mihomo 不认识这个策略名，因此 Tailscale 的 Shadowrocket 专属规则放在本目录的 `Tailscale.sgmodule`：
+Shadowrocket 原生 Tailscale 全局模组使用专属 `TAILSCALE` 规则策略，而 Mihomo 不认识这个策略名，因此 Tailscale 的 Shadowrocket 专属规则保留在本目录的 `Tailscale.sgmodule`，并由 All-in-One 自动聚合：
 
 https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/Tailscale.sgmodule
 
@@ -14,7 +35,9 @@ https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/Tail
 
 共享的 `Clash/ClashDirect.yaml` 仍保留 `100.64.0.0/10` 与 `fd7a:115c:a1e0::/48`，用于 Windows Mihomo / Tailscale 共存。
 
-## 推荐原生模块
+## 独立模块地址（备用）
+
+如果需要单独启停某一功能，仍可以不用 All-in-One，改为分别安装以下模块。
 
 ### Block HTTPDNS — blackmatrix7
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/BlockHTTPDNS/BlockHTTPDNS.sgmodule
@@ -42,4 +65,4 @@ https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodul
 
 ## 机器可读清单与自动检查
 
-`sources.json` 保存当前模块订阅地址；`.github/workflows/check-module-upstreams.yml` 每周检查这些 URL 是否仍可访问，也支持手动执行。
+`sources.json` 保存各个上游模块地址，是构建 All-in-One 的来源清单，不是给 Shadowrocket 直接订阅的格式。`.github/workflows/check-module-upstreams.yml` 每周检查这些 URL 是否仍可访问，也支持手动执行。

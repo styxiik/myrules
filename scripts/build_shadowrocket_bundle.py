@@ -31,8 +31,15 @@ BASE_URL_REWRITES = [
     r"^https?://(www\.)?google\.cn https://www.google.com 302",
 ]
 
-# HTTPS URL rewrites require MITM for the source hosts. Keep these local baseline
-# hostnames independent from upstream modules so a future bundle rebuild cannot drop them.
+# HTTPS URL Rewrite needs the target hosts to pass through Shadowrocket's HTTP engine.
+BASE_FORCE_HTTP_ENGINE_HOSTS = [
+    "g.cn",
+    "www.g.cn",
+    "google.cn",
+    "www.google.cn",
+]
+
+# HTTPS decryption hosts required by the local Google CN redirects.
 BASE_MITM_HOSTNAMES = [
     "g.cn",
     "www.g.cn",
@@ -94,10 +101,12 @@ def append_unique(target: list[str], lines: list[str]) -> None:
             seen.add(line)
 
 
-def split_hostnames(value: str) -> list[str]:
+def split_append_values(value: str) -> list[str]:
     value = value.strip()
-    if value.startswith("%APPEND%"):
-        value = value[len("%APPEND%") :].strip()
+    for prefix in ("%APPEND%", "%INSERT%"):
+        if value.startswith(prefix):
+            value = value[len(prefix) :].strip()
+            break
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
@@ -135,7 +144,7 @@ def main() -> None:
                 for line in lines:
                     if line.lstrip().startswith("hostname") and "=" in line:
                         _, value = line.split("=", 1)
-                        for hostname in split_hostnames(value):
+                        for hostname in split_append_values(value):
                             if hostname not in hostnames:
                                 hostnames.append(hostname)
                     else:
@@ -145,6 +154,24 @@ def main() -> None:
 
             merged.setdefault(section, [])
             append_unique(merged[section], lines)
+
+    # Merge all force-http-engine-hosts declarations into one stable line, with
+    # Google CN first so HTTPS redirects always enter Shadowrocket's HTTP engine.
+    general_lines = merged.get("General", [])
+    force_http_hosts = list(BASE_FORCE_HTTP_ENGINE_HOSTS)
+    general_other: list[str] = []
+    for line in general_lines:
+        if line.lstrip().startswith("force-http-engine-hosts") and "=" in line:
+            _, value = line.split("=", 1)
+            for hostname in split_append_values(value):
+                if hostname not in force_http_hosts:
+                    force_http_hosts.append(hostname)
+        else:
+            general_other.append(line)
+    merged["General"] = [
+        "force-http-engine-hosts = %APPEND% " + ", ".join(force_http_hosts),
+        *general_other,
+    ]
 
     if hostnames or mitm_other:
         merged.setdefault("MITM", [])
@@ -212,8 +239,8 @@ def main() -> None:
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",
         r"^https?://(www\.)?google\.cn https://www.google.com 302",
+        "force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
         "hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
-        "force-http-engine-hosts = %APPEND%",
         "tiebac.baidu.com",
         "spotify-proto =",
         "youtube.response =",

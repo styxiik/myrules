@@ -31,6 +31,15 @@ BASE_URL_REWRITES = [
     r"^https?://(www\.)?google\.cn https://www.google.com 302",
 ]
 
+# HTTPS URL rewrites require MITM for the source hosts. Keep these local baseline
+# hostnames independent from upstream modules so a future bundle rebuild cannot drop them.
+BASE_MITM_HOSTNAMES = [
+    "g.cn",
+    "www.g.cn",
+    "google.cn",
+    "www.google.cn",
+]
+
 
 def fetch_text(url: str) -> str:
     last_error: Exception | None = None
@@ -101,7 +110,7 @@ def main() -> None:
     merged: OrderedDict[str, list[str]] = OrderedDict()
     argument_chunks: list[str] = []
     argument_descs: list[str] = []
-    hostnames: list[str] = []
+    hostnames: list[str] = list(BASE_MITM_HOSTNAMES)
     mitm_other: list[str] = []
     source_notes: list[str] = []
 
@@ -203,11 +212,11 @@ def main() -> None:
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",
         r"^https?://(www\.)?google\.cn https://www.google.com 302",
+        "hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
         "force-http-engine-hosts = %APPEND%",
         "tiebac.baidu.com",
         "spotify-proto =",
         "youtube.response =",
-        "hostname = %APPEND%",
     ]
     for marker in required:
         if marker not in output:

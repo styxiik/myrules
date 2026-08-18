@@ -15,6 +15,7 @@ https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-
 - Tailscale
 - BlockHTTPDNS / blackmatrix7
 - ZhihuAssistantPlus / blackmatrix7
+- Startup Ads 开屏去广告 / blackmatrix7
 - Tieba / app2smile
 - Spotify / app2smile
 - YouTube Enhance / Maasea
@@ -24,7 +25,7 @@ https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-
 - `^https?://(www\.)?g\.cn` 302 到 `https://www.google.com`
 - `^https?://(www\.)?google\.cn` 302 到 `https://www.google.com`
 
-`.github/workflows/update-shadowrocket-bundle.yml` 每天拉取这些上游的最新模块，由 `scripts/build_shadowrocket_bundle.py` 按 section 重新生成 `All-in-One.sgmodule`。生成器不会直接拼接多个 `[MITM]`，而是合并并去重 hostname，统一使用 `%APPEND%`；模块参数也会合并保留。
+`.github/workflows/update-shadowrocket-bundle.yml` 每天拉取这些上游的最新模块，由 `scripts/build_shadowrocket_bundle.py` 按 section 重新生成 `All-in-One.sgmodule`。生成器不会直接拼接多个 `[MITM]`，而是合并并去重 hostname，统一使用 `%APPEND%`；模块参数和 `force-http-engine-hosts` 也会合并保留。
 
 因此 Shadowrocket 端只维护这一条远程模块 URL。以后使用模块页面的「更新模块」或自动后台更新，就会刷新整套聚合模块。
 
@@ -55,6 +56,9 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Sh
 
 ### 知乎增强 / 去广告 — blackmatrix7
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/ZhihuAssistant/ZhihuAssistantPlus/zhihu_plus.sgmodule
+
+### 开屏去广告 — blackmatrix7
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.sgmodule
 
 ### 百度贴吧 — app2smile
 https://raw.githubusercontent.com/app2smile/rules/master/module/tieba.sgmodule

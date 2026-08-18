@@ -197,7 +197,7 @@ def main() -> None:
 
     lines = [
         "#!name=MyRules All-in-One",
-        "#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
+        "#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Startup Ads + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
         "#!author=styxiik/myrules",
     ]
     if combined_arguments:
@@ -241,6 +241,7 @@ def main() -> None:
         r"^https?://(www\.)?google\.cn https://www.google.com 302",
         "force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
         "hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
+        "爱奇艺_开屏去广告 =",
         "tiebac.baidu.com",
         "spotify-proto =",
         "youtube.response =",

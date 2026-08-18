@@ -19,11 +19,22 @@ https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-
 - Spotify / app2smile
 - YouTube Enhance / Maasea
 
+同时固定加入本仓库自己的基础配置：
+
+- `^https?://(www\.)?g\.cn` 302 到 `https://www.google.com`
+- `^https?://(www\.)?google\.cn` 302 到 `https://www.google.com`
+
 `.github/workflows/update-shadowrocket-bundle.yml` 每天拉取这些上游的最新模块，由 `scripts/build_shadowrocket_bundle.py` 按 section 重新生成 `All-in-One.sgmodule`。生成器不会直接拼接多个 `[MITM]`，而是合并并去重 hostname，统一使用 `%APPEND%`；模块参数也会合并保留。
 
 因此 Shadowrocket 端只维护这一条远程模块 URL。以后使用模块页面的「更新模块」或自动后台更新，就会刷新整套聚合模块。
 
 如果某个上游临时失效，生成 workflow 会失败并保留上一版可用的 `All-in-One.sgmodule`，不会把空文件覆盖到主分支。
+
+## 为什么不直接使用第三方“大而全” All-in-One
+
+当前公开可确认的 Shadowrocket `AllInOne.sgmodule` 主要来自 blackmatrix7，而不是 ddgksf2013 当前维护的模块仓库。blackmatrix7 的 AllInOne 覆盖范围非常广，会带入大量与本配置目标无关的规则、脚本和 MITM hostname；同时不同功能的独立原生模块更新节奏可能更快。
+
+因此本仓库采用“精选上游 + 自动聚合”的方式：人工只维护少量上游入口，实际内容由原作者维护，GitHub Action 自动生成单一模块链接。这样既保留一键更新体验，也减少无关规则和冲突风险。
 
 ## Tailscale
 

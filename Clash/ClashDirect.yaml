@@ -2,7 +2,9 @@ payload:
   # Lan ip
   - IP-CIDR,0.0.0.0/8
   - IP-CIDR,10.0.0.0/8
+  # Tailscale: hand Tailnet traffic back to the Windows routing table / Tailscale adapter.
   - IP-CIDR,100.64.0.0/10
+  - IP-CIDR6,fd7a:115c:a1e0::/48
   - IP-CIDR,127.0.0.0/8
   - IP-CIDR,169.254.0.0/16
   - IP-CIDR,172.16.0.0/12

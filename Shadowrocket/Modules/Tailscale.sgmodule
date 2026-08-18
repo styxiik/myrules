@@ -1,0 +1,8 @@
+#!name=Tailscale
+#!desc=Route tailnet traffic to Shadowrocket's native Tailscale global module.
+
+[Rule]
+DOMAIN-WILDCARD,tail*.ts.net,TAILSCALE
+DOMAIN-SUFFIX,ts.net,TAILSCALE
+IP-CIDR,100.64.0.0/10,TAILSCALE,no-resolve
+IP-CIDR6,fd7a:115c:a1e0::/48,TAILSCALE,no-resolve

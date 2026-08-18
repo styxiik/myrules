@@ -1,0 +1,55 @@
+name: Check Module Upstreams
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 3 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - 'Shadowrocket/Modules/sources.json'
+      - 'Shadowrocket/Modules/Tailscale.sgmodule'
+      - 'QX/MODULE_SOURCES.md'
+      - '.github/workflows/check-module-upstreams.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check configured upstream URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          manifest = json.loads(Path('Shadowrocket/Modules/sources.json').read_text(encoding='utf-8'))
+          failures = []
+
+          for client, entries in manifest.items():
+              for entry in entries:
+                  url = entry['url']
+                  name = f"{client}/{entry['name']}"
+                  print(f"Checking {name}: {url}")
+                  result = subprocess.run(
+                      ['curl', '-fsSL', '--retry', '2', '--connect-timeout', '10', '--max-time', '30', '-o', '/dev/null', url],
+                      check=False,
+                  )
+                  if result.returncode != 0:
+                      failures.append((name, url))
+
+          if failures:
+              print('\nUnavailable module upstreams:')
+              for name, url in failures:
+                  print(f'- {name}: {url}')
+              raise SystemExit(1)
+
+          print('\nAll configured module upstreams are reachable.')
+          PY

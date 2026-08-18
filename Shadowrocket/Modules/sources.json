@@ -1,0 +1,87 @@
+{
+  "shadowrocket": [
+    {
+      "name": "Tailscale",
+      "maintainer": "styxiik",
+      "url": "https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/Tailscale.sgmodule",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fstyxiik%2Fmyrules%2Fmain%2FShadowrocket%2FModules%2FTailscale.sgmodule"
+    },
+    {
+      "name": "BlockHTTPDNS",
+      "maintainer": "blackmatrix7",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/BlockHTTPDNS/BlockHTTPDNS.sgmodule",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fblackmatrix7%2Fios_rule_script%2Fmaster%2Frewrite%2FShadowrocket%2FBlockHTTPDNS%2FBlockHTTPDNS.sgmodule"
+    },
+    {
+      "name": "ZhihuAssistantPlus",
+      "maintainer": "blackmatrix7",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/ZhihuAssistant/ZhihuAssistantPlus/zhihu_plus.sgmodule",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fblackmatrix7%2Fios_rule_script%2Fmaster%2Frewrite%2FShadowrocket%2FZhihuAssistant%2FZhihuAssistantPlus%2Fzhihu_plus.sgmodule"
+    },
+    {
+      "name": "Tieba",
+      "maintainer": "app2smile",
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/module/tieba.sgmodule",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fapp2smile%2Frules%2Fmaster%2Fmodule%2Ftieba.sgmodule"
+    },
+    {
+      "name": "Spotify",
+      "maintainer": "app2smile",
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fapp2smile%2Frules%2Fmaster%2Fmodule%2Fspotify.module"
+    },
+    {
+      "name": "YouTubeEnhance",
+      "maintainer": "Maasea",
+      "url": "https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule",
+      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2FMaasea%2Fsgmodule%2Fmaster%2FYouTube.Enhance.sgmodule"
+    }
+  ],
+  "quantumult_x": [
+    {
+      "name": "BlockHTTPDNS",
+      "maintainer": "blackmatrix7",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/QuantumultX/BlockHTTPDNS/BlockHTTPDNS.conf"
+    },
+    {
+      "name": "Zhihu",
+      "maintainer": "blackmatrix7",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zheye/zheye.snippet"
+    },
+    {
+      "name": "Tieba",
+      "maintainer": "app2smile",
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/module/tieba-qx.conf"
+    },
+    {
+      "name": "Spotify",
+      "maintainer": "app2smile",
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.conf"
+    },
+    {
+      "name": "YouTubeAds",
+      "maintainer": "ddgksf2013",
+      "url": "https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/YoutubeAds.conf"
+    },
+    {
+      "name": "CaiYunAds",
+      "maintainer": "ddgksf2013",
+      "url": "https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/CaiYunAds.conf"
+    },
+    {
+      "name": "Applet",
+      "maintainer": "ddgksf2013",
+      "url": "https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Applet.conf"
+    },
+    {
+      "name": "Ximalaya",
+      "maintainer": "ddgksf2013",
+      "url": "https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Ximalaya.conf"
+    },
+    {
+      "name": "NeteaseAds",
+      "maintainer": "ddgksf2013",
+      "url": "https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/NeteaseAds.conf"
+    }
+  ]
+}

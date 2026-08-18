@@ -1,0 +1,40 @@
+name: Update Shadowrocket Bundle
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
+  push:
+    branches: [main, shadowrocket-all-in-one-module]
+    paths:
+      - 'Shadowrocket/Modules/sources.json'
+      - 'Shadowrocket/Modules/Tailscale.sgmodule'
+      - 'scripts/build_shadowrocket_bundle.py'
+      - '.github/workflows/update-shadowrocket-bundle.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build all-in-one Shadowrocket module
+        run: python3 scripts/build_shadowrocket_bundle.py
+
+      - name: Commit generated bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Action"
+          git config user.email "noreply@github.com"
+          git add Shadowrocket/Modules/All-in-One.sgmodule
+          if git diff --cached --quiet; then
+            echo "No Shadowrocket bundle changes"
+            exit 0
+          fi
+          git commit -m "Update Shadowrocket all-in-one module"
+          git push

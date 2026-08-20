@@ -1,0 +1,51 @@
+name: One-time QX Config Fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-qx-config-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch QX routing config
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path('QX.conf')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=reject',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=direct',
+          )
+          text = text.replace(
+              'https://raw.githubusercontent.com/styxiik/myrules/main/Clash//ClashProxy.yaml',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml',
+          )
+          if 'private.txt, tag=🛡️PrivacyPlus, force-policy=direct' not in text:
+              raise SystemExit('QX private policy was not corrected')
+          if '/Clash//ClashProxy.yaml' in text:
+              raise SystemExit('QX ClashProxy URL still has a double slash')
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit QX fix and remove temporary workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Action"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/one-time-qx-config-fix.yml
+          git add QX.conf
+          git commit -m "Fix QX private routing config"
+          git push

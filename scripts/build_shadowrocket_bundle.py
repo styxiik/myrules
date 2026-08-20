@@ -25,6 +25,14 @@ PREFERRED_SECTION_ORDER = [
     "MITM",
 ]
 
+# Local baseline rules that should always be present before upstream rules.
+# Reject QUIC only for Google CN so clients fall back to TCP/HTTPS, where
+# Shadowrocket's HTTP engine + MITM can apply the 302 rewrite.
+BASE_RULES = [
+    "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
+    "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
+]
+
 # Local baseline rewrites that should always be present even when upstream modules change.
 BASE_URL_REWRITES = [
     r"^https?://(www\.)?g\.cn https://www.google.com 302",
@@ -185,12 +193,16 @@ def main() -> None:
         line for line in upstream_rewrites if line not in BASE_URL_REWRITES
     ]
 
-    # Keep Tailscale routing first so it wins before generic rules bundled from other sources.
+    # Keep the Google CN QUIC fallback rules first, followed by Tailscale routing,
+    # before generic rules bundled from upstream modules.
     rules = merged.get("Rule", [])
-    tailscale_rules = [line for line in rules if ",TAILSCALE" in line]
-    other_rules = [line for line in rules if ",TAILSCALE" not in line]
-    if tailscale_rules:
-        merged["Rule"] = tailscale_rules + other_rules
+    tailscale_rules = [
+        line for line in rules if ",TAILSCALE" in line and line not in BASE_RULES
+    ]
+    other_rules = [
+        line for line in rules if line not in BASE_RULES and ",TAILSCALE" not in line
+    ]
+    merged["Rule"] = BASE_RULES + tailscale_rules + other_rules
 
     combined_arguments = ",".join(chunk for chunk in argument_chunks if chunk)
     combined_desc = r"\n\n".join(argument_descs)
@@ -237,6 +249,8 @@ def main() -> None:
 
     required = [
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
+        "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
+        "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",
         r"^https?://(www\.)?google\.cn https://www.google.com 302",
         "force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",

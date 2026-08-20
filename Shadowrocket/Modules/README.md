@@ -22,6 +22,7 @@ https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-
 
 同时固定加入本仓库自己的基础配置：
 
+- `block-quic = all`：Shadowrocket 原生全局禁用 QUIC / UDP 443
 - `^https?://(www\.)?g\.cn` 302 到 `https://www.google.com`
 - `^https?://(www\.)?google\.cn` 302 到 `https://www.google.com`
 

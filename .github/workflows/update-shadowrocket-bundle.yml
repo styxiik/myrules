@@ -21,159 +21,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
-      - name: Apply reviewed config fixes
+      - name: Build all-in-one Shadowrocket module
+        run: python3 scripts/build_shadowrocket_bundle.py
+
+      - name: Commit generated bundle
         shell: bash
         run: |
           set -euo pipefail
-          python3 <<'PY'
-          from pathlib import Path
-          import re
-
-          def write(path: str, text: str) -> None:
-              Path(path).write_text(text, encoding='utf-8')
-
-          # META: reserved fake-ip range; remove deprecated fingerprint and inactive fallback-filter.
-          p = Path('META.yaml')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('global-client-fingerprint: random\n', '')
-          s = s.replace('fake-ip-range: 28.0.0.1/8', 'fake-ip-range: 198.18.0.1/16')
-          s, n = re.subn(
-              r'\n  fallback-filter:\n.*?\n  #fake-ip or redir-host\n',
-              '\n  #fake-ip or redir-host\n',
-              s,
-              count=1,
-              flags=re.S,
-          )
-          if n != 1:
-              raise SystemExit('Expected exactly one fallback-filter block in META.yaml')
-          write('META.yaml', s)
-
-          # QX: private network list is DIRECT. Keep skip_validating_cert and MITM material untouched.
-          p = Path('QX.conf')
-          s = p.read_text(encoding='utf-8')
-          old_private = 'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=reject'
-          new_private = 'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=direct'
-          if old_private not in s:
-              raise SystemExit('Expected QX private rule was not found')
-          s = s.replace(old_private, new_private, 1)
-          s = s.replace('https://raw.githubusercontent.com/styxiik/myrules/main/Clash//ClashProxy.yaml',
-                        'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml', 1)
-          write('QX.conf', s)
-
-          # QX Bing redirect: MITM the source CN hostnames.
-          p = Path('QX/QXRewrite.conf')
-          s = p.read_text(encoding='utf-8')
-          old_host = 'hostname = api.m.jd.com, www.youtube.com, www.bing.com'
-          new_host = 'hostname = api.m.jd.com, www.youtube.com, www.bing.com, cn.bing.com, www.cn.bing.com'
-          if old_host not in s:
-              raise SystemExit('Expected QX rewrite hostname line was not found')
-          s = s.replace(old_host, new_host, 1)
-          write('QX/QXRewrite.conf', s)
-
-          # ClashProxy: remove dead gstatic.cn PROXY rule (Reject is earlier) and exact duplicates.
-          p = Path('Clash/ClashProxy.yaml')
-          lines = p.read_text(encoding='utf-8').splitlines()
-          out = []
-          seen = set()
-          for line in lines:
-              if line.strip() == '- DOMAIN-SUFFIX,gstatic.cn':
-                  continue
-              if line.startswith('  - '):
-                  if line in seen:
-                      continue
-                  seen.add(line)
-              out.append(line)
-          write('Clash/ClashProxy.yaml', '\n'.join(out).rstrip() + '\n')
-
-          # Shadowrocket native global QUIC block as a permanent generator baseline.
-          p = Path('scripts/build_shadowrocket_bundle.py')
-          s = p.read_text(encoding='utf-8')
-          marker = '# HTTPS URL Rewrite needs the target hosts to pass through Shadowrocket\'s HTTP engine.\n'
-          insert = 'BASE_GENERAL_LINES = [\n    "block-quic = all",\n]\n\n'
-          if insert not in s:
-              if marker not in s:
-                  raise SystemExit('Generator insertion marker was not found')
-              s = s.replace(marker, insert + marker, 1)
-          s = s.replace('general_other: list[str] = []', 'general_other: list[str] = list(BASE_GENERAL_LINES)', 1)
-          s = s.replace('        else:\n            general_other.append(line)\n',
-                        '        else:\n            if line not in general_other:\n                general_other.append(line)\n', 1)
-          anchor = '        "DOMAIN-SUFFIX,ts.net,TAILSCALE",\n'
-          if '        "block-quic = all",\n' not in s:
-              if anchor not in s:
-                  raise SystemExit('Generator required-list anchor was not found')
-              s = s.replace(anchor, anchor + '        "block-quic = all",\n', 1)
-          write('scripts/build_shadowrocket_bundle.py', s)
-
-          # Document native QUIC blocking in the Shadowrocket bundle baseline.
-          p = Path('Shadowrocket/Modules/README.md')
-          s = p.read_text(encoding='utf-8')
-          needle = '同时固定加入本仓库自己的基础配置：\n\n'
-          if needle not in s:
-              raise SystemExit('README baseline section was not found')
-          if '- `block-quic = all`：Shadowrocket 原生全局禁用 QUIC / UDP 443\n' not in s:
-              s = s.replace(needle, needle + '- `block-quic = all`：Shadowrocket 原生全局禁用 QUIC / UDP 443\n', 1)
-          write('Shadowrocket/Modules/README.md', s)
-
-          # Retain Action history long enough for useful failure diagnosis.
-          p = Path('.github/workflows/update-checker.yml')
-          s = p.read_text(encoding='utf-8')
-          if "date -u -d '1 day ago' +%s" not in s:
-              raise SystemExit('Expected one-day workflow retention expression was not found')
-          s = s.replace("date -u -d '1 day ago' +%s", "date -u -d '14 days ago' +%s", 1)
-          write('.github/workflows/update-checker.yml', s)
-          PY
-
-      - name: Validate and rebuild
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -m pip install --quiet pyyaml
-          python3 <<'PY'
-          from pathlib import Path
-          import yaml
-
-          for path in ['META.yaml', 'Clash/ClashDirect.yaml', 'Clash/ClashProxy.yaml', 'Clash/ClashReject.yaml']:
-              with open(path, 'r', encoding='utf-8') as f:
-                  yaml.safe_load(f)
-
-          meta = Path('META.yaml').read_text(encoding='utf-8')
-          assert 'fake-ip-range: 198.18.0.1/16' in meta
-          assert 'fake-ip-range: 28.0.0.1/8' not in meta
-          assert 'global-client-fingerprint:' not in meta
-          assert 'fallback-filter:' not in meta
-          assert 'myghproxyhttps://' in meta
-
-          qx = Path('QX.conf').read_text(encoding='utf-8')
-          assert 'private.txt, tag=🛡️PrivacyPlus, force-policy=direct' in qx
-          assert '/Clash//ClashProxy.yaml' not in qx
-          assert 'skip_validating_cert = true' in qx
-
-          qxr = Path('QX/QXRewrite.conf').read_text(encoding='utf-8')
-          assert 'cn.bing.com, www.cn.bing.com' in qxr
-
-          proxy = Path('Clash/ClashProxy.yaml').read_text(encoding='utf-8')
-          assert proxy.count('DOMAIN-SUFFIX,googleapis.com') == 1
-          assert 'DOMAIN-SUFFIX,gstatic.cn' not in proxy
-
-          checker = Path('.github/workflows/update-checker.yml').read_text(encoding='utf-8')
-          assert "date -u -d '14 days ago' +%s" in checker
-          PY
-
-          python3 -m py_compile scripts/build_shadowrocket_bundle.py
-          python3 scripts/build_shadowrocket_bundle.py
-          grep -Fq 'block-quic = all' Shadowrocket/Modules/All-in-One.sgmodule
-
-      - name: Commit reviewed fixes and restore workflow
-        shell: bash
-        run: |
-          set -euo pipefail
-          # Restore this workflow to its pre-cleanup production version in the same result commit.
-          git checkout HEAD^ -- .github/workflows/update-shadowrocket-bundle.yml
           git config user.name "GitHub Action"
           git config user.email "noreply@github.com"
-          git add -A
-          git commit -m "Apply config review fixes"
+          git add Shadowrocket/Modules/All-in-One.sgmodule
+          if git diff --cached --quiet; then
+            echo "No Shadowrocket bundle changes"
+            exit 0
+          fi
+          git commit -m "Update Shadowrocket all-in-one module"
           git push

@@ -133,10 +133,11 @@ Final, 🕹 终极清单
           from pathlib import Path
           meta = Path('META.yaml').read_text(encoding='utf-8')
           qx = Path('QX.conf').read_text(encoding='utf-8')
-          for text, markers in [
+          checks = [
               (meta, ['ClashReject,REJECT','ClashDirect,DIRECT','ClashProxy,PROXY','RULE-SET,gfw,PROXY','RULE-SET,cncidr,DIRECT','RULE-SET,telegramcidr,PROXY','RULE-SET,cfip,PROXY','RULE-SET,googleip,PROXY','RULE-SET,cloudfrontip,DIRECT','MATCH,最终选择']),
               (qx, ['ClashReject.yaml','ClashDirect.yaml','ClashProxy.yaml','surge-rules/release/direct.txt','surge-rules/release/proxy.txt','surge-rules/release/cncidr.txt','/QX/cfip.txt','/QX/googleip.txt','telegramcidr.txt','/QX/cft.txt']),
-          ]:
+          ]
+          for text, markers in checks:
               pos = [text.index(m) for m in markers]
               if pos != sorted(pos):
                   raise SystemExit(f'Routing order validation failed: {pos}')
@@ -144,16 +145,13 @@ Final, 🕹 终极清单
               raise SystemExit('QX safety invariants changed unexpectedly')
           PY
 
-      - name: Build all-in-one Shadowrocket module
-        run: python3 scripts/build_shadowrocket_bundle.py
-
       - name: Commit routing order
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "GitHub Action"
           git config user.email "noreply@github.com"
-          git add META.yaml QX.conf Shadowrocket/Modules/All-in-One.sgmodule
+          git add META.yaml QX.conf
           if git diff --cached --quiet; then
             echo "No routing order changes"
             exit 0

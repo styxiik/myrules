@@ -1,5 +1,4 @@
 name: One-time Routing Order Fix
-# retrigger after workflow exists on main
 
 on:
   push:
@@ -24,98 +23,98 @@ jobs:
           from pathlib import Path
           import re
 
+          meta_lines = [
+              'rules:',
+              '  # Protocol / system exceptions',
+              '  - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC',
+              '  - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT',
+              '',
+              '  # Repair / override rules',
+              '  - RULE-SET,Unbreak,DIRECT,no-resolve',
+              '',
+              '  # Explicit custom rules: REJECT -> DIRECT -> PROXY',
+              '  - RULE-SET,ClashReject,REJECT,no-resolve',
+              '  - RULE-SET,ClashDirect,DIRECT,no-resolve',
+              '  - RULE-SET,ClashProxy,PROXY,no-resolve',
+              '',
+              '  # Generic domain rules: REJECT -> DIRECT -> PROXY',
+              '  # - RULE-SET,reject,REJECT,no-resolve',
+              '  - DOMAIN-SUFFIX,cn,DIRECT',
+              '  - RULE-SET,private,DIRECT,no-resolve',
+              '  - RULE-SET,direct,DIRECT,no-resolve',
+              '  - RULE-SET,icloud,DIRECT,no-resolve',
+              '  - RULE-SET,apple,DIRECT,no-resolve',
+              '  # - RULE-SET,applications,DIRECT',
+              '  - DOMAIN-SUFFIX,goog,PROXY',
+              '  - RULE-SET,gfw,PROXY',
+              '  - RULE-SET,cryptocurrency,PROXY',
+              '  - RULE-SET,google,PROXY',
+              '  - RULE-SET,greatfire,PROXY',
+              '',
+              '  # IP rules: DIRECT -> PROXY',
+              '  - RULE-SET,lancidr,DIRECT,no-resolve',
+              '  - RULE-SET,cncidr,DIRECT,no-resolve',
+              '  - RULE-SET,cnipv6,DIRECT,no-resolve',
+              '  - RULE-SET,telegramcidr,PROXY,no-resolve',
+              '  - RULE-SET,cfip,PROXY,no-resolve',
+              '  - RULE-SET,googleip,PROXY,no-resolve',
+              '',
+              '  # Special fallback: after all explicit PROXY rules, direct remaining AWS/CloudFront IPs',
+              '  - RULE-SET,cloudfrontip,DIRECT,no-resolve',
+              '',
+              '  # Final fallback',
+              '  - GEOIP,CN,DIRECT,no-resolve',
+              '  - MATCH,最终选择',
+          ]
           meta = Path('META.yaml')
           text = meta.read_text(encoding='utf-8')
-          new_rules = '''rules:
-  # Protocol / system exceptions
-  - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC
-  - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
-
-  # Repair / override rules
-  - RULE-SET,Unbreak,DIRECT,no-resolve
-
-  # Explicit custom rules: REJECT -> DIRECT -> PROXY
-  - RULE-SET,ClashReject,REJECT,no-resolve
-  - RULE-SET,ClashDirect,DIRECT,no-resolve
-  - RULE-SET,ClashProxy,PROXY,no-resolve
-
-  # Generic domain rules: REJECT -> DIRECT -> PROXY
-  # - RULE-SET,reject,REJECT,no-resolve
-  - DOMAIN-SUFFIX,cn,DIRECT
-  - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,direct,DIRECT,no-resolve
-  - RULE-SET,icloud,DIRECT,no-resolve
-  - RULE-SET,apple,DIRECT,no-resolve
-  # - RULE-SET,applications,DIRECT
-  - DOMAIN-SUFFIX,goog,PROXY
-  - RULE-SET,gfw,PROXY
-  - RULE-SET,cryptocurrency,PROXY
-  - RULE-SET,google,PROXY
-  - RULE-SET,greatfire,PROXY
-
-  # IP rules: DIRECT -> PROXY
-  - RULE-SET,lancidr,DIRECT,no-resolve
-  - RULE-SET,cncidr,DIRECT,no-resolve
-  - RULE-SET,cnipv6,DIRECT,no-resolve
-  - RULE-SET,telegramcidr,PROXY,no-resolve
-  - RULE-SET,cfip,PROXY,no-resolve
-  - RULE-SET,googleip,PROXY,no-resolve
-
-  # Special fallback: after all explicit PROXY rules, direct remaining AWS/CloudFront IPs
-  - RULE-SET,cloudfrontip,DIRECT,no-resolve
-
-  # Final fallback
-  - GEOIP,CN,DIRECT,no-resolve
-  - MATCH,最终选择
-'''
-          text, n = re.subn(r'(?ms)^rules:\n.*?(?=^sub-rules:)', new_rules, text, count=1)
+          text, n = re.subn(r'(?ms)^rules:\n.*?(?=^sub-rules:)', '\n'.join(meta_lines) + '\n', text, count=1)
           if n != 1:
               raise SystemExit('META rules block replacement failed')
           meta.write_text(text, encoding='utf-8')
 
+          qx_remote_lines = [
+              '[filter_remote]',
+              'FILTER_LAN, tag=LAN, force-policy=direct, enabled=true',
+              'FILTER_REGION, tag=CN, force-policy=direct, enabled=true',
+              'https://raw.githubusercontent.com/ddgksf2013/Filter/master/Unbreak.list, tag=规则修正, force-policy=direct, update-interval=172800, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml, tag=🚫 ClashReject, force-policy=reject, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml, tag=🐼 ClashDirect, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml, tag=🎈ClashProxy, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/reject.txt, tag=🛡️达咩, force-policy=reject, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/apple.txt, tag=🍎 Apple, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/icloud.txt, tag=🍎 icloud, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt, tag=🐼 ChinaDomain, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt, tag=🌍 国外网站, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/gfw.txt, tag=🌍 国外网站GFW, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Cryptocurrency/Cryptocurrency.list, tag=🌍 加密货币, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/cncidr.txt, tag=🐼 ChinaIP, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/QX/cnipv6.txt, tag=🐼 ChinaIP6, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/QX/cfip.txt, tag=🌍 CloudFlareIP, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/QX/googleip.txt, tag=🌍 GoogleIP, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/telegramcidr.txt, tag=💻 Telegram, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true',
+              'https://raw.githubusercontent.com/styxiik/myrules/main/QX/cft.txt, tag=🌍 CloudfrontIP, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true',
+          ]
+          qx_local_lines = [
+              '[filter_local]',
+              'host-suffix, local, direct',
+              'host-wildcard, *.cn, direct',
+              'host-wildcard, *.goog, 🎯 节点',
+              'ip-cidr, 10.0.0.0/8, direct',
+              'ip-cidr, 127.0.0.0/8, direct',
+              'ip-cidr, 172.16.0.0/12, direct',
+              'ip-cidr, 192.168.0.0/16, direct',
+              'ip-cidr, 224.0.0.0/24, direct',
+              'geoip, cn, direct',
+              'Final, 🕹 终极清单',
+          ]
           qx = Path('QX.conf')
           text = qx.read_text(encoding='utf-8')
-          new_remote = '''[filter_remote]
-FILTER_LAN, tag=LAN, force-policy=direct, enabled=true
-FILTER_REGION, tag=CN, force-policy=direct, enabled=true
-https://raw.githubusercontent.com/ddgksf2013/Filter/master/Unbreak.list, tag=规则修正, force-policy=direct, update-interval=172800, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashReject.yaml, tag=🚫 ClashReject, force-policy=reject, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml, tag=🐼 ClashDirect, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml, tag=🎈ClashProxy, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/reject.txt, tag=🛡️达咩, force-policy=reject, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/apple.txt, tag=🍎 Apple, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/icloud.txt, tag=🍎 icloud, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt, tag=🐼 ChinaDomain, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt, tag=🌍 国外网站, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/gfw.txt, tag=🌍 国外网站GFW, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Cryptocurrency/Cryptocurrency.list, tag=🌍 加密货币, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/cncidr.txt, tag=🐼 ChinaIP, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/QX/cnipv6.txt, tag=🐼 ChinaIP6, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/QX/cfip.txt, tag=🌍 CloudFlareIP, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/QX/googleip.txt, tag=🌍 GoogleIP, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/telegramcidr.txt, tag=💻 Telegram, force-policy=🎯 节点, update-interval=86400, opt-parser=true, enabled=true
-https://raw.githubusercontent.com/styxiik/myrules/main/QX/cft.txt, tag=🌍 CloudfrontIP, force-policy=direct, update-interval=86400, opt-parser=true, enabled=true
-'''
-          text, n = re.subn(r'(?ms)^\[filter_remote\]\n.*?(?=^\[rewrite_remote\])', new_remote + '\n', text, count=1)
-          if n != 1:
-              raise SystemExit('QX filter_remote replacement failed')
-
-          new_local = '''[filter_local]
-host-suffix, local, direct
-host-wildcard, *.cn, direct
-host-wildcard, *.goog, 🎯 节点
-ip-cidr, 10.0.0.0/8, direct
-ip-cidr, 127.0.0.0/8, direct
-ip-cidr, 172.16.0.0/12, direct
-ip-cidr, 192.168.0.0/16, direct
-ip-cidr, 224.0.0.0/24, direct
-geoip, cn, direct
-Final, 🕹 终极清单
-'''
-          text, n = re.subn(r'(?ms)^\[filter_local\]\n.*?(?=^\[http_backend\])', new_local + '\n', text, count=1)
-          if n != 1:
-              raise SystemExit('QX filter_local replacement failed')
+          text, n1 = re.subn(r'(?ms)^\[filter_remote\]\n.*?(?=^\[rewrite_remote\])', '\n'.join(qx_remote_lines) + '\n\n', text, count=1)
+          text, n2 = re.subn(r'(?ms)^\[filter_local\]\n.*?(?=^\[http_backend\])', '\n'.join(qx_local_lines) + '\n\n', text, count=1)
+          if n1 != 1 or n2 != 1:
+              raise SystemExit(f'QX routing block replacement failed: {n1}, {n2}')
           if 'skip_validating_cert = true' not in text or 'udp_drop_list = 443' not in text:
               raise SystemExit('QX invariants unexpectedly changed')
           qx.write_text(text, encoding='utf-8')

@@ -1,5 +1,6 @@
 name: One-time Rule Ordering
 # retrigger after initial workflow creation
+# second trigger
 
 on:
   push:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# temporary trigger for routing-order maintenance 2
+# Shadowrocket all-in-one module generator.
 from __future__ import annotations
 
 import json

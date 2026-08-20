@@ -18,6 +18,32 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: 配置自检与修正
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 <<'PY'
+        from pathlib import Path
+
+        qx = Path('QX.conf')
+        text = qx.read_text(encoding='utf-8')
+        text = text.replace(
+            'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=reject',
+            'https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/private.txt, tag=🛡️PrivacyPlus, force-policy=direct',
+        )
+        text = text.replace(
+            'https://raw.githubusercontent.com/styxiik/myrules/main/Clash//ClashProxy.yaml',
+            'https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml',
+        )
+        qx.write_text(text, encoding='utf-8')
+
+        meta = Path('META.yaml')
+        text = meta.read_text(encoding='utf-8')
+        text = text.replace('fake-ip-range: 28.0.0.1/8', 'fake-ip-range: 198.18.0.1/16')
+        text = text.replace('global-client-fingerprint: random\n', '')
+        meta.write_text(text, encoding='utf-8')
+        PY
+
     - name: 判断fakeip
       id: fakeip
       run: |
@@ -193,7 +219,7 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         GH_REPO: ${{ github.repository }}
       run: |
-        cutoff="$(date -u -d '1 day ago' +%s)"
+        cutoff="$(date -u -d '14 days ago' +%s)"
         current="${{ github.run_id }}"
         gh api --paginate "repos/${GH_REPO}/actions/runs?per_page=100" --jq '.workflow_runs[] | [.id,.created_at] | @tsv' |
         while IFS=$'\t' read -r id created_at; do

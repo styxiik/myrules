@@ -17,6 +17,8 @@
 force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, 119.29.29.29:80, dns.weixin.qq.com:443, dns.weixin.qq.com:80, dns.weixin.qq.com:8080, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, *.didapinche.com
 
 [Rule]
+AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP
+AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP
 DOMAIN-WILDCARD,tail*.ts.net,TAILSCALE
 DOMAIN-SUFFIX,ts.net,TAILSCALE
 IP-CIDR,100.64.0.0/10,TAILSCALE,no-resolve

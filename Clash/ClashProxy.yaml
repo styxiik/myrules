@@ -29,11 +29,9 @@ payload:
   - DOMAIN-SUFFIX,github.dev
   - DOMAIN-SUFFIX,openwrt.org
   - DOMAIN-SUFFIX,google.com
-  - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,gvt1.com
   - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,ocsp.pki.goog
-  - DOMAIN-SUFFIX,gstatic.cn
   - DOMAIN-SUFFIX,azureedge.net
   - DOMAIN-SUFFIX,1drv.ms
   - DOMAIN-SUFFIX,onedrive.live.com
@@ -63,4 +61,3 @@ payload:
   - DOMAIN-SUFFIX,99csw.com
   - DOMAIN-SUFFIX,speedtest.net
   - DOMAIN-SUFFIX,connectivity-check.ubuntu.com
-

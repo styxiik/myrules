@@ -39,6 +39,12 @@ BASE_URL_REWRITES = [
     r"^https?://(www\.)?google\.cn https://www.google.com 302",
 ]
 
+# Shadowrocket-native global QUIC block. This is kept in the module because the
+# shared META.yaml uses Mihomo SUB-RULE syntax that Shadowrocket may not preserve.
+BASE_GENERAL_LINES = [
+    "block-quic = all",
+]
+
 # HTTPS URL Rewrite needs the target hosts to pass through Shadowrocket's HTTP engine.
 BASE_FORCE_HTTP_ENGINE_HOSTS = [
     "g.cn",
@@ -167,7 +173,7 @@ def main() -> None:
     # Google CN first so HTTPS redirects always enter Shadowrocket's HTTP engine.
     general_lines = merged.get("General", [])
     force_http_hosts = list(BASE_FORCE_HTTP_ENGINE_HOSTS)
-    general_other: list[str] = []
+    general_other: list[str] = list(BASE_GENERAL_LINES)
     for line in general_lines:
         if line.lstrip().startswith("force-http-engine-hosts") and "=" in line:
             _, value = line.split("=", 1)
@@ -175,7 +181,8 @@ def main() -> None:
                 if hostname not in force_http_hosts:
                     force_http_hosts.append(hostname)
         else:
-            general_other.append(line)
+            if line not in general_other:
+                general_other.append(line)
     merged["General"] = [
         "force-http-engine-hosts = %APPEND% " + ", ".join(force_http_hosts),
         *general_other,
@@ -249,6 +256,7 @@ def main() -> None:
 
     required = [
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
+        "block-quic = all",
         "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",

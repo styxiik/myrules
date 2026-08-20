@@ -251,16 +251,22 @@ rule-providers:
     interval: 86400
     
 rules:
+  # Protocol / system exceptions
   - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
+
+  # Repair / override rules
   - RULE-SET,Unbreak,DIRECT,no-resolve
+
+  # Explicit custom rules: REJECT -> DIRECT -> PROXY
   - RULE-SET,ClashReject,REJECT,no-resolve
-  - RULE-SET,ClashProxy,PROXY,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve
-  - DOMAIN-SUFFIX,cn,DIRECT
+  - RULE-SET,ClashProxy,PROXY,no-resolve
+
+  # Generic domain rules: REJECT -> DIRECT -> PROXY
   # - RULE-SET,reject,REJECT,no-resolve
+  - DOMAIN-SUFFIX,cn,DIRECT
   - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,lancidr,DIRECT,no-resolve
   - RULE-SET,direct,DIRECT,no-resolve
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve
@@ -270,12 +276,19 @@ rules:
   - RULE-SET,cryptocurrency,PROXY
   - RULE-SET,google,PROXY
   - RULE-SET,greatfire,PROXY
+
+  # IP rules: DIRECT -> PROXY
+  - RULE-SET,lancidr,DIRECT,no-resolve
+  - RULE-SET,cncidr,DIRECT,no-resolve
+  - RULE-SET,cnipv6,DIRECT,no-resolve
   - RULE-SET,telegramcidr,PROXY,no-resolve
   - RULE-SET,cfip,PROXY,no-resolve
   - RULE-SET,googleip,PROXY,no-resolve
+
+  # Special fallback: after all explicit PROXY rules, direct remaining AWS/CloudFront IPs
   - RULE-SET,cloudfrontip,DIRECT,no-resolve
-  - RULE-SET,cncidr,DIRECT,no-resolve
-  - RULE-SET,cnipv6,DIRECT,no-resolve
+
+  # Final fallback
   - GEOIP,CN,DIRECT,no-resolve
   - MATCH,最终选择
 sub-rules:

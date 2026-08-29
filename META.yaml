@@ -126,9 +126,9 @@ rule-providers:
 
   reject:
     type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+    behavior: classical
     path: ./ruleset/reject.yaml
+    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
     interval: 86400
 
   private:
@@ -137,7 +137,7 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
     path: ./ruleset/private.yaml
     interval: 86400
-    
+
   lancidr:
     type: http
     behavior: ipcidr
@@ -334,6 +334,24 @@ dns:
   fake-ip-filter:
     - 'github.com'
     - 'ssh.github.com'
+
+    # Banking domains: use real DNS results instead of fake-IP
+    - '+.cmbchina.com'       # 招商银行
+    - '+.cmbimg.com'         # 招商银行静态资源
+    - '+.boc.cn'             # 中国银行
+    - '+.bankofchina.com'    # 中国银行
+    - '+.icbc.com.cn'        # 中国工商银行
+    - '+.abchina.com.cn'     # 中国农业银行
+    - '+.abchina.com'        # 中国农业银行旧域名
+    - '+.95599.cn'           # 中国农业银行旧/业务域名
+    - '+.bankcomm.com'       # 交通银行
+    - '+.bankcomm.cn'        # 交通银行
+    - '+.95559.com.cn'       # 交通银行网银/业务域名
+    - '+.ccb.com'            # 中国建设银行
+    - '+.citicbank.com'      # 中信银行
+    - '+.hsbc.com.hk'        # 香港汇丰
+    - '+.hsbc.com'           # 汇丰集团/香港汇丰相关服务
+
     - '*.lan'
     - '*.localdomain'
     - '*.example'

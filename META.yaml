@@ -332,6 +332,8 @@ dns:
   fake-ip-range: 198.18.0.1/16
   use-hosts: true
   fake-ip-filter:
+    - 'github.com'
+    - 'ssh.github.com'
     - '*.lan'
     - '*.localdomain'
     - '*.example'

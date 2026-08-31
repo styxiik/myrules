@@ -103,13 +103,13 @@ proxy-groups:
     filter: '(?i)(日本|Japan|JP|🇯🇵)'
 
   - name: "DNS-PROXY"
-    type: select
+    type: fallback
     proxies:
       - PROXY
       - DIRECT
     url: http://www.google.com/generate_204
-    # interval: 60
-    # tolerance: 100
+    interval: 60
+    lazy: false
 
 rule-providers:
   Unbreak:

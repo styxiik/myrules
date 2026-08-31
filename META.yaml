@@ -61,9 +61,10 @@ proxy-providers:
     interval: 7200
     path: ./Proxy/MyownMETA.yaml 
     health-check:
-      enable: false
-      interval: 300
+      enable: true
+      interval: 60
       url: http://www.google.com/generate_204
+      lazy: false
       
 proxy-groups:
   - name: "最终选择"
@@ -78,12 +79,28 @@ proxy-groups:
       - MY
 
   - name: "MY"
+    type: fallback
+    proxies:
+      - 美国优先
+      - 日本备份
+    url: http://www.google.com/generate_204
+    interval: 60
+    lazy: false
+
+  - name: "美国优先"
+    type: fallback
+    use:
+      - MYOWN
+    filter: '(?i)(美国|美國|United States|USA|US|🇺🇸)'
+    url: http://www.google.com/generate_204
+    interval: 60
+    lazy: false
+
+  - name: "日本备份"
     type: select
     use:
       - MYOWN
-    url: http://www.google.com/generate_204
-    # interval: 60
-    # tolerance: 100
+    filter: '(?i)(日本|Japan|JP|🇯🇵)'
 
   - name: "DNS-PROXY"
     type: select

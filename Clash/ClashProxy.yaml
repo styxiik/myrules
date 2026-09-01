@@ -17,6 +17,7 @@ payload:
   - DOMAIN-SUFFIX,ai.com
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,zerotier.com
+  - DOMAIN-SUFFIX,tailscale.com
   - DOMAIN-SUFFIX,languagetoolplus.com
   - DOMAIN-SUFFIX,visualstudio.com
   - DOMAIN-SUFFIX,recaptcha.net

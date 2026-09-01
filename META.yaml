@@ -2,7 +2,7 @@ mixed-port: 7890
 allow-lan: true
 bind-address: '*'
 mode: rule
-ipv6: true
+ipv6: false
 log-level: error
 keep-alive-interval: 30
 # find-process-mode: off
@@ -317,7 +317,7 @@ sub-rules:
 dns:
   enable: true
   listen: :53
-  ipv6: true
+  ipv6: false
   default-nameserver:
     - 119.29.29.29
     - 120.53.53.53

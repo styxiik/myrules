@@ -74,4 +74,9 @@ payload:
   - DOMAIN-SUFFIX,tos.mx
   - DOMAIN-SUFFIX,tdameritrade.com
   - DOMAIN-SUFFIX,ameritrade.com
+  # Schwab/TOS news, images and video CDN
+  - DOMAIN-SUFFIX,brightcove.com
+  - DOMAIN-SUFFIX,brightcovecdn.com
+  - DOMAIN-SUFFIX,boltdns.net
+  - DOMAIN-SUFFIX,cnbc.com
   # hosts ip

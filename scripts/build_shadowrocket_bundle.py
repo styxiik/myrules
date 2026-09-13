@@ -54,6 +54,19 @@ BASE_FORCE_HTTP_ENGINE_HOSTS = [
     "www.google.cn",
 ]
 
+# Local MITM settings are authoritative and must survive every generated bundle refresh.
+# Ignore conflicting values for these keys from upstream modules.
+BASE_MITM_LINES = [
+    "h2 = true",
+    "ca-passphrase = RzExkz8eb",
+    "ca-p12 = zEH7MzC9",
+    "enable = true",
+]
+BASE_MITM_KEYS = {
+    line.split("=", 1)[0].strip()
+    for line in BASE_MITM_LINES
+}
+
 # HTTPS decryption hosts required by the local Google CN redirects.
 BASE_MITM_HOSTNAMES = [
     "g.cn",
@@ -135,7 +148,7 @@ def main() -> None:
     argument_chunks: list[str] = []
     argument_descs: list[str] = []
     hostnames: list[str] = list(BASE_MITM_HOSTNAMES)
-    mitm_other: list[str] = []
+    mitm_other: list[str] = list(BASE_MITM_LINES)
     source_notes: list[str] = []
 
     for entry in entries:
@@ -163,6 +176,9 @@ def main() -> None:
                             if hostname not in hostnames:
                                 hostnames.append(hostname)
                     else:
+                        key = line.split("=", 1)[0].strip() if "=" in line else None
+                        if key in BASE_MITM_KEYS:
+                            continue
                         if line not in mitm_other:
                             mitm_other.append(line)
                 continue
@@ -263,6 +279,10 @@ def main() -> None:
         r"^https?://(www\.)?g\.cn https://www.google.com 302",
         r"^https?://(www\.)?google\.cn https://www.google.com 302",
         "force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
+        "h2 = true",
+        "ca-passphrase = RzExkz8eb",
+        "ca-p12 = zEH7MzC9",
+        "enable = true",
         "hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn",
         "爱奇艺_开屏去广告 =",
         "tiebac.baidu.com",

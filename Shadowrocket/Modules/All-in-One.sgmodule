@@ -156,5 +156,5 @@ youtube.request.log_event = type=http-request,pattern=^https:\/\/youtubei\.googl
 hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, *.httpdns.pro, 101.35.204.35, 103.37.155.60, 110.76.8.150, 114.110.96.26, 119.29.29.29, 119.29.29.98, 119.29.29.99, 180.76.76.112, 182.256.116.116, amdc-sibling.alipay.com.cn, amdc.alipay.com, api.weibo.cn, dns.jd.com, dns.weixin.qq.com, short.weixin.qq.com, zijieapi.com, capis.didapinche.com, capis*.didapinche.com, fmapp.chinafamilymart.com.cn, app.bilibili.com, wmapi.meituan.com, hd.mina.mi.com, api.m.jd.com, mi.gdt.qq.com, cmsapi.dmall.com, gw.yolanda.hk, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, tiebac.baidu.com, spclient.wg.spotify.com, *spclient.spotify.com, *.googlevideo.com, youtubei.googleapis.com
 h2 = true
 ca-passphrase = RzExkz8eb
-ca-p12 = zEH7M*z%C9
+ca-p12 = zEH7MzC9
 enable = true

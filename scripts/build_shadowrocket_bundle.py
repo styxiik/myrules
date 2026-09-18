@@ -43,6 +43,8 @@ BASE_URL_REWRITES = [
 # Shadowrocket-native global QUIC block. This is kept in the module because the
 # shared META.yaml uses Mihomo SUB-RULE syntax that Shadowrocket may not preserve.
 BASE_GENERAL_LINES = [
+    "ipv6 = true",
+    "prefer-ipv6 = true",
     "block-quic = all",
 ]
 
@@ -273,6 +275,8 @@ def main() -> None:
 
     required = [
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
+        "ipv6 = true",
+        "prefer-ipv6 = true",
         "block-quic = all",
         "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",

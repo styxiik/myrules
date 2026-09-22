@@ -1,84 +1,106 @@
-# Shadowrocket Modules
+# Shadowrocket
 
-Shadowrocket 直接导入仓库根目录的 `META.yaml` 作为主配置，不再维护单独的 `Shadowrocket-META.yaml`。
+Shadowrocket 不再直接导入根目录的 `META.yaml`，也不需要另外安装 All-in-One 模块。
 
-主配置保持 Mihomo / Shadowrocket 共用；所有 Shadowrocket 专属能力都放在「配置 -> 模块」中。这样不会把 Shadowrocket 专属语法写进 Mihomo 配置。
+## 唯一需要订阅的主配置
 
-## 推荐：一个链接更新全部模块
+```
+https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Shadowrocket.conf
+```
 
-只需要在 Shadowrocket「配置 -> 模块 -> 右上角 +」添加下面这个远程模块：
+`Shadowrocket/Shadowrocket.conf` 是**自动生成文件，不手工维护**。
 
-https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/All-in-One.sgmodule
+## 单一配置源
 
-`All-in-One.sgmodule` 自动聚合以下内容：
+人工维护仍然以根目录 `META.yaml` 为唯一主配置：
+
+```
+META.yaml
+   ├─ proxy-groups / proxy-providers
+   ├─ rules / rule-providers
+   ├─ dns
+   └─ hosts
+        │
+        ▼
+scripts/build_shadowrocket_config.py
+        │
+        ├─ Shadowrocket/Rules/*.list
+        └─ Shadowrocket/Shadowrocket.conf
+```
+
+生成器会读取 META 中的 rule-provider `behavior`，同时检查 payload 实际内容：
+
+- `classical`：保留原生规则类型。
+- `domain`：转换为 Shadowrocket 的 `DOMAIN / DOMAIN-SUFFIX / DOMAIN-WILDCARD`。
+- `ipcidr`：转换为 `IP-CIDR / IP-CIDR6`，并按 META 的 `no-resolve` 语义生成。
+- 如果 payload 本身已经带 `DOMAIN-SUFFIX` 等类型，则优先按实际内容转换，不盲信错误的 provider metadata。
+
+因此 Shadowrocket 不再直接读取 Clash 的 `payload:` YAML，也不会丢失 `behavior: domain/ipcidr` 的语义。
+
+## 模块已内联到主配置
+
+`Shadowrocket/Modules/All-in-One.sgmodule` 仍作为**构建中间产物**自动聚合上游，但 Shadowrocket 客户端不再需要安装它。
+
+它目前聚合：
 
 - Tailscale
 - BlockHTTPDNS / blackmatrix7
 - ZhihuAssistantPlus / blackmatrix7
-- Startup Ads 开屏去广告 / blackmatrix7
+- Startup Ads / blackmatrix7
 - Tieba / app2smile
 - Spotify / app2smile
 - YouTube Enhance / Maasea
+- Google CN 重定向
+- Shadowrocket 原生 QUIC 设置
 
-同时固定加入本仓库自己的基础配置：
+随后生成器把模块的以下 section 直接并入最终 `Shadowrocket.conf`：
 
-- `block-quic = all`：Shadowrocket 原生全局禁用 QUIC / UDP 443
-- `^https?://(www\.)?g\.cn` 302 到 `https://www.google.com`
-- `^https?://(www\.)?google\.cn` 302 到 `https://www.google.com`
+- `[General]`
+- `[Rule]`
+- `[Host]`
+- `[URL Rewrite]`
+- `[Header Rewrite]`
+- `[Script]`
+- `[MITM]`
 
-`.github/workflows/update-shadowrocket-bundle.yml` 每天拉取这些上游的最新模块，由 `scripts/build_shadowrocket_bundle.py` 按 section 重新生成 `All-in-One.sgmodule`。生成器不会直接拼接多个 `[MITM]`，而是合并并去重 hostname，统一使用 `%APPEND%`；模块参数和 `force-http-engine-hosts` 也会合并保留。
+模块中的 `{{{参数}}}` 会在构建时使用模块当前默认值展开，因此最终主配置不会残留只能在模块环境中解释的占位符。
 
-因此 Shadowrocket 端只维护这一条远程模块 URL。以后使用模块页面的「更新模块」或自动后台更新，就会刷新整套聚合模块。
+## 自动更新
 
-如果某个上游临时失效，生成 workflow 会失败并保留上一版可用的 `All-in-One.sgmodule`，不会把空文件覆盖到主分支。
+`.github/workflows/update-shadowrocket-bundle.yml` 会在以下情况下自动重建：
 
-## 为什么不直接使用第三方“大而全” All-in-One
+- `META.yaml` 修改
+- `Clash/**` 修改
+- Shadowrocket 模块源或聚合脚本修改
+- Shadowrocket 配置生成器修改
+- 每日定时任务
+- 手工 workflow dispatch
 
-当前公开可确认的 Shadowrocket `AllInOne.sgmodule` 主要来自 blackmatrix7，而不是 ddgksf2013 当前维护的模块仓库。blackmatrix7 的 AllInOne 覆盖范围非常广，会带入大量与本配置目标无关的规则、脚本和 MITM hostname；同时不同功能的独立原生模块更新节奏可能更快。
+Action 会先生成 `All-in-One.sgmodule`，再生成原生规则集和最终 `Shadowrocket.conf`，最后只提交机器生成产物。
 
-因此本仓库采用“精选上游 + 自动聚合”的方式：人工只维护少量上游入口，实际内容由原作者维护，GitHub Action 自动生成单一模块链接。这样既保留一键更新体验，也减少无关规则和冲突风险。
+所以正常使用时只需要维护：
+
+1. `META.yaml`
+2. 必要时维护 `Shadowrocket/Modules/sources.json`
+
+不要手工编辑 `Shadowrocket/Shadowrocket.conf` 或 `Shadowrocket/Rules/*.list`。
+
+## 节点订阅
+
+META 中的 proxy-provider 名称会直接映射到 Shadowrocket 策略组的订阅筛选，例如：
+
+```
+美国优先 = fallback,MYOWN,use=true,policy-regex-filter=...
+```
+
+因此 Shadowrocket 中的节点订阅名称需要继续与 META provider 名称一致（当前为 `MYOWN`）。
 
 ## Tailscale
 
-Shadowrocket 原生 Tailscale 全局模组使用专属 `TAILSCALE` 规则策略，而 Mihomo 不认识这个策略名，因此 Tailscale 的 Shadowrocket 专属规则保留在本目录的 `Tailscale.sgmodule`，并由 All-in-One 自动聚合：
+Tailscale 规则会在最终配置中保持高优先级：
 
-https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/Tailscale.sgmodule
+- `*.ts.net -> TAILSCALE`
+- `100.64.0.0/10 -> TAILSCALE`
+- `fd7a:115c:a1e0::/48 -> TAILSCALE`
 
-启用前先在 Shadowrocket 设置中启用原生 Tailscale 功能。模块负责把 `*.ts.net`、`100.64.0.0/10` 和 Tailscale IPv6 ULA 流量交给 `TAILSCALE` 策略。
-
-共享的 `Clash/ClashDirect.yaml` 仍保留 `100.64.0.0/10` 与 `fd7a:115c:a1e0::/48`，用于 Windows Mihomo / Tailscale 共存。
-
-## 独立模块地址（备用）
-
-如果需要单独启停某一功能，仍可以不用 All-in-One，改为分别安装以下模块。
-
-### Block HTTPDNS — blackmatrix7
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/BlockHTTPDNS/BlockHTTPDNS.sgmodule
-
-### 知乎增强 / 去广告 — blackmatrix7
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/ZhihuAssistant/ZhihuAssistantPlus/zhihu_plus.sgmodule
-
-### 开屏去广告 — blackmatrix7
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.sgmodule
-
-### 百度贴吧 — app2smile
-https://raw.githubusercontent.com/app2smile/rules/master/module/tieba.sgmodule
-
-### Spotify — app2smile
-https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module
-
-### YouTube 去广告 / 增强 — Maasea
-https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
-
-## 原则
-
-1. `META.yaml` 是唯一主配置和节点订阅入口，继续使用 `MyownMETA订阅` 占位符。
-2. 不再向 Clash YAML 写 `modules:`；实测 Shadowrocket 转换器会忽略该字段。
-3. 优先使用原作者/主维护仓库提供的 Shadowrocket / Surge 原生模块。
-4. 不再引用已删除的 `ddgksf2013/Modules`。
-5. 模块涉及 HTTPS MITM 时，CA 证书只在设备本地生成和信任，不把证书私钥或 p12 提交到 GitHub。
-6. 模块规则优先于主配置，因此 Shadowrocket 专属的 Tailscale 规则可以覆盖共享 META 中的通用直连逻辑。
-
-## 机器可读清单与自动检查
-
-`sources.json` 保存各个上游模块地址，是构建 All-in-One 的来源清单，不是给 Shadowrocket 直接订阅的格式。`.github/workflows/check-module-upstreams.yml` 每周检查这些 URL 是否仍可访问，也支持手动执行。
+这样可以覆盖共享 META/Clash 中针对这些网段的通用直连规则。

@@ -7,9 +7,12 @@ on:
   push:
     branches: [main, shadowrocket-all-in-one-module]
     paths:
+      - 'META.yaml'
+      - 'Clash/**'
       - 'Shadowrocket/Modules/sources.json'
       - 'Shadowrocket/Modules/Tailscale.sgmodule'
       - 'scripts/build_shadowrocket_bundle.py'
+      - 'scripts/build_shadowrocket_config.py'
       - '.github/workflows/update-shadowrocket-bundle.yml'
 
 permissions:
@@ -21,20 +24,59 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Build all-in-one Shadowrocket module
+      - name: Install generator dependency
+        run: python3 -m pip install --disable-pip-version-check pyyaml
+
+      - name: Build Shadowrocket module bundle
         run: python3 scripts/build_shadowrocket_bundle.py
 
-      - name: Commit generated bundle
+      - name: Build native Shadowrocket config and rule sets
+        run: python3 scripts/build_shadowrocket_config.py
+
+      - name: Commit generated Shadowrocket artifacts
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "GitHub Action"
           git config user.email "noreply@github.com"
-          git add Shadowrocket/Modules/All-in-One.sgmodule
-          if git diff --cached --quiet; then
-            echo "No Shadowrocket bundle changes"
-            exit 0
-          fi
-          git commit -m "Update Shadowrocket all-in-one module"
-          git push
+
+          # Another workflow or an edit may advance main while this job is
+          # generating. Never place artifacts generated from an old META.yaml
+          # on top of a newer source commit. Refresh and rebuild instead.
+          for attempt in 1 2 3; do
+            git fetch origin main
+
+            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              echo "main advanced while generating; rebuilding from latest source (attempt $attempt)"
+              git reset --hard origin/main
+              python3 scripts/build_shadowrocket_bundle.py
+              python3 scripts/build_shadowrocket_config.py
+            fi
+
+            git add Shadowrocket/Modules/All-in-One.sgmodule
+            git add Shadowrocket/Shadowrocket.conf
+            git add -A Shadowrocket/Rules
+
+            if git diff --cached --quiet; then
+              echo "No Shadowrocket generated changes"
+              exit 0
+            fi
+
+            git commit -m "Update generated Shadowrocket config"
+
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            echo "Push raced with another update; retrying from latest main"
+            git fetch origin main
+            git reset --hard origin/main
+            python3 scripts/build_shadowrocket_bundle.py
+            python3 scripts/build_shadowrocket_config.py
+          done
+
+          echo "Failed to publish generated Shadowrocket artifacts after 3 attempts" >&2
+          exit 1

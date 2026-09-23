@@ -40,12 +40,13 @@ BASE_URL_REWRITES = [
     r"^https?://(www\.)?google\.cn https://www.google.com 302",
 ]
 
-# Shadowrocket-native global QUIC block. This is kept in the module because the
-# shared META.yaml uses Mihomo SUB-RULE syntax that Shadowrocket may not preserve.
+# Shadowrocket-native network preferences. Keep IPv6 available, but do not
+# globally prefer it; some dual-stack CN services have unreliable IPv6 paths.
+# QUIC is not blocked globally. Targeted Google CN UDP/443 fallback rules live
+# in BASE_RULES above.
 BASE_GENERAL_LINES = [
     "ipv6 = true",
-    "prefer-ipv6 = true",
-    "block-quic = all",
+    "prefer-ipv6 = false",
 ]
 
 # HTTPS URL Rewrite needs the target hosts to pass through Shadowrocket's HTTP engine.
@@ -276,8 +277,7 @@ def main() -> None:
     required = [
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         "ipv6 = true",
-        "prefer-ipv6 = true",
-        "block-quic = all",
+        "prefer-ipv6 = false",
         "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",

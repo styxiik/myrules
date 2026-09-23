@@ -366,7 +366,7 @@ def main() -> None:
         "[Rule]",
         "FINAL,最终选择",
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
-        "block-quic = all",
+        "prefer-ipv6 = false",
         "[Script]",
         "[MITM]",
     ]

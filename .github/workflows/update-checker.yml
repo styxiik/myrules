@@ -117,6 +117,10 @@ jobs:
         sed -i '$a\+.pingan.com.cn' fake.list
         sed -i '$a\+.stun.l.google.com' fake.list
         sed -i '$a\+.zerotier.com' fake.list
+        # thinkorswim / Charles Schwab: keep real DNS answers for long-lived app sessions
+        sed -i '$a\+.schwab.com' fake.list
+        sed -i '$a\+.thinkorswim.com' fake.list
+        sed -i '$a\+.tos.mx' fake.list
         sed -i '$a\al.mydomain1' fake.list
         sed -i '$a\alist.mydomain1' fake.list
         sed -i '$a\nec.mydomain1' fake.list

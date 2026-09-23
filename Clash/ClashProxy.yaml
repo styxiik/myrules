@@ -16,6 +16,7 @@ payload:
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,ai.com
   - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,meta.ai
   - DOMAIN-SUFFIX,metaaivm.com
   - DOMAIN-SUFFIX,zerotier.com
   - DOMAIN-SUFFIX,languagetoolplus.com

@@ -15,6 +15,9 @@ DOMAIN-SUFFIX,fast.com
 DOMAIN-SUFFIX,bing.com
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,meta.ai
 DOMAIN-SUFFIX,metaaivm.com

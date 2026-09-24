@@ -18,6 +18,7 @@ force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, 119
 ipv6 = true
 prefer-ipv6 = false
 dns-direct-system = true
+direct-dns-server = system
 
 [Rule]
 AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP

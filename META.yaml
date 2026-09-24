@@ -318,6 +318,10 @@ dns:
   enable: true
   listen: :53
   ipv6: true
+  respect-rules: true
+  direct-nameserver:
+    - system
+  direct-nameserver-follow-policy: false
   default-nameserver:
     - 119.29.29.29
     - 120.53.53.53
@@ -336,10 +340,7 @@ dns:
     - tls://120.53.53.53
   nameserver-policy:
     "rule-set:direct,icloud,apple,applications,private":
-      - https://1.12.12.12/dns-query
-      - tls://1.12.12.12
-      - https://120.53.53.53/dns-query
-      - tls://120.53.53.53
+      - system
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"

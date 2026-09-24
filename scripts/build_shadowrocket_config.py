@@ -368,6 +368,7 @@ def main() -> None:
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         "prefer-ipv6 = false",
         "dns-direct-system = true",
+        "direct-dns-server = system",
         "[Script]",
         "[MITM]",
     ]

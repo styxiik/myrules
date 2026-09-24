@@ -339,7 +339,7 @@ dns:
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
   nameserver-policy:
-    "rule-set:direct,icloud,apple,applications,private":
+    "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
       - system
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"

@@ -273,6 +273,9 @@ rules:
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
 
   # Repair / override rules
+  # Force Google download hosts through proxy before Unbreak can match them as DIRECT
+  - DOMAIN,dl.google.com,PROXY
+  - DOMAIN,dl.l.google.com,PROXY
   - RULE-SET,Unbreak,DIRECT,no-resolve
 
   # Explicit custom rules: REJECT -> DIRECT -> PROXY

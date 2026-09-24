@@ -1,0 +1,32 @@
+name: Sync QX Direct DNS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Clash/ClashDirect.yaml"
+      - "QX.conf"
+      - "scripts/sync_qx_direct_dns.py"
+      - ".github/workflows/update-qx-direct-dns.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync explicit DIRECT domains to system DNS
+        run: python3 scripts/sync_qx_direct_dns.py
+      - name: Commit generated QX DNS block
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "noreply@github.com"
+          git add QX.conf
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Sync QX direct system DNS"
+          git push

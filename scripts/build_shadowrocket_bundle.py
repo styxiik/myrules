@@ -48,6 +48,7 @@ BASE_GENERAL_LINES = [
     "ipv6 = true",
     "prefer-ipv6 = false",
     "dns-direct-system = true",
+    "direct-dns-server = system",
 ]
 
 # HTTPS URL Rewrite needs the target hosts to pass through Shadowrocket's HTTP engine.
@@ -280,6 +281,7 @@ def main() -> None:
         "ipv6 = true",
         "prefer-ipv6 = false",
         "dns-direct-system = true",
+        "direct-dns-server = system",
         "AND,((DOMAIN-SUFFIX,g.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         "AND,((DOMAIN-SUFFIX,google.cn),(PROTOCOL,UDP),(DST-PORT,443)),REJECT-NO-DROP",
         r"^https?://(www\.)?g\.cn https://www.google.com 302",

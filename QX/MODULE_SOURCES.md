@@ -4,7 +4,6 @@
 
 ## 直接保留的主维护来源
 
-- BlockHTTPDNS：blackmatrix7 `rewrite/QuantumultX/BlockHTTPDNS/BlockHTTPDNS.conf`
 - 知乎：blackmatrix7 `script/zheye/zheye.snippet`
 - 百度贴吧：app2smile `module/tieba-qx.conf`
 - Spotify：app2smile `module/spotify.conf`
@@ -21,7 +20,7 @@
 
 - 主配置直接使用根目录 `META.yaml`，不再维护单独的 Shadowrocket 配置文件。
 - Shadowrocket 专属能力统一由 `Shadowrocket/Modules/All-in-One.sgmodule` 提供。
-- All-in-One 自动聚合 Tailscale、BlockHTTPDNS、知乎、贴吧、Spotify、YouTube Enhance，并固定保留 Google CN 重定向所需的 HTTP Engine / URL Rewrite / MITM 配置。
+- All-in-One 自动聚合 Tailscale、知乎、贴吧、Spotify、YouTube Enhance，并固定保留 Google CN 重定向所需的 HTTP Engine / URL Rewrite / MITM 配置。
 - `scripts/build_shadowrocket_bundle.py` 与 `update-shadowrocket-bundle.yml` 负责自动更新聚合模块。
 - `sources.json` 仅作为上游清单和构建输入，不是 Shadowrocket 直接订阅格式。
 

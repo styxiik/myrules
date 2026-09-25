@@ -238,7 +238,7 @@ def main() -> None:
 
     lines = [
         "#!name=MyRules All-in-One",
-        "#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Startup Ads + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
+        "#!desc=Tailscale + Google CN redirect + Zhihu + Startup Ads + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.",
         "#!author=styxiik/myrules",
     ]
     if combined_arguments:

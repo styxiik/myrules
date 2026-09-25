@@ -1,12 +1,11 @@
 #!name=MyRules All-in-One
-#!desc=Tailscale + Google CN redirect + BlockHTTPDNS + Zhihu + Startup Ads + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.
+#!desc=Tailscale + Google CN redirect + Zhihu + Startup Ads + Tieba + Spotify + YouTube Enhance. Auto-generated; do not edit by hand.
 #!author=styxiik/myrules
 #!arguments=per_filter_video:0,屏蔽上传按钮:true,屏蔽选段按钮:true,屏蔽Shorts按钮:false,字幕翻译语言:off,启用调试模式:false
 #!arguments-desc=per_filter_video:设置为1则推荐页不展示视频贴\n\n- 屏蔽参数：[true, false] \n- 翻译参数：[语言代码, off] \n\n1. 语言代码遵循 Google Translate Languages Codes, 当填入 off 时关闭翻译\n2. 开启调试模式用于输出更多日志
 
 # Generated from maintained upstream modules:
 # source: Tailscale -> https://raw.githubusercontent.com/styxiik/myrules/main/Shadowrocket/Modules/Tailscale.sgmodule
-# source: BlockHTTPDNS -> https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/BlockHTTPDNS/BlockHTTPDNS.sgmodule
 # source: ZhihuAssistantPlus -> https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/ZhihuAssistant/ZhihuAssistantPlus/zhihu_plus.sgmodule
 # source: StartupAds -> https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.sgmodule
 # source: Tieba -> https://raw.githubusercontent.com/app2smile/rules/master/module/tieba.sgmodule
@@ -14,7 +13,7 @@
 # source: YouTubeEnhance -> https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
 
 [General]
-force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, 119.29.29.29:80, dns.weixin.qq.com:443, dns.weixin.qq.com:80, dns.weixin.qq.com:8080, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, *.didapinche.com
+force-http-engine-hosts = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, *.didapinche.com
 ipv6 = true
 prefer-ipv6 = false
 dns-direct-system = true
@@ -27,71 +26,6 @@ DOMAIN-WILDCARD,tail*.ts.net,TAILSCALE
 DOMAIN-SUFFIX,ts.net,TAILSCALE
 IP-CIDR,100.64.0.0/10,TAILSCALE,no-resolve
 IP-CIDR6,fd7a:115c:a1e0::/48,TAILSCALE,no-resolve
-DOMAIN,dns.jd.com,REJECT
-DOMAIN,dns.weibo.cn,REJECT
-DOMAIN,dns.weixin.qq.com,REJECT
-DOMAIN,dns.weixin.qq.com.cn,REJECT
-DOMAIN,httpdns-api.aliyuncs.com,REJECT
-DOMAIN,httpdns-sc.aliyuncs.com,REJECT
-DOMAIN,httpdns.alicdn.com,REJECT
-DOMAIN,httpdns.baidu.com,REJECT
-DOMAIN,httpdns.baidubce.com,REJECT
-DOMAIN,httpdns.bilivideo.com,REJECT
-DOMAIN,httpdns.c.cdnhwc2.com,REJECT
-DOMAIN,httpdns.calorietech.com,REJECT
-DOMAIN,httpdns.meituan.com,REJECT
-DOMAIN,httpdns.music.163.com,REJECT
-DOMAIN,httpdns.n.netease.com,REJECT
-DOMAIN,httpdns.push.oppomobile.com,REJECT
-DOMAIN,httpdns.volcengineapi.com,REJECT
-DOMAIN,httpdns.yunxindns.com,REJECT
-DOMAIN,httpdnsvip.meituan.com,REJECT
-DOMAIN,httpsdns.baidu.com,REJECT
-DOMAIN,lofter.httpdns.c.163.com,REJECT
-DOMAIN,music.httpdns.c.163.com,REJECT
-DOMAIN-SUFFIX,httpdns.pro,REJECT
-IP-CIDR,101.124.19.122/32,REJECT,no-resolve
-IP-CIDR,101.91.140.124/32,REJECT,no-resolve
-IP-CIDR,101.91.140.224/32,REJECT,no-resolve
-IP-CIDR,103.224.222.208/32,REJECT,no-resolve
-IP-CIDR,112.64.218.119/32,REJECT,no-resolve
-IP-CIDR,112.65.200.117/32,REJECT,no-resolve
-IP-CIDR,114.116.215.110/32,REJECT,no-resolve
-IP-CIDR,115.236.121.195/32,REJECT,no-resolve
-IP-CIDR,115.236.121.51/32,REJECT,no-resolve
-IP-CIDR,116.63.10.135/32,REJECT,no-resolve
-IP-CIDR,116.63.10.31/32,REJECT,no-resolve
-IP-CIDR,117.144.238.29/32,REJECT,no-resolve
-IP-CIDR,117.185.228.108/32,REJECT,no-resolve
-IP-CIDR,118.89.204.198/32,REJECT,no-resolve
-IP-CIDR,119.29.29.98/32,REJECT,no-resolve
-IP-CIDR,119.29.29.99/32,REJECT,no-resolve
-IP-CIDR,120.46.169.234/32,REJECT,no-resolve
-IP-CIDR,121.36.72.124/32,REJECT,no-resolve
-IP-CIDR,122.9.13.79/32,REJECT,no-resolve
-IP-CIDR,122.9.15.129/32,REJECT,no-resolve
-IP-CIDR,122.9.7.134/32,REJECT,no-resolve
-IP-CIDR,123.151.54.50/32,REJECT,no-resolve
-IP-CIDR,180.76.76.200/32,REJECT,no-resolve
-IP-CIDR,182.254.116.117/32,REJECT,no-resolve
-IP-CIDR,182.254.118.119/32,REJECT,no-resolve
-IP-CIDR,202.90.108.13/32,REJECT,no-resolve
-IP-CIDR,202.90.110.46/32,REJECT,no-resolve
-IP-CIDR,203.107.1.0/24,REJECT,no-resolve
-IP-CIDR,2402:4e00:1200:ed00:0:9089:6dac:96b6/128,REJECT,no-resolve
-IP-CIDR,2402:4e00:1900:1700:0:9554:1ad9:c3a/128,REJECT,no-resolve
-IP-CIDR,2402:db40:5100:1011::5/128,REJECT,no-resolve
-IP-CIDR,240e:928:1400:10::25/128,REJECT,no-resolve
-IP-CIDR,39.97.128.148/32,REJECT,no-resolve
-IP-CIDR,39.97.130.51/32,REJECT,no-resolve
-IP-CIDR,42.187.182.106/32,REJECT,no-resolve
-IP-CIDR,42.187.182.123/32,REJECT,no-resolve
-IP-CIDR,42.187.184.154/32,REJECT,no-resolve
-IP-CIDR,42.81.232.18/32,REJECT,no-resolve
-IP-CIDR,47.100.123.169/32,REJECT,no-resolve
-IP-CIDR,47.101.175.206/32,REJECT,no-resolve
-IP-CIDR,59.111.239.61/32,REJECT,no-resolve
-IP-CIDR,59.111.239.62/32,REJECT,no-resolve
 DOMAIN,appcloud2.in.zhihu.com,REJECT
 DOMAIN,mqtt.zhihu.com,REJECT
 DOMAIN,sugar.zhihu.com,REJECT
@@ -110,27 +44,6 @@ RULE-SET,https://raw.githubusercontent.com/app2smile/rules/master/rule/tieba-ad.
 [URL Rewrite]
 ^https?://(www\.)?g\.cn https://www.google.com 302
 ^https?://(www\.)?google\.cn https://www.google.com 302
-^http:\/\/101\.35\.204\.35\/d - reject
-^http:\/\/103\.37\.155\.60\/fetch - reject
-^http:\/\/114\.110\.96\.26\/d - reject
-^http:\/\/116\.63\.10\.135\/resolve - reject
-^http:\/\/117\.185\.228\.108\/resolve - reject
-^http:\/\/180\.76\.76\.112\/v4\/resolve - reject
-^http:\/\/182\.256\.116\.116\/d - reject
-^http:\/\/[2402:4e00:1411:201:0:9964:ba21:5a41]\/d - reject
-^http:\/\/[240c:409f::3:0:163]\/d - reject
-^http:\/\/api\.weibo\.cn\/2\/httpdns\/config - reject
-^https:\/\/dns\.jd\.com\/v6\/b - reject
-^https?:\/\/.+\.zijieapi\.com\/get_domains\/ - reject
-^https?:\/\/110\.76\.8\.150\/squery - reject
-^https?:\/\/119\.29\.29\.29\/d - reject
-^https?:\/\/203\.209\.230\.39\/squery - reject
-^https?:\/\/2400:B180:6001::18F\/squery - reject
-^https?:\/\/2400:B200:1005:3000::155\/squery - reject
-^https?:\/\/amdc-sibling\.alipay\.com\.cn\/s?query - reject
-^https?:\/\/amdc\.alipay\.com\/s?query - reject
-^https?:\/\/dns\.weixin\.qq\.com\/cgi-bin\/micromsg-bin\/newgetdns - reject
-^https?:\/\/short\.weixin\.qq\.com\/cgi-bin\/micromsg-bin\/getcdndns - reject
 
 [Header Rewrite]
 # if-none-match返回304状态码
@@ -160,4 +73,4 @@ h2 = true
 ca-passphrase = RzExkz8eb
 ca-p12 = zEH7MzC9
 enable = true
-hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, *.httpdns.pro, 101.35.204.35, 103.37.155.60, 110.76.8.150, 114.110.96.26, 119.29.29.29, 119.29.29.98, 119.29.29.99, 180.76.76.112, 182.256.116.116, amdc-sibling.alipay.com.cn, amdc.alipay.com, api.weibo.cn, dns.jd.com, dns.weixin.qq.com, short.weixin.qq.com, zijieapi.com, capis.didapinche.com, capis*.didapinche.com, fmapp.chinafamilymart.com.cn, app.bilibili.com, wmapi.meituan.com, hd.mina.mi.com, api.m.jd.com, mi.gdt.qq.com, cmsapi.dmall.com, gw.yolanda.hk, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, tiebac.baidu.com, spclient.wg.spotify.com, *spclient.spotify.com, *.googlevideo.com, youtubei.googleapis.com
+hostname = %APPEND% g.cn, www.g.cn, google.cn, www.google.cn, capis.didapinche.com, capis*.didapinche.com, fmapp.chinafamilymart.com.cn, app.bilibili.com, wmapi.meituan.com, hd.mina.mi.com, api.m.jd.com, mi.gdt.qq.com, cmsapi.dmall.com, gw.yolanda.hk, t7z.cupid.iqiyi.com, kjp.cupid.iqiyi.com, tiebac.baidu.com, spclient.wg.spotify.com, *spclient.spotify.com, *.googlevideo.com, youtubei.googleapis.com

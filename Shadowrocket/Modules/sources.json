@@ -7,12 +7,6 @@
       "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fstyxiik%2Fmyrules%2Fmain%2FShadowrocket%2FModules%2FTailscale.sgmodule"
     },
     {
-      "name": "BlockHTTPDNS",
-      "maintainer": "blackmatrix7",
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/BlockHTTPDNS/BlockHTTPDNS.sgmodule",
-      "install_url": "shadowrocket://install?module=https%3A%2F%2Fraw.githubusercontent.com%2Fblackmatrix7%2Fios_rule_script%2Fmaster%2Frewrite%2FShadowrocket%2FBlockHTTPDNS%2FBlockHTTPDNS.sgmodule"
-    },
-    {
       "name": "ZhihuAssistantPlus",
       "maintainer": "blackmatrix7",
       "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Shadowrocket/ZhihuAssistant/ZhihuAssistantPlus/zhihu_plus.sgmodule",
@@ -44,11 +38,6 @@
     }
   ],
   "quantumult_x": [
-    {
-      "name": "BlockHTTPDNS",
-      "maintainer": "blackmatrix7",
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/QuantumultX/BlockHTTPDNS/BlockHTTPDNS.conf"
-    },
     {
       "name": "Zhihu",
       "maintainer": "blackmatrix7",

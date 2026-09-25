@@ -44,7 +44,6 @@ scripts/build_shadowrocket_config.py
 它目前聚合：
 
 - Tailscale
-- BlockHTTPDNS / blackmatrix7
 - ZhihuAssistantPlus / blackmatrix7
 - Startup Ads / blackmatrix7
 - Tieba / app2smile

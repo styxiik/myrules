@@ -448,8 +448,6 @@ dns:
     - 'localhost.ptlogin2.qq.com'
     - 'localhost.sec.qq.com'
     - '+.qq.com'
-    - '+.tencentmusic.com'
-    - '+.ofalias.net'
     - '+.tencent.com'
     - '+.srv.nintendo.net'
     - '*.n.n.srv.nintendo.net'

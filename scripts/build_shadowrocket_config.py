@@ -293,11 +293,33 @@ def shadowrocket_real_ip_filters(filters: list[Any]) -> list[str]:
     return translated
 
 
+def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
+    """Build Shadowrocket DIRECT DNS: system plus META direct-nameserver."""
+    servers: list[str] = []
+    seen: set[str] = set()
+    for raw in ["system", *(dns.get("direct-nameserver") or [])]:
+        value = str(raw).strip()
+        if value and value not in seen:
+            servers.append(value)
+            seen.add(value)
+    return servers
+
+
 def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     dns = meta.get("dns", {}) or {}
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
     proxy_ns = [str(x) for x in (dns.get("proxy-server-nameserver") or [])]
+    direct_ns = shadowrocket_direct_nameservers(dns)
     fake_filters = shadowrocket_real_ip_filters(list(dns.get("fake-ip-filter") or []))
+
+    # META owns DNS policy. Legacy module DNS defaults must not override it.
+    filtered_module_general: list[str] = []
+    for line in module_general:
+        if "=" in line and not line.lstrip().startswith("#"):
+            key = line.split("=", 1)[0].strip()
+            if key in {"dns-direct-system", "direct-dns-server"}:
+                continue
+        filtered_module_general.append(line)
 
     base = [
         "yaml = true",
@@ -305,6 +327,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
         "skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, captive.apple.com",
         "tun-excluded-routes = 239.255.255.250/32, 224.0.0.251/32, ff02::fb/128",
         "dns-server = " + ", ".join(nameservers),
+        "direct-dns-server = " + ", ".join(direct_ns),
     ]
     if proxy_ns:
         base.append("proxy-dns-server = " + ", ".join(proxy_ns))
@@ -317,7 +340,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
 
     merged: OrderedDict[str, str] = OrderedDict()
     raw_lines: list[str] = []
-    for line in base + module_general:
+    for line in base + filtered_module_general:
         if "=" in line and not line.lstrip().startswith("#"):
             key = line.split("=", 1)[0].strip()
             merged[key] = line
@@ -392,8 +415,7 @@ def main() -> None:
         "FINAL,最终选择",
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         "prefer-ipv6 = false",
-        "dns-direct-system = true",
-        "direct-dns-server = system",
+        "direct-dns-server = system, https://1.12.12.12/dns-query, tls://1.12.12.12, https://120.53.53.53/dns-query, tls://120.53.53.53",
         "[Script]",
         "[MITM]",
     ]
@@ -402,6 +424,8 @@ def main() -> None:
             raise SystemExit(f"Generated Shadowrocket config missing required marker: {marker}")
     if PLACEHOLDER_RE.search(output):
         raise SystemExit("Generated config still contains unresolved module placeholders")
+    if "dns-direct-system =" in output:
+        raise SystemExit("Generated config must not contain dns-direct-system")
     always_real_ip = next(
         (line for line in output.splitlines() if line.startswith("always-real-ip = ")),
         "",

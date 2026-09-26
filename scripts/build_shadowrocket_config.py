@@ -268,11 +268,36 @@ def translate_meta_rule(rule: str, rule_urls: dict[str, str]) -> str | None:
     return re.sub(r"\(NETWORK,([^)]+)\)", r"(PROTOCOL,\1)", rule)
 
 
+def shadowrocket_real_ip_filters(filters: list[Any]) -> list[str]:
+    """Translate Mihomo fake-ip-filter syntax to Shadowrocket always-real-ip."""
+    translated: list[str] = []
+    seen: set[str] = set()
+
+    def add(value: str) -> None:
+        value = value.strip()
+        if value and value not in seen:
+            translated.append(value)
+            seen.add(value)
+
+    for raw in filters:
+        value = str(raw).strip()
+        if value.startswith("+.") and len(value) > 2:
+            # Mihomo "+.example.com" covers both the apex and subdomains.
+            # Shadowrocket always-real-ip uses ordinary/wildcard host patterns.
+            domain = value[2:].lstrip(".")
+            add(domain)
+            add("*." + domain)
+        else:
+            add(value)
+
+    return translated
+
+
 def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     dns = meta.get("dns", {}) or {}
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
     proxy_ns = [str(x) for x in (dns.get("proxy-server-nameserver") or [])]
-    fake_filters = [str(x) for x in (dns.get("fake-ip-filter") or [])]
+    fake_filters = shadowrocket_real_ip_filters(list(dns.get("fake-ip-filter") or []))
 
     base = [
         "yaml = true",
@@ -377,6 +402,15 @@ def main() -> None:
             raise SystemExit(f"Generated Shadowrocket config missing required marker: {marker}")
     if PLACEHOLDER_RE.search(output):
         raise SystemExit("Generated config still contains unresolved module placeholders")
+    always_real_ip = next(
+        (line for line in output.splitlines() if line.startswith("always-real-ip = ")),
+        "",
+    )
+    if "+." in always_real_ip:
+        raise SystemExit(
+            "Generated always-real-ip still contains Mihomo +. syntax; "
+            "translate it before emitting Shadowrocket config"
+        )
 
     OUTPUT.write_text(output, encoding="utf-8")
     print(f"Generated {OUTPUT.relative_to(ROOT)} ({len(output)} bytes)")

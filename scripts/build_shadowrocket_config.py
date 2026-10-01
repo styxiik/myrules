@@ -334,7 +334,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     if fake_filters:
         base.append("always-real-ip = " + ",".join(fake_filters))
     base.extend([
-        f"ipv6 = {'true' if meta.get('ipv6', True) else 'false'}",
+        "ipv6 = false",  # Shadowrocket-only: avoid broken/unstable IPv6 DIRECT paths
         f"update-url = {UPDATE_URL}",
     ])
 

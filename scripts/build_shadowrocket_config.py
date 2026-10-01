@@ -317,7 +317,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     for line in module_general:
         if "=" in line and not line.lstrip().startswith("#"):
             key = line.split("=", 1)[0].strip()
-            if key in {"dns-direct-system", "direct-dns-server"}:
+            if key in {"dns-direct-system", "direct-dns-server", "ipv6"}:
                 continue
         filtered_module_general.append(line)
 

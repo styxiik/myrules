@@ -21,6 +21,7 @@ DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,meta.ai
 DOMAIN-SUFFIX,metaaivm.com
+DOMAIN,controlplane.tailscale.com
 DOMAIN-SUFFIX,zerotier.com
 DOMAIN-SUFFIX,languagetoolplus.com
 DOMAIN-SUFFIX,visualstudio.com

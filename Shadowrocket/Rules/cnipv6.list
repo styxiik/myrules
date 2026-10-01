@@ -401,10 +401,7 @@ IP-CIDR6,2404:2280:25c::/48,no-resolve
 IP-CIDR6,2404:2280:265::/48,no-resolve
 IP-CIDR6,2404:2280:266::/47,no-resolve
 IP-CIDR6,2404:2280:268::/45,no-resolve
-IP-CIDR6,2404:2280:270::/45,no-resolve
-IP-CIDR6,2404:2280:278::/47,no-resolve
-IP-CIDR6,2404:2280:27b::/48,no-resolve
-IP-CIDR6,2404:2280:27c::/46,no-resolve
+IP-CIDR6,2404:2280:270::/44,no-resolve
 IP-CIDR6,2404:2280:282::/47,no-resolve
 IP-CIDR6,2404:2280:284::/47,no-resolve
 IP-CIDR6,2404:2280:288::/46,no-resolve

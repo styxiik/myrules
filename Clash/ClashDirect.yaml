@@ -19,6 +19,10 @@ payload:
   - IP-CIDR6,fc00::/7
   - IP-CIDR6,fe80::/10
   # 自定义规则
+  # Alibaba/Taobao CDN bare-IP traffic observed in Shadowrocket
+  - IP-CIDR,47.246.0.0/16
+  - IP-CIDR,155.102.0.0/16
+  - IP-CIDR,47.251.75.0/24
   - PROCESS-NAME,qbittorrent.exe
   - DOMAIN-SUFFIX,waditu.com
   - DOMAIN-SUFFIX,mydomain1

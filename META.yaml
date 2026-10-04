@@ -359,6 +359,22 @@ dns:
   fake-ip-range: 198.18.0.1/16
   use-hosts: true
   fake-ip-filter:
+    # Persistent local real-IP exceptions (mirrored in update-checker.yml)
+    - 'github.com'
+    - 'ssh.github.com'
+    - '+.tencentmusic.com'
+    - '+.ofalias.net'
+    - '+.boc.cn'
+    - '+.bankofchina.com'
+    - '+.icbc.com.cn'
+    - '+.abchina.com.cn'
+    - '+.abchina.com'
+    - '+.95599.cn'
+    - '+.bankcomm.cn'
+    - '+.ccb.com'
+    - '+.citicbank.com'
+    - '+.hsbc.com.hk'
+    - '+.hsbc.com'
     - '*.lan'
     - '*.localdomain'
     - '*.example'

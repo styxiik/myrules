@@ -117,6 +117,22 @@ jobs:
         sed -i '$a\+.pingan.com.cn' fake.list
         sed -i '$a\+.stun.l.google.com' fake.list
         sed -i '$a\+.zerotier.com' fake.list
+        # Persistent local real-IP exceptions: keep these when fake-ip-filter is regenerated
+        sed -i '$a\github.com' fake.list
+        sed -i '$a\ssh.github.com' fake.list
+        sed -i '$a\+.tencentmusic.com' fake.list
+        sed -i '$a\+.ofalias.net' fake.list
+        sed -i '$a\+.boc.cn' fake.list
+        sed -i '$a\+.bankofchina.com' fake.list
+        sed -i '$a\+.icbc.com.cn' fake.list
+        sed -i '$a\+.abchina.com.cn' fake.list
+        sed -i '$a\+.abchina.com' fake.list
+        sed -i '$a\+.95599.cn' fake.list
+        sed -i '$a\+.bankcomm.cn' fake.list
+        sed -i '$a\+.ccb.com' fake.list
+        sed -i '$a\+.citicbank.com' fake.list
+        sed -i '$a\+.hsbc.com.hk' fake.list
+        sed -i '$a\+.hsbc.com' fake.list
         sed -i '$a\al.mydomain1' fake.list
         sed -i '$a\alist.mydomain1' fake.list
         sed -i '$a\nec.mydomain1' fake.list

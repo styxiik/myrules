@@ -86,4 +86,3 @@ payload:
   # LaunchDarkly mobile analytics/event endpoint and Glance guided support
   - DOMAIN-SUFFIX,launchdarkly.com
   - DOMAIN-SUFFIX,glance.net
-  # hosts ip

@@ -73,6 +73,40 @@ jobs:
         sed -i 's/^/  /g' host.list
         test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
 
+    - name: 判断是否使用host及添加host到fake-ip
+      if: env.HOST == 'false' && !cancelled()
+      run: |
+        rm host.list & sed -i '1,$d' *.txt && touch host.list && echo "hosts:" >> host.list
+
+    - name: 合并自定义host
+      run: |
+        python3 <<'PY'
+        from collections import OrderedDict
+        from pathlib import Path
+
+        def read_flat_hosts(path: Path) -> OrderedDict[str, str]:
+            result: OrderedDict[str, str] = OrderedDict()
+            if not path.exists():
+                return result
+            for raw in path.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#") or line == "hosts:" or ":" not in line:
+                    continue
+                key, value = line.split(":", 1)
+                key = key.strip().strip("'\"")
+                value = value.strip().split()[0]
+                if key and value:
+                    result[key] = value
+            return result
+
+        merged = read_flat_hosts(Path("host.list"))
+        merged.update(read_flat_hosts(Path("Custom/hosts.yaml")))
+
+        lines = ["hosts:"]
+        lines.extend(f"   '{host}': {ip}" for host, ip in merged.items())
+        Path("host.list").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        PY
+
     - name: 生成HostsDirect
       run: |
         python3 <<'PY'
@@ -107,40 +141,6 @@ jobs:
             "",
         ]
         out.write_text("\n".join(lines), encoding="utf-8")
-        PY
-
-    - name: 判断是否使用host及添加host到fake-ip
-      if: env.HOST == 'false' && !cancelled()
-      run: |
-        rm host.list & sed -i '1,$d' *.txt && touch host.list && echo "hosts:" >> host.list
-
-    - name: 合并自定义host
-      run: |
-        python3 <<'PY'
-        from collections import OrderedDict
-        from pathlib import Path
-
-        def read_flat_hosts(path: Path) -> OrderedDict[str, str]:
-            result: OrderedDict[str, str] = OrderedDict()
-            if not path.exists():
-                return result
-            for raw in path.read_text(encoding="utf-8").splitlines():
-                line = raw.strip()
-                if not line or line.startswith("#") or line == "hosts:" or ":" not in line:
-                    continue
-                key, value = line.split(":", 1)
-                key = key.strip().strip("'\"")
-                value = value.strip().split()[0]
-                if key and value:
-                    result[key] = value
-            return result
-
-        merged = read_flat_hosts(Path("host.list"))
-        merged.update(read_flat_hosts(Path("Custom/hosts.yaml")))
-
-        lines = ["hosts:"]
-        lines.extend(f"   '{host}': {ip}" for host, ip in merged.items())
-        Path("host.list").write_text("\n".join(lines) + "\n", encoding="utf-8")
         PY
 
     - name: 更新fake-ip

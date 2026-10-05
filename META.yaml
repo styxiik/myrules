@@ -141,12 +141,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashDirect.yaml"
     interval: 7200
 
-  HostsDirect:
-    type: http
-    behavior: classical
-    path: ./ruleSet/HostsDirect.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/HostsDirect.yaml"
-    interval: 7200
 
   reject:
     type: http
@@ -288,7 +282,6 @@ rules:
   # Explicit custom rules: REJECT -> DIRECT -> PROXY
   - RULE-SET,ClashReject,REJECT,no-resolve
   - RULE-SET,ClashDirect,DIRECT,no-resolve
-  - RULE-SET,HostsDirect,DIRECT,no-resolve
   - RULE-SET,ClashProxy,PROXY,no-resolve
 
   # Generic domain rules: REJECT -> DIRECT -> PROXY

@@ -107,42 +107,6 @@ jobs:
         Path("host.list").write_text("\n".join(lines) + "\n", encoding="utf-8")
         PY
 
-    - name: 生成HostsDirect
-      run: |
-        python3 <<'PY'
-        import ipaddress
-        import re
-        from pathlib import Path
-
-        host_file = Path("host.list")
-        out = Path("Clash/HostsDirect.yaml")
-        pattern = re.compile(r"^\s*['\"]?([^'\":]+)['\"]?\s*:\s*([^\s#]+)")
-
-        rules = []
-        seen = set()
-        for line in host_file.read_text(encoding="utf-8").splitlines():
-            match = pattern.match(line)
-            if not match or match.group(1) == "hosts":
-                continue
-            value = match.group(2)
-            try:
-                ip = ipaddress.ip_address(value)
-            except ValueError:
-                continue
-            rule = f"IP-CIDR6,{ip}/128" if ip.version == 6 else f"IP-CIDR,{ip}/32"
-            if rule not in seen:
-                rules.append(rule)
-                seen.add(rule)
-
-        lines = [
-            "payload:",
-            "  # AUTO-GENERATED from merged hosts; do not edit by hand.",
-            *[f"  - {rule}" for rule in rules],
-            "",
-        ]
-        out.write_text("\n".join(lines), encoding="utf-8")
-        PY
-
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
       run: |

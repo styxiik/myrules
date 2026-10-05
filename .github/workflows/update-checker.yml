@@ -1,6 +1,11 @@
 name: Update Checker
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Custom/**'
+      - '.github/workflows/update-checker.yml'
   schedule:
     - cron: 0 16 * * *
 
@@ -68,28 +73,75 @@ jobs:
         sed -i 's/^/  /g' host.list
         test -s host.list && sed -i '1i\hosts:' host.list || echo "hosts:" >> host.list
 
-    - name: 添加host ip到直连
+    - name: 生成HostsDirect
       run: |
-        awk -F "[: ]+" '!a[$3]++{print "  - IP-CIDR,"$3"\/32"}' > "ins.host" host.list
-        sed -i '/^  - IP-CIDR,\/32/d' *.host
-        test -s ins.host && sed -i '1i\  # hosts ip' ins.host || echo "  # hosts ip" >> ins.host
-        hostip=$(sed -n "/  # hosts ip/=" Clash/ClashDirect.yaml)
-        sed -i ${hostip}',$d' Clash/ClashDirect.yaml
-        cat ins.host >> Clash/ClashDirect.yaml
+        python3 <<'PY'
+        import ipaddress
+        import re
+        from pathlib import Path
+
+        host_file = Path("host.list")
+        out = Path("Clash/HostsDirect.yaml")
+        pattern = re.compile(r"^\s*['\"]?([^'\":]+)['\"]?\s*:\s*([^\s#]+)")
+
+        rules = []
+        seen = set()
+        for line in host_file.read_text(encoding="utf-8").splitlines():
+            match = pattern.match(line)
+            if not match or match.group(1) == "hosts":
+                continue
+            value = match.group(2)
+            try:
+                ip = ipaddress.ip_address(value)
+            except ValueError:
+                continue
+            rule = f"IP-CIDR6,{ip}/128" if ip.version == 6 else f"IP-CIDR,{ip}/32"
+            if rule not in seen:
+                rules.append(rule)
+                seen.add(rule)
+
+        lines = [
+            "payload:",
+            "  # AUTO-GENERATED from merged hosts; do not edit by hand.",
+            *[f"  - {rule}" for rule in rules],
+            "",
+        ]
+        out.write_text("\n".join(lines), encoding="utf-8")
+        PY
 
     - name: 判断是否使用host及添加host到fake-ip
       if: env.HOST == 'false' && !cancelled()
       run: |
         rm host.list & sed -i '1,$d' *.txt && touch host.list && echo "hosts:" >> host.list
 
-    - name: 自定义host
+    - name: 合并自定义host
       run: |
-        wget --header='Authorization: token ${{ secrets.GER_TOKEN }}' https://raw.githubusercontent.com/styxiik/hosts/main/hosts.txt
-        sed -i '/^#/d' hosts.txt & sed '/^[  ]*$/d' hosts.txt
-        cat >> host.list <<EOF
-           'dns.google': 8.8.8.8
-        EOF
-        rm -rf hosts.txt
+        python3 <<'PY'
+        from collections import OrderedDict
+        from pathlib import Path
+
+        def read_flat_hosts(path: Path) -> OrderedDict[str, str]:
+            result: OrderedDict[str, str] = OrderedDict()
+            if not path.exists():
+                return result
+            for raw in path.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#") or line == "hosts:" or ":" not in line:
+                    continue
+                key, value = line.split(":", 1)
+                key = key.strip().strip("'\"")
+                value = value.strip().split()[0]
+                if key and value:
+                    result[key] = value
+            return result
+
+        merged = read_flat_hosts(Path("host.list"))
+        merged.update(read_flat_hosts(Path("Custom/hosts.yaml")))
+
+        lines = ["hosts:"]
+        lines.extend(f"   '{host}': {ip}" for host, ip in merged.items())
+        Path("host.list").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        PY
 
     - name: 更新fake-ip
       if: steps.fakeip.outputs.fakeornot == 'true' && !cancelled()
@@ -97,46 +149,11 @@ jobs:
         wget https://raw.githubusercontent.com/vernesong/OpenClash/master/luci-app-openclash/root/etc/openclash/custom/openclash_custom_fake_filter.list && mv openclash_custom_fake_filter.list default.fake
         awk -F "[ ]+" '!a[$2]++{print "+."$2}' > "host.fake" *.txt
         cat *.fake > fake.list
-        #自定义fake-ip
-        sed -i '$a\+.cn' fake.list
-        sed -i '$a\+.com.cn' fake.list
-        sed -i '$a\+.cmbchina.com' fake.list
-        sed -i '$a\+.apple.com' fake.list
-        sed -i '$a\+.icloud.com' fake.list
-        sed -i '$a\+.mzstatic.com' fake.list
-        sed -i '$a\+.cdn-apple.com' fake.list
-        sed -i '$a\+.haowu.link' fake.list
-        sed -i '$a\+.cmbimg.com' fake.list
-        sed -i '$a\+.digitalcertvalidation.com' fake.list
-        sed -i '$a\+.zhuanzfx.com' fake.list
-        sed -i '$a\+.cib.com.cn' fake.list
-        sed -i '$a\+.dcocsp.com' fake.list
-        sed -i '$a\+.95559.com.cn' fake.list
-        sed -i '$a\+.bankcomm.com' fake.list
-        sed -i '$a\+.digicert.com' fake.list
-        sed -i '$a\+.pingan.com.cn' fake.list
-        sed -i '$a\+.stun.l.google.com' fake.list
-        sed -i '$a\+.zerotier.com' fake.list
-        # Persistent local real-IP exceptions: keep these when fake-ip-filter is regenerated
-        sed -i '$a\github.com' fake.list
-        sed -i '$a\ssh.github.com' fake.list
-        sed -i '$a\+.tencentmusic.com' fake.list
-        sed -i '$a\+.ofalias.net' fake.list
-        sed -i '$a\+.boc.cn' fake.list
-        sed -i '$a\+.bankofchina.com' fake.list
-        sed -i '$a\+.icbc.com.cn' fake.list
-        sed -i '$a\+.abchina.com.cn' fake.list
-        sed -i '$a\+.abchina.com' fake.list
-        sed -i '$a\+.95599.cn' fake.list
-        sed -i '$a\+.bankcomm.cn' fake.list
-        sed -i '$a\+.ccb.com' fake.list
-        sed -i '$a\+.citicbank.com' fake.list
-        sed -i '$a\+.hsbc.com.hk' fake.list
-        sed -i '$a\+.hsbc.com' fake.list
-        sed -i '$a\al.mydomain1' fake.list
-        sed -i '$a\alist.mydomain1' fake.list
-        sed -i '$a\nec.mydomain1' fake.list
-        sed -i '$a\lo.mydomain1' fake.list
+        #自定义fake-ip：长期数据统一维护在 Custom/fake-ip-filter.list
+        cat Custom/fake-ip-filter.list >> fake.list
+        sed -i '/^[[:space:]]*#/d;/^[[:space:]]*$/d' fake.list
+        awk '!seen[$0]++' fake.list > fake.list.tmp
+        mv fake.list.tmp fake.list
         sed -i '/^#/d' fake.list && sed -i 's/^/    - '"'"'/g' fake.list && sed -i 's/$/'"'"'/g' fake.list
         sed -i '1i\  fake-ip-filter:' fake.list
 

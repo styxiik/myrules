@@ -1,0 +1,42 @@
+# Persistent local Fake-IP exclusions.
+# Mihomo syntax. Lines here are merged with upstream fake-ip filters.
+# +.example.com means the apex and all subdomains.
+
++.cn
++.com.cn
++.cmbchina.com
++.apple.com
++.icloud.com
++.mzstatic.com
++.cdn-apple.com
++.haowu.link
++.cmbimg.com
++.digitalcertvalidation.com
++.zhuanzfx.com
++.cib.com.cn
++.dcocsp.com
++.95559.com.cn
++.bankcomm.com
++.digicert.com
++.pingan.com.cn
++.stun.l.google.com
++.zerotier.com
+github.com
+ssh.github.com
++.tencentmusic.com
++.ofalias.net
++.boc.cn
++.bankofchina.com
++.icbc.com.cn
++.abchina.com.cn
++.abchina.com
++.95599.cn
++.bankcomm.cn
++.ccb.com
++.citicbank.com
++.hsbc.com.hk
++.hsbc.com
+al.mydomain1
+alist.mydomain1
+nec.mydomain1
+lo.mydomain1

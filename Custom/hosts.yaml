@@ -1,0 +1,3 @@
+# Persistent local hosts.
+# Flat hostname -> IP mapping. These entries override fetched host sources.
+dns.google: 8.8.8.8

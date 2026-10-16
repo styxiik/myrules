@@ -310,6 +310,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
     proxy_ns = [str(x) for x in (dns.get("proxy-server-nameserver") or [])]
     direct_ns = shadowrocket_direct_nameservers(dns)
+    mode = str(dns.get("enhanced-mode", "redir-host")).strip().lower()
     fake_filters = shadowrocket_real_ip_filters(list(dns.get("fake-ip-filter") or []))
 
     # META owns DNS policy. Legacy module DNS defaults must not override it.
@@ -317,7 +318,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     for line in module_general:
         if "=" in line and not line.lstrip().startswith("#"):
             key = line.split("=", 1)[0].strip()
-            if key in {"dns-direct-system", "direct-dns-server", "ipv6"}:
+            if key in {"dns-direct-system", "direct-dns-server", "ipv6", "always-real-ip"}:
                 continue
         filtered_module_general.append(line)
 
@@ -331,7 +332,10 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     ]
     if proxy_ns:
         base.append("proxy-dns-server = " + ", ".join(proxy_ns))
-    if fake_filters:
+    if mode == "redir-host":
+        # Shadowrocket real-IP TUN DNS test; unlike Mihomo, it has no redir-host keyword.
+        base.append("always-real-ip = *")
+    elif fake_filters:
         base.append("always-real-ip = " + ",".join(fake_filters))
     base.extend([
         "ipv6 = false",  # Shadowrocket-only: avoid broken/unstable IPv6 DIRECT paths

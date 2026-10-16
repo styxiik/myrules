@@ -77,6 +77,12 @@ proxy-groups:
     type: select
     proxies:
       - MY
+      - 手动选择
+
+  - name: "手动选择"
+    type: select
+    use:
+      - MYOWN
 
   - name: "MY"
     type: fallback

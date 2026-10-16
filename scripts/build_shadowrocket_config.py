@@ -311,6 +311,14 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     proxy_ns = [str(x) for x in (dns.get("proxy-server-nameserver") or [])]
     direct_ns = shadowrocket_direct_nameservers(dns)
     mode = str(dns.get("enhanced-mode", "redir-host")).strip().lower()
+    # Shadowrocket cannot directly import Mihomo nameserver-policy.
+    # Under global Real-IP, target proxy domains must use a non-polluted
+    # overseas resolver through the selected proxy, not mainland DoH.
+    if mode == "redir-host":
+        nameservers = [
+            "https://1.1.1.1/dns-query#proxy",
+            "https://8.8.8.8/dns-query#proxy",
+        ]
     fake_filters = shadowrocket_real_ip_filters(list(dns.get("fake-ip-filter") or []))
 
     # META owns DNS policy. Legacy module DNS defaults must not override it.
@@ -332,6 +340,10 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     ]
     if proxy_ns:
         base.append("proxy-dns-server = " + ", ".join(proxy_ns))
+    if mode == "redir-host":
+        # Do not fall back to potentially poisoned system DNS for global Real-IP.
+        base.append("fallback-dns-server = https://1.0.0.1/dns-query#proxy")
+        base.append("dns-fallback-system = false")
     if mode == "redir-host":
         # Shadowrocket real-IP TUN DNS test; unlike Mihomo, it has no redir-host keyword.
         base.append("always-real-ip = *")

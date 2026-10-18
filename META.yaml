@@ -330,8 +330,8 @@ dns:
   ipv6: true
   respect-rules: true
   direct-nameserver:
-    - https://doh.pub/dns-query
-    - tls://dot.pub:853
+    - https://1.12.12.12/dns-query
+    - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
   direct-nameserver-follow-policy: false
@@ -342,19 +342,19 @@ dns:
     - 114.114.114.114
     - system
   nameserver:
-    - https://doh.pub/dns-query
-    - tls://dot.pub:853
+    - https://1.12.12.12/dns-query
+    - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
   proxy-server-nameserver:
-    - https://doh.pub/dns-query
-    - tls://dot.pub:853
+    - https://1.12.12.12/dns-query
+    - tls://1.12.12.12
     - https://120.53.53.53/dns-query
     - tls://120.53.53.53
   nameserver-policy:
     "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
-      - https://doh.pub/dns-query
-      - tls://dot.pub:853
+      - https://1.12.12.12/dns-query
+      - tls://1.12.12.12
       - https://120.53.53.53/dns-query
       - tls://120.53.53.53
     "rule-set:geolocation-!cn":

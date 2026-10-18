@@ -329,35 +329,42 @@ dns:
   listen: :53
   ipv6: true
   respect-rules: true
-  # DIRECT DNS uses the local network's resolver for geographically appropriate CDN answers.
-  # On Ubuntu TUN/systemd-resolved installations, avoid pointing system DNS back at Mihomo's TUN.
+
+  # DNSPod Public DNS via official DoH/DoT hostnames, always connected DIRECT.
+  # Never send these queries through the OS system resolver (Ubuntu TUN loop).
   direct-nameserver:
-    - system
+    - "https://doh.pub/dns-query#DIRECT"
+    - "tls://dot.pub:853#DIRECT"
   direct-nameserver-follow-policy: false
 
-  # Bootstrap for DNS endpoints; use literal IPs to avoid DNS bootstrap loops.
+  # Literal DNSPod bootstrap IPs for doh.pub and dot.pub.
   default-nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
+    - 1.12.12.12
+    - 120.53.53.53
 
-  # Foreign/non-direct domain queries use encrypted DNS through the proxy.
+  # Overseas domain queries continue using encrypted DNS over the proxy.
   nameserver:
     - "https://1.1.1.1/dns-query#DNS-PROXY"
     - "https://8.8.8.8/dns-query#DNS-PROXY"
 
-  # The node hostname is resolved before its proxy tunnel can be established.
+  # Proxy node hostnames must resolve before their tunnels are established.
   proxy-server-nameserver:
-    - system
+    - "https://doh.pub/dns-query#DIRECT"
+    - "tls://dot.pub:853#DIRECT"
 
   nameserver-policy:
     "geosite:cn":
-      - system
+      - "https://doh.pub/dns-query#DIRECT"
+      - "tls://dot.pub:853#DIRECT"
     "+.cn":
-      - system
+      - "https://doh.pub/dns-query#DIRECT"
+      - "tls://dot.pub:853#DIRECT"
     "+.ts.net":
-      - system
+      - "https://doh.pub/dns-query#DIRECT"
+      - "tls://dot.pub:853#DIRECT"
     "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
-      - system
+      - "https://doh.pub/dns-query#DIRECT"
+      - "tls://dot.pub:853#DIRECT"
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"

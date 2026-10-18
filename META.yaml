@@ -329,46 +329,39 @@ dns:
   listen: :53
   ipv6: true
   respect-rules: true
-
-  # DNSPod Public DNS via official DoH/DoT hostnames, always connected DIRECT.
-  # Never send these queries through the OS system resolver (Ubuntu TUN loop).
   direct-nameserver:
-    - "https://doh.pub/dns-query#DIRECT"
-    - "tls://dot.pub:853#DIRECT"
+    - https://doh.pub/dns-query
+    - tls://dot.pub:853
+    - https://120.53.53.53/dns-query
+    - tls://120.53.53.53
   direct-nameserver-follow-policy: false
-
-  # Literal DNSPod bootstrap IPs for doh.pub and dot.pub.
   default-nameserver:
-    - 1.12.12.12
+    - 119.29.29.29
     - 120.53.53.53
-
-  # Overseas domain queries continue using encrypted DNS over the proxy.
+    - 1.12.12.12
+    - 114.114.114.114
+    - system
   nameserver:
-    - "https://1.1.1.1/dns-query#DNS-PROXY"
-    - "https://8.8.8.8/dns-query#DNS-PROXY"
-
-  # Proxy node hostnames must resolve before their tunnels are established.
+    - https://doh.pub/dns-query
+    - tls://dot.pub:853
+    - https://120.53.53.53/dns-query
+    - tls://120.53.53.53
   proxy-server-nameserver:
-    - "https://doh.pub/dns-query#DIRECT"
-    - "tls://dot.pub:853#DIRECT"
-
+    - https://doh.pub/dns-query
+    - tls://dot.pub:853
+    - https://120.53.53.53/dns-query
+    - tls://120.53.53.53
   nameserver-policy:
-    "geosite:cn":
-      - "https://doh.pub/dns-query#DIRECT"
-      - "tls://dot.pub:853#DIRECT"
-    "+.cn":
-      - "https://doh.pub/dns-query#DIRECT"
-      - "tls://dot.pub:853#DIRECT"
-    # Tailscale MagicDNS is private; Public DNSPod cannot resolve tailnet names.
-    "+.ts.net":
-      - "100.100.100.100#DIRECT"
     "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
-      - "https://doh.pub/dns-query#DIRECT"
-      - "tls://dot.pub:853#DIRECT"
+      - https://doh.pub/dns-query
+      - tls://dot.pub:853
+      - https://120.53.53.53/dns-query
+      - tls://120.53.53.53
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"
-
+      - "tls://8.8.4.4:853#DNS-PROXY"
+  # Real-IP test: keep existing nameservers, policies, and TUN unchanged.
   enhanced-mode: redir-host
   use-hosts: true
 hosts:

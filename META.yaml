@@ -359,9 +359,9 @@ dns:
     "+.cn":
       - "https://doh.pub/dns-query#DIRECT"
       - "tls://dot.pub:853#DIRECT"
+    # Tailscale MagicDNS is private; Public DNSPod cannot resolve tailnet names.
     "+.ts.net":
-      - "https://doh.pub/dns-query#DIRECT"
-      - "tls://dot.pub:853#DIRECT"
+      - "100.100.100.100#DIRECT"
     "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
       - "https://doh.pub/dns-query#DIRECT"
       - "tls://dot.pub:853#DIRECT"

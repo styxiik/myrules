@@ -329,39 +329,39 @@ dns:
   listen: :53
   ipv6: true
   respect-rules: true
+  # DIRECT DNS uses the local network's resolver for geographically appropriate CDN answers.
+  # On Ubuntu TUN/systemd-resolved installations, avoid pointing system DNS back at Mihomo's TUN.
   direct-nameserver:
-    - https://1.12.12.12/dns-query
-    - tls://1.12.12.12
-    - https://120.53.53.53/dns-query
-    - tls://120.53.53.53
-  direct-nameserver-follow-policy: false
-  default-nameserver:
-    - 119.29.29.29
-    - 120.53.53.53
-    - 1.12.12.12
-    - 114.114.114.114
     - system
+  direct-nameserver-follow-policy: false
+
+  # Bootstrap for DNS endpoints; use literal IPs to avoid DNS bootstrap loops.
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+
+  # Foreign/non-direct domain queries use encrypted DNS through the proxy.
   nameserver:
-    - https://1.12.12.12/dns-query
-    - tls://1.12.12.12
-    - https://120.53.53.53/dns-query
-    - tls://120.53.53.53
+    - "https://1.1.1.1/dns-query#DNS-PROXY"
+    - "https://8.8.8.8/dns-query#DNS-PROXY"
+
+  # The node hostname is resolved before its proxy tunnel can be established.
   proxy-server-nameserver:
-    - https://1.12.12.12/dns-query
-    - tls://1.12.12.12
-    - https://120.53.53.53/dns-query
-    - tls://120.53.53.53
+    - system
+
   nameserver-policy:
+    "geosite:cn":
+      - system
+    "+.cn":
+      - system
+    "+.ts.net":
+      - system
     "rule-set:Unbreak,ClashDirect,direct,icloud,apple,private":
-      - https://1.12.12.12/dns-query
-      - tls://1.12.12.12
-      - https://120.53.53.53/dns-query
-      - tls://120.53.53.53
+      - system
     "rule-set:geolocation-!cn":
       - "https://1.1.1.1/dns-query#DNS-PROXY"
       - "https://8.8.8.8/dns-query#DNS-PROXY"
-      - "tls://8.8.4.4:853#DNS-PROXY"
-  # Real-IP test: keep existing nameservers, policies, and TUN unchanged.
+
   enhanced-mode: redir-host
   use-hosts: true
 hosts:

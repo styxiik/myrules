@@ -294,21 +294,15 @@ def shadowrocket_real_ip_filters(filters: list[Any]) -> list[str]:
 
 
 def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
-    """Build Shadowrocket DIRECT DNS: system plus META direct-nameserver."""
-    servers: list[str] = []
-    seen: set[str] = set()
-    for raw in ["system", *(dns.get("direct-nameserver") or [])]:
-        value = str(raw).strip()
-        if value and value not in seen:
-            servers.append(value)
-            seen.add(value)
-    return servers
+    """DIRECT domains use only the current network's system DNS."""
+    return ["system"]
 
 
 def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     dns = meta.get("dns", {}) or {}
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
-    proxy_ns = [str(x) for x in (dns.get("proxy-server-nameserver") or [])]
+    # Resolve proxy node hostnames using local DNS before connecting the tunnel.
+    proxy_ns = ["system"]
     direct_ns = shadowrocket_direct_nameservers(dns)
     mode = str(dns.get("enhanced-mode", "redir-host")).strip().lower()
     # Shadowrocket cannot directly import Mihomo nameserver-policy.
@@ -350,7 +344,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     elif fake_filters:
         base.append("always-real-ip = " + ",".join(fake_filters))
     base.extend([
-        "ipv6 = false",  # Shadowrocket-only: avoid broken/unstable IPv6 DIRECT paths
+        "ipv6 = true",  # Dual stack enabled, prefer-ipv6 remains false
         f"update-url = {UPDATE_URL}",
     ])
 
@@ -431,7 +425,9 @@ def main() -> None:
         "FINAL,最终选择",
         "DOMAIN-SUFFIX,ts.net,TAILSCALE",
         "prefer-ipv6 = false",
-        "direct-dns-server = system, https://1.12.12.12/dns-query, tls://1.12.12.12, https://120.53.53.53/dns-query, tls://120.53.53.53",
+        "direct-dns-server = system",
+        "proxy-dns-server = system",
+        "ipv6 = true",
         "[Script]",
         "[MITM]",
     ]

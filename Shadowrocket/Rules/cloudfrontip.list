@@ -1287,6 +1287,7 @@ IP-CIDR,99.77.143.0/24,no-resolve
 IP-CIDR,104.255.57.182/32,no-resolve
 IP-CIDR,104.255.59.133/32,no-resolve
 IP-CIDR,173.83.223.0/24,no-resolve
+IP-CIDR,191.166.0.0/16,no-resolve
 IP-CIDR,3.4.1.0/24,no-resolve
 IP-CIDR,3.4.12.29/32,no-resolve
 IP-CIDR,13.56.0.0/16,no-resolve

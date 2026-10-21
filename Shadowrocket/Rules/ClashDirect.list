@@ -16,7 +16,6 @@ IP-CIDR6,::1/128,no-resolve
 IP-CIDR6,fc00::/7,no-resolve
 IP-CIDR6,fe80::/10,no-resolve
 IP-CIDR,47.246.0.0/16,no-resolve
-IP-CIDR,155.102.0.0/16,no-resolve
 IP-CIDR,47.251.75.0/24,no-resolve
 DOMAIN,PROCESS-NAME,qbittorrent.exe
 DOMAIN-SUFFIX,waditu.com
@@ -24,7 +23,6 @@ DOMAIN-SUFFIX,mydomain1
 DOMAIN-SUFFIX,office.net
 DOMAIN-SUFFIX,trip.com
 DOMAIN-SUFFIX,tripcdn.com
-DOMAIN-SUFFIX,cloudfront.net
 DOMAIN-SUFFIX,al.chirmyram.com
 DOMAIN-SUFFIX,office.com
 DOMAIN-SUFFIX,live.com

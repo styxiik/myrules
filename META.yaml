@@ -267,13 +267,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/googleip.txt"
     interval: 7200
 
-  cloudfrontip:
-    type: http
-    behavior: ipcidr
-    path: ./ruleSet/cloudfrontip.yaml
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/cft.txt"
-    interval: 7200
-
   geolocation-!cn:
     type: http
     behavior: domain
@@ -287,6 +280,19 @@ rules:
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT
 
   # Repair / override rules
+  # Binance account/login, API, and CDN traffic: PROXY before any generic DIRECT/CDN rules.
+  - DOMAIN-SUFFIX,binance.com,PROXY
+  - DOMAIN-SUFFIX,binance.info,PROXY
+  - DOMAIN-SUFFIX,bnbstatic.com,PROXY
+  - DOMAIN-SUFFIX,saasexch.com,PROXY
+  - DOMAIN-SUFFIX,bscdnweb.com,PROXY
+  # Historically observed IP-only exchange API/CDN destinations (2026-10-21).
+  - IP-CIDR,54.199.72.85/32,PROXY,no-resolve
+  - IP-CIDR,155.102.54.131/32,PROXY,no-resolve
+  - IP-CIDR,155.102.54.132/32,PROXY,no-resolve
+  - IP-CIDR,155.102.54.134/32,PROXY,no-resolve
+  - IP-CIDR,155.102.54.135/32,PROXY,no-resolve
+  - IP-CIDR,155.102.54.136/32,PROXY,no-resolve
   # Force Google download hosts through proxy before Unbreak can match them as DIRECT
   - DOMAIN,dl.google.com,PROXY
   - DOMAIN,dl.l.google.com,PROXY
@@ -319,8 +325,6 @@ rules:
   - RULE-SET,cfip,PROXY,no-resolve
   - RULE-SET,googleip,PROXY,no-resolve
 
-  # Special fallback: after all explicit PROXY rules, direct remaining AWS/CloudFront IPs
-  - RULE-SET,cloudfrontip,DIRECT,no-resolve
 
   # Final fallback
   - GEOIP,CN,DIRECT,no-resolve

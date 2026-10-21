@@ -59,7 +59,9 @@ jobs:
             git add Shadowrocket/Modules/All-in-One.sgmodule
             git add Shadowrocket/Shadowrocket.conf
             git add -A Shadowrocket/Rules
-            git add 'QX/category-ai-!cn.list'
+            if [ -f 'QX/category-ai-!cn.list' ]; then
+              git add 'QX/category-ai-!cn.list'
+            fi
 
             if git diff --cached --quiet; then
               echo "No Shadowrocket generated changes"

@@ -1,4 +1,17 @@
 payload:
+  # Exchange domains involved in 2026-10-21 Shadowrocket login/CDN traffic.
+  - DOMAIN-SUFFIX,binance.com
+  - DOMAIN-SUFFIX,binance.info
+  - DOMAIN-SUFFIX,bnbstatic.com
+  - DOMAIN-SUFFIX,saasexch.com
+  - DOMAIN-SUFFIX,bscdnweb.com
+  # Observed IP-only Binance API/CDN endpoints; exact /32, not shared AWS/CDN ranges.
+  - IP-CIDR,54.199.72.85/32
+  - IP-CIDR,155.102.54.131/32
+  - IP-CIDR,155.102.54.132/32
+  - IP-CIDR,155.102.54.134/32
+  - IP-CIDR,155.102.54.135/32
+  - IP-CIDR,155.102.54.136/32
   - DOMAIN-SUFFIX,mydomain2
   - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,msftncsi.com

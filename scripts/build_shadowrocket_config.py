@@ -217,6 +217,39 @@ def build_native_rule_sets(meta: dict[str, Any]) -> dict[str, str]:
     return urls
 
 
+
+def build_qx_ai_not_cn_rules() -> None:
+    """Generate Quantumult X rules from the same AI-NotCN source as Shadowrocket."""
+    source = RULE_DIR / "AI-NotCN.list"
+    if not source.is_file():
+        raise RuntimeError("AI-NotCN Shadowrocket rules missing during QX generation")
+
+    types = {
+        "DOMAIN": "host",
+        "DOMAIN-SUFFIX": "host-suffix",
+        "DOMAIN-WILDCARD": "host-wildcard",
+        "DOMAIN-KEYWORD": "host-keyword",
+    }
+    converted: list[str] = []
+    seen: set[str] = set()
+    for raw in source.read_text(encoding="utf-8").splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        kind, sep, value = raw.partition(",")
+        if not sep or kind not in types or not value.strip():
+            raise RuntimeError(f"Unsupported AI-NotCN rule for Quantumult X: {raw}")
+        rule = f"{types[kind]}, {value.strip()}"
+        if rule not in seen:
+            converted.append(rule)
+            seen.add(rule)
+    if not converted:
+        raise RuntimeError("AI-NotCN QX rule set is empty")
+    target = ROOT / "QX" / "category-ai-!cn.list"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("\n".join(converted) + "\n", encoding="utf-8")
+    print(f"Generated {target.relative_to(ROOT)} ({len(converted)} rules)")
+
+
 def proxy_groups(meta: dict[str, Any]) -> list[str]:
     providers = set((meta.get("proxy-providers", {}) or {}).keys())
     out: list[str] = []
@@ -382,6 +415,8 @@ def main() -> None:
         module_sections[section] = [resolve_module_arguments(x, defaults) for x in rows]
 
     rule_urls = build_native_rule_sets(meta)
+    if "AI-NotCN" in rule_urls:
+        build_qx_ai_not_cn_rules()
     meta_rules = [
         translated
         for raw in (meta.get("rules", []) or [])

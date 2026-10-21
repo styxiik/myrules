@@ -147,6 +147,16 @@ rule-providers:
     url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/ClashProxy.yaml"
     interval: 7200
 
+  # MetaCubeX geosite category-ai-!cn: non-mainland AI services.
+  AI-NotCN:
+    type: http
+    behavior: domain
+    format: text
+    path: ./ruleSet/category-ai-!cn.list
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list"
+    interval: 86400
+
+
   ClashDirect:
     type: http
     behavior: classical
@@ -293,6 +303,8 @@ rules:
   - IP-CIDR,155.102.54.134/32,PROXY,no-resolve
   - IP-CIDR,155.102.54.135/32,PROXY,no-resolve
   - IP-CIDR,155.102.54.136/32,PROXY,no-resolve
+  # Non-CN AI services must proxy before generic DIRECT rule sets.
+  - RULE-SET,AI-NotCN,PROXY
   # Force Google download hosts through proxy before Unbreak can match them as DIRECT
   - DOMAIN,dl.google.com,PROXY
   - DOMAIN,dl.l.google.com,PROXY

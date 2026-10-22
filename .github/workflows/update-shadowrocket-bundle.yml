@@ -13,6 +13,7 @@ on:
       - 'Shadowrocket/Modules/Tailscale.sgmodule'
       - 'scripts/build_shadowrocket_bundle.py'
       - 'scripts/build_shadowrocket_config.py'
+      - 'scripts/sync_qx_china_domain.py'
       - '.github/workflows/update-shadowrocket-bundle.yml'
 
 permissions:
@@ -36,6 +37,9 @@ jobs:
       - name: Build native Shadowrocket config and rule sets
         run: python3 scripts/build_shadowrocket_config.py
 
+      - name: Sync Quantumult X ChinaDomain from MetaCubeX
+        run: python3 scripts/sync_qx_china_domain.py
+
       - name: Commit generated Shadowrocket artifacts
         shell: bash
         run: |
@@ -54,6 +58,7 @@ jobs:
               git reset --hard origin/main
               python3 scripts/build_shadowrocket_bundle.py
               python3 scripts/build_shadowrocket_config.py
+              python3 scripts/sync_qx_china_domain.py
             fi
 
             git add Shadowrocket/Modules/All-in-One.sgmodule
@@ -62,6 +67,7 @@ jobs:
             if [ -f 'QX/category-ai-!cn.list' ]; then
               git add 'QX/category-ai-!cn.list'
             fi
+            git add QX/geolocation-cn.list
 
             if git diff --cached --quiet; then
               echo "No Shadowrocket generated changes"
@@ -79,6 +85,7 @@ jobs:
             git reset --hard origin/main
             python3 scripts/build_shadowrocket_bundle.py
             python3 scripts/build_shadowrocket_config.py
+            python3 scripts/sync_qx_china_domain.py
           done
 
           echo "Failed to publish generated Shadowrocket artifacts after 3 attempts" >&2

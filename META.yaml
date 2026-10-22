@@ -189,7 +189,8 @@ rule-providers:
   direct:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
+    format: text
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-cn.list"
     path: ./ruleset/direct.yaml
     interval: 86400
 

@@ -318,9 +318,7 @@ rules:
 
   # Generic domain rules: REJECT -> DIRECT -> PROXY
   # - RULE-SET,reject,REJECT,no-resolve
-  - DOMAIN-SUFFIX,cn,DIRECT
   - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,direct,DIRECT,no-resolve
   - RULE-SET,icloud,DIRECT,no-resolve
   - RULE-SET,apple,DIRECT,no-resolve
   # - RULE-SET,applications,DIRECT
@@ -329,6 +327,10 @@ rules:
   - RULE-SET,cryptocurrency,PROXY
   - RULE-SET,google,PROXY
   - RULE-SET,greatfire,PROXY
+
+  # Large ChinaDomain is deliberately after explicit/GFW/Crypto PROXY lists.
+  - DOMAIN-SUFFIX,cn,DIRECT
+  - RULE-SET,direct,DIRECT,no-resolve
 
   # IP rules: DIRECT -> PROXY
   - RULE-SET,lancidr,DIRECT,no-resolve

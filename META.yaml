@@ -190,8 +190,8 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/cn.list"
-    path: ./ruleset/direct.yaml
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.list"
+    path: ./ruleset/metacubex-cn.list
     interval: 86400
 
   icloud:

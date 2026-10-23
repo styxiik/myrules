@@ -34,11 +34,11 @@ jobs:
       - name: Build Shadowrocket module bundle
         run: python3 scripts/build_shadowrocket_bundle.py
 
+      - name: Mirror full MetaCubeX ChinaDomain and generate QX rules
+        run: python3 scripts/sync_qx_china_domain.py
+
       - name: Build native Shadowrocket config and rule sets
         run: python3 scripts/build_shadowrocket_config.py
-
-      - name: Sync Quantumult X ChinaDomain from MetaCubeX
-        run: python3 scripts/sync_qx_china_domain.py
 
       - name: Commit generated Shadowrocket artifacts
         shell: bash
@@ -57,8 +57,8 @@ jobs:
               echo "main advanced while generating; rebuilding from latest source (attempt $attempt)"
               git reset --hard origin/main
               python3 scripts/build_shadowrocket_bundle.py
-              python3 scripts/build_shadowrocket_config.py
               python3 scripts/sync_qx_china_domain.py
+              python3 scripts/build_shadowrocket_config.py
             fi
 
             git add Shadowrocket/Modules/All-in-One.sgmodule
@@ -67,7 +67,10 @@ jobs:
             if [ -f 'QX/category-ai-!cn.list' ]; then
               git add 'QX/category-ai-!cn.list'
             fi
-            git add QX/geolocation-cn.list
+            git add Clash/cn.list
+            git add QX/cn.list
+            # Retain the previous geolocation-cn artifact for compatibility; it is not active.
+
 
             if git diff --cached --quiet; then
               echo "No Shadowrocket generated changes"
@@ -84,8 +87,8 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python3 scripts/build_shadowrocket_bundle.py
-            python3 scripts/build_shadowrocket_config.py
             python3 scripts/sync_qx_china_domain.py
+            python3 scripts/build_shadowrocket_config.py
           done
 
           echo "Failed to publish generated Shadowrocket artifacts after 3 attempts" >&2

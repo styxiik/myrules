@@ -415,6 +415,17 @@ def main() -> None:
         module_sections[section] = [resolve_module_arguments(x, defaults) for x in rows]
 
     rule_urls = build_native_rule_sets(meta)
+    # MetaCubeX full geosite:cn must survive conversion to Shadowrocket.
+    cn_source = str((meta.get("rule-providers", {}).get("direct") or {}).get("url", ""))
+    expected_cn = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.list"
+    if cn_source != expected_cn:
+        raise RuntimeError(f"ChinaDomain provider is not the canonical MetaCubeX source: {cn_source}")
+    cn_rules = RULE_DIR / "direct.list"
+    if not cn_rules.is_file():
+        raise RuntimeError("Missing converted Shadowrocket ChinaDomain rules")
+    cn_count = sum(1 for line in cn_rules.open(encoding="utf-8") if line.strip())
+    if cn_count < 100_000:
+        raise RuntimeError(f"Truncated Shadowrocket ChinaDomain: {cn_count} rules")
     if "AI-NotCN" in rule_urls:
         build_qx_ai_not_cn_rules()
     meta_rules = [
@@ -466,6 +477,7 @@ def main() -> None:
         "[Script]",
         "[MITM]",
     ]
+    required.append(f"RULE-SET,{RAW_BASE}/Shadowrocket/Rules/direct.list,DIRECT")
     for marker in required:
         if marker not in output:
             raise SystemExit(f"Generated Shadowrocket config missing required marker: {marker}")

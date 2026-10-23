@@ -190,7 +190,7 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-cn.list"
+    url: "https://raw.githubusercontent.com/styxiik/myrules/main/Clash/cn.list"
     path: ./ruleset/direct.yaml
     interval: 86400
 

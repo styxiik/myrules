@@ -218,11 +218,11 @@ def build_native_rule_sets(meta: dict[str, Any]) -> dict[str, str]:
 
 
 
-def build_qx_ai_not_cn_rules() -> None:
-    """Generate Quantumult X rules from the same AI-NotCN source as Shadowrocket."""
-    source = RULE_DIR / "AI-NotCN.list"
+def build_qx_domain_rules(source_name: str, target_name: str) -> None:
+    """Convert native Shadowrocket domain rules to Quantumult X syntax."""
+    source = RULE_DIR / source_name
     if not source.is_file():
-        raise RuntimeError("AI-NotCN Shadowrocket rules missing during QX generation")
+        raise RuntimeError(f"Shadowrocket rule source missing during QX generation: {source_name}")
 
     types = {
         "DOMAIN": "host",
@@ -237,17 +237,21 @@ def build_qx_ai_not_cn_rules() -> None:
             continue
         kind, sep, value = raw.partition(",")
         if not sep or kind not in types or not value.strip():
-            raise RuntimeError(f"Unsupported AI-NotCN rule for Quantumult X: {raw}")
+            raise RuntimeError(f"Unsupported {source_name} rule for Quantumult X: {raw}")
         rule = f"{types[kind]}, {value.strip()}"
         if rule not in seen:
             converted.append(rule)
             seen.add(rule)
     if not converted:
-        raise RuntimeError("AI-NotCN QX rule set is empty")
-    target = ROOT / "QX" / "category-ai-!cn.list"
+        raise RuntimeError(f"Quantumult X domain rule set is empty: {source_name}")
+    target = ROOT / "QX" / target_name
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(converted) + "\n", encoding="utf-8")
     print(f"Generated {target.relative_to(ROOT)} ({len(converted)} rules)")
+
+
+def build_qx_ai_not_cn_rules() -> None:
+    build_qx_domain_rules("AI-NotCN.list", "category-ai-!cn.list")
 
 
 def proxy_groups(meta: dict[str, Any]) -> list[str]:
@@ -428,6 +432,8 @@ def main() -> None:
         raise RuntimeError(f"Truncated Shadowrocket ChinaDomain: {cn_count} rules")
     if "AI-NotCN" in rule_urls:
         build_qx_ai_not_cn_rules()
+    if "geolocation-!cn" in rule_urls:
+        build_qx_domain_rules("geolocation-!cn.list", "geolocation-!cn.list")
     meta_rules = [
         translated
         for raw in (meta.get("rules", []) or [])

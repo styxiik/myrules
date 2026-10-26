@@ -67,6 +67,9 @@ jobs:
             if [ -f 'QX/category-ai-!cn.list' ]; then
               git add 'QX/category-ai-!cn.list'
             fi
+            if [ -f 'QX/geolocation-!cn.list' ]; then
+              git add 'QX/geolocation-!cn.list'
+            fi
             git add Clash/cn.list
             git add QX/cn.list
             # Retain the previous geolocation-cn artifact for compatibility; it is not active.

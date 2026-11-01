@@ -335,7 +335,26 @@ def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
     return ["system"]
 
 
+def shadowrocket_lan_route_exclusions(meta: dict[str, Any]) -> list[str]:
+    """Mirror RFC1918 LAN exclusions but protect CF Tunnel and native Tailscale.
+
+    Cloudflare Tunnel edge addresses must remain inside TUN. Excluding
+    100.64/10 or fc00::/7 here can steal routes from native Tailscale,
+    including fd7a:115c:a1e0::/48.
+    """
+    lan_ipv4 = ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]
+    meta_excludes = {
+        str(item).strip()
+        for item in ((meta.get("tun") or {}).get("route-exclude-address") or [])
+    }
+    missing = set(lan_ipv4) - meta_excludes
+    if missing:
+        raise RuntimeError(f"Mihomo LAN IPv4 exclusions missing: {sorted(missing)}")
+    return lan_ipv4
+
+
 def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
+    lan_ipv4 = shadowrocket_lan_route_exclusions(meta)
     dns = meta.get("dns", {}) or {}
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
     # Resolve proxy node hostnames using local DNS before connecting the tunnel.
@@ -364,8 +383,10 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
     base = [
         "yaml = true",
         "udp-policy-not-supported-behaviour = REJECT",
-        "skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, captive.apple.com",
-        "tun-excluded-routes = 239.255.255.250/32, 224.0.0.251/32, ff02::fb/128",
+        "skip-proxy = " + ", ".join([*lan_ipv4, "localhost", "*.local", "captive.apple.com"]),
+        "tun-excluded-routes = " + ", ".join([
+            *lan_ipv4, "239.255.255.250/32", "224.0.0.251/32", "ff02::fb/128"
+        ]),
         "dns-server = " + ", ".join(nameservers),
         "direct-dns-server = " + ", ".join(direct_ns),
     ]
@@ -442,7 +463,13 @@ def main() -> None:
         if translated
     ]
 
-    module_rules = module_sections.get("Rule", [])
+    # Correct upstream modules that label IPv6 addresses as IP-CIDR.
+    module_rules = [
+        normalize_typed_rule(line, False)
+        if line.startswith("IP-CIDR,") and ":" in line.split(",", 2)[1]
+        else line
+        for line in module_sections.get("Rule", [])
+    ]
     rules: list[str] = []
     seen: set[str] = set()
     for line in module_rules + meta_rules:

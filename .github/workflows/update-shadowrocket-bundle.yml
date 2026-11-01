@@ -40,6 +40,9 @@ jobs:
       - name: Build native Shadowrocket config and rule sets
         run: python3 scripts/build_shadowrocket_config.py
 
+      - name: Verify routing invariants
+        run: python3 scripts/verify_routing_invariants.py
+
       - name: Commit generated Shadowrocket artifacts
         shell: bash
         run: |
@@ -59,6 +62,7 @@ jobs:
               python3 scripts/build_shadowrocket_bundle.py
               python3 scripts/sync_qx_china_domain.py
               python3 scripts/build_shadowrocket_config.py
+              python3 scripts/verify_routing_invariants.py
             fi
 
             git add Shadowrocket/Modules/All-in-One.sgmodule
@@ -92,6 +96,7 @@ jobs:
             python3 scripts/build_shadowrocket_bundle.py
             python3 scripts/sync_qx_china_domain.py
             python3 scripts/build_shadowrocket_config.py
+            python3 scripts/verify_routing_invariants.py
           done
 
           echo "Failed to publish generated Shadowrocket artifacts after 3 attempts" >&2

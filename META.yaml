@@ -60,8 +60,10 @@ tun:
     - 172.16.0.0/12
     # Local IPv6 unique-local addresses
     - fc00::/7
-    # CF Tunnel edge IPv6 must remain inside TUN. Physical-NIC bypass
-    # of 2606:4700:a0::/123 and 2606:4700:a8::/123 caused connection failures.
+    # Cloudflare Tunnel edge IPv6 must bypass TUN. Routing via TUN
+    # previously caused connection failures; preserve these exclusions.
+    - 2606:4700:a0::/123
+    - 2606:4700:a8::/123
     # Tailscale internal addresses
     - 100.64.0.0/10
     - fd7a:115c:a1e0::/48

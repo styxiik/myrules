@@ -335,26 +335,29 @@ def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
     return ["system"]
 
 
-def shadowrocket_lan_route_exclusions(meta: dict[str, Any]) -> list[str]:
-    """Mirror RFC1918 LAN exclusions but protect CF Tunnel and native Tailscale.
+def shadowrocket_tun_route_exclusions(meta: dict[str, Any]) -> list[str]:
+    """Mirror selected Mihomo TUN exclusions while preserving native Tailscale.
 
-    Cloudflare Tunnel edge addresses must remain inside TUN. Excluding
-    100.64/10 or fc00::/7 here can steal routes from native Tailscale,
-    including fd7a:115c:a1e0::/48.
+    Cloudflare Tunnel edge IPv6 must bypass TUN: prior TUN routing caused
+    connection failures. Do not exclude the larger fc00::/7 or 100.64/10
+    here: Shadowrocket's native TAILSCALE policy must still receive traffic.
     """
     lan_ipv4 = ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]
+    cf_tunnel_ipv6 = ["2606:4700:a0::/123", "2606:4700:a8::/123"]
     meta_excludes = {
         str(item).strip()
         for item in ((meta.get("tun") or {}).get("route-exclude-address") or [])
     }
-    missing = set(lan_ipv4) - meta_excludes
+    expected = [*lan_ipv4, *cf_tunnel_ipv6]
+    missing = set(expected) - meta_excludes
     if missing:
-        raise RuntimeError(f"Mihomo LAN IPv4 exclusions missing: {sorted(missing)}")
-    return lan_ipv4
+        raise RuntimeError(f"Mihomo required TUN exclusions missing: {sorted(missing)}")
+    return expected
 
 
 def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
-    lan_ipv4 = shadowrocket_lan_route_exclusions(meta)
+    tun_excludes = shadowrocket_tun_route_exclusions(meta)
+    lan_ipv4 = tun_excludes[:3]
     dns = meta.get("dns", {}) or {}
     nameservers = [str(x) for x in (dns.get("nameserver") or dns.get("default-nameserver") or ["system"])]
     # Resolve proxy node hostnames using local DNS before connecting the tunnel.
@@ -385,7 +388,7 @@ def general_lines(meta: dict[str, Any], module_general: list[str]) -> list[str]:
         "udp-policy-not-supported-behaviour = REJECT",
         "skip-proxy = " + ", ".join([*lan_ipv4, "localhost", "*.local", "captive.apple.com"]),
         "tun-excluded-routes = " + ", ".join([
-            *lan_ipv4, "239.255.255.250/32", "224.0.0.251/32", "ff02::fb/128"
+            *tun_excludes, "239.255.255.250/32", "224.0.0.251/32", "ff02::fb/128"
         ]),
         "dns-server = " + ", ".join(nameservers),
         "direct-dns-server = " + ", ".join(direct_ns),

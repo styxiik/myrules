@@ -338,17 +338,18 @@ def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
 def shadowrocket_tun_route_exclusions(meta: dict[str, Any]) -> list[str]:
     """Mirror selected Mihomo TUN exclusions while preserving native Tailscale.
 
-    Cloudflare Tunnel edge IPv6 must bypass TUN: prior TUN routing caused
+    Cloudflare Tunnel edges must bypass TUN: prior TUN routing caused
     connection failures. Do not exclude the larger fc00::/7 or 100.64/10
     here: Shadowrocket's native TAILSCALE policy must still receive traffic.
     """
     lan_ipv4 = ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]
-    cf_tunnel_ipv6 = ["2606:4700:a0::/123", "2606:4700:a8::/123"]
+    cf_tunnel_edges = ["198.41.192.0/24", "198.41.200.0/24",
+                       "2606:4700:a0::/123", "2606:4700:a8::/123"]
     meta_excludes = {
         str(item).strip()
         for item in ((meta.get("tun") or {}).get("route-exclude-address") or [])
     }
-    expected = [*lan_ipv4, *cf_tunnel_ipv6]
+    expected = [*lan_ipv4, *cf_tunnel_edges]
     missing = set(expected) - meta_excludes
     if missing:
         raise RuntimeError(f"Mihomo required TUN exclusions missing: {sorted(missing)}")

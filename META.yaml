@@ -60,8 +60,9 @@ tun:
     - 172.16.0.0/12
     # Local IPv6 unique-local addresses
     - fc00::/7
-    # Cloudflare Tunnel edge IPv6 must bypass TUN. Routing via TUN
-    # previously caused connection failures; preserve these exclusions.
+    # Cloudflare Tunnel edges must bypass TUN (see CloudflareTunnel.md).
+    - 198.41.192.0/24
+    - 198.41.200.0/24
     - 2606:4700:a0::/123
     - 2606:4700:a8::/123
     # Tailscale internal addresses
@@ -293,6 +294,14 @@ rule-providers:
     interval: 86400
     
 rules:
+  # Tunnel connections must precede generic Cloudflare/CDN proxy rules.
+  - DOMAIN-SUFFIX,argotunnel.com,DIRECT
+  - DOMAIN-SUFFIX,cftunnel.com,DIRECT
+  - IP-CIDR,198.41.192.0/24,DIRECT,no-resolve
+  - IP-CIDR,198.41.200.0/24,DIRECT,no-resolve
+  - IP-CIDR6,2606:4700:a0::/123,DIRECT,no-resolve
+  - IP-CIDR6,2606:4700:a8::/123,DIRECT,no-resolve
+
   # Protocol / system exceptions
   - SUB-RULE,(AND,((DST-PORT,443),(NETWORK,UDP))),QUIC
   - AND,((DST-PORT,9993),(NETWORK,UDP)),DIRECT

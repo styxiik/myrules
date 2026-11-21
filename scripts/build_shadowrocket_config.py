@@ -467,11 +467,13 @@ def main() -> None:
         if translated
     ]
 
+    # Keep the module's Tailscale domain/IP rules, but route them through
+    # the manual provider-backed Tailscale group instead of a native-only policy.
     # Correct upstream modules that label IPv6 addresses as IP-CIDR.
     module_rules = [
-        normalize_typed_rule(line, False)
+        normalize_typed_rule(line.replace(",TAILSCALE", ",Tailscale"), False)
         if line.startswith("IP-CIDR,") and ":" in line.split(",", 2)[1]
-        else line
+        else line.replace(",TAILSCALE", ",Tailscale")
         for line in module_sections.get("Rule", [])
     ]
     rules: list[str] = []
@@ -506,7 +508,8 @@ def main() -> None:
         "[Proxy Group]",
         "[Rule]",
         "FINAL,最终选择",
-        "DOMAIN-SUFFIX,ts.net,TAILSCALE",
+        "DOMAIN-SUFFIX,ts.net,Tailscale",
+        "Tailscale = select,DIRECT,MYOWN,use=true",
         "prefer-ipv6 = false",
         "direct-dns-server = system",
         "proxy-dns-server = system",
@@ -518,6 +521,8 @@ def main() -> None:
     for marker in required:
         if marker not in output:
             raise SystemExit(f"Generated Shadowrocket config missing required marker: {marker}")
+    if ",TAILSCALE" in output:
+        raise SystemExit("Generated config contains obsolete native-only TAILSCALE policy")
     if PLACEHOLDER_RE.search(output):
         raise SystemExit("Generated config still contains unresolved module placeholders")
     if "dns-direct-system =" in output:

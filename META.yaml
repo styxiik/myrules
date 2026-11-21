@@ -58,16 +58,13 @@ tun:
     - 192.168.0.0/16
     - 10.0.0.0/8
     - 172.16.0.0/12
-    # Local IPv6 unique-local addresses
-    - fc00::/7
     # Cloudflare Tunnel edges must bypass TUN (see CloudflareTunnel.md).
     - 198.41.192.0/24
     - 198.41.200.0/24
     - 2606:4700:a0::/123
     - 2606:4700:a8::/123
-    # Tailscale internal addresses
-    - 100.64.0.0/10
-    - fd7a:115c:a1e0::/48
+    # Tailnet and ULA traffic must enter the TUN to be handled by rules.
+    # Remaining ULA is explicitly DIRECT in rules below.
 
 proxy-providers:
   MYOWN: 
@@ -96,6 +93,13 @@ proxy-groups:
 
   - name: "手动选择"
     type: select
+    use:
+      - MYOWN
+
+  - name: "Tailscale"
+    type: select
+    proxies:
+      - DIRECT
     use:
       - MYOWN
 
@@ -294,6 +298,12 @@ rule-providers:
     interval: 86400
     
 rules:
+  # Tailnet: choose DIRECT for native Tailscale, or any MYOWN VPS relay.
+  - IP-CIDR,100.64.0.0/10,Tailscale,no-resolve
+  - IP-CIDR6,fd7a:115c:a1e0::/48,Tailscale,no-resolve
+  # Non-Tailnet ULA stays DIRECT, without excluding all ULA from TUN.
+  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
+
   # Tunnel connections must precede generic Cloudflare/CDN proxy rules.
   - DOMAIN-SUFFIX,argotunnel.com,DIRECT
   - DOMAIN-SUFFIX,cftunnel.com,DIRECT

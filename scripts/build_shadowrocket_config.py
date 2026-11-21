@@ -261,6 +261,10 @@ def proxy_groups(meta: dict[str, Any]) -> list[str]:
         if not isinstance(group, dict) or not group.get("name"):
             continue
         name = str(group["name"])
+        # TAILSCALE is reserved for Shadowrocket's native transport.
+        # Keep the Mihomo group independent under a distinct name.
+        if name == "Tailscale":
+            name = "Tailnet-Select"
         typ = str(group.get("type", "select"))
         if typ not in {"select", "url-test", "fallback", "load-balance", "random"}:
             raise RuntimeError(f"Unsupported Shadowrocket proxy group type {typ!r} in {name}")
@@ -336,11 +340,11 @@ def shadowrocket_direct_nameservers(dns: dict[str, Any]) -> list[str]:
 
 
 def shadowrocket_tun_route_exclusions(meta: dict[str, Any]) -> list[str]:
-    """Mirror selected Mihomo TUN exclusions while preserving native Tailscale.
+    """Mirror selected Mihomo TUN exclusions without bypassing Tailnet rules.
 
     Cloudflare Tunnel edges must bypass TUN: prior TUN routing caused
     connection failures. Do not exclude the larger fc00::/7 or 100.64/10
-    here: Shadowrocket's native TAILSCALE policy must still receive traffic.
+    here: the custom Tailnet-Select group must still receive that traffic.
     """
     lan_ipv4 = ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]
     cf_tunnel_edges = ["198.41.192.0/24", "198.41.200.0/24",
@@ -466,14 +470,16 @@ def main() -> None:
         for translated in [translate_meta_rule(raw, rule_urls)]
         if translated
     ]
+    # Translate Mihomo's Tailscale group into a non-reserved policy name.
+    meta_rules = [line.replace(",Tailscale", ",Tailnet-Select") for line in meta_rules]
 
     # Keep the module's Tailscale domain/IP rules, but route them through
-    # the manual provider-backed Tailscale group instead of a native-only policy.
+    # the manual provider-backed Tailnet-Select group instead.
     # Correct upstream modules that label IPv6 addresses as IP-CIDR.
     module_rules = [
-        normalize_typed_rule(line.replace(",TAILSCALE", ",Tailscale"), False)
+        normalize_typed_rule(line.replace(",TAILSCALE", ",Tailnet-Select"), False)
         if line.startswith("IP-CIDR,") and ":" in line.split(",", 2)[1]
-        else line.replace(",TAILSCALE", ",Tailscale")
+        else line.replace(",TAILSCALE", ",Tailnet-Select")
         for line in module_sections.get("Rule", [])
     ]
     rules: list[str] = []
@@ -508,8 +514,8 @@ def main() -> None:
         "[Proxy Group]",
         "[Rule]",
         "FINAL,最终选择",
-        "DOMAIN-SUFFIX,ts.net,Tailscale",
-        "Tailscale = select,DIRECT,MYOWN,use=true",
+        "DOMAIN-SUFFIX,ts.net,Tailnet-Select",
+        "Tailnet-Select = select,DIRECT,MYOWN,use=true",
         "prefer-ipv6 = false",
         "direct-dns-server = system",
         "proxy-dns-server = system",
@@ -521,8 +527,8 @@ def main() -> None:
     for marker in required:
         if marker not in output:
             raise SystemExit(f"Generated Shadowrocket config missing required marker: {marker}")
-    if ",TAILSCALE" in output:
-        raise SystemExit("Generated config contains obsolete native-only TAILSCALE policy")
+    if ",TAILSCALE" in output or ",Tailscale" in output:
+        raise SystemExit("Generated config contains a reserved or ambiguous Tailscale policy")
     if PLACEHOLDER_RE.search(output):
         raise SystemExit("Generated config still contains unresolved module placeholders")
     if "dns-direct-system =" in output:

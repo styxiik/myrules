@@ -19,8 +19,11 @@ def section(content: str, title: str) -> str:
 
 excluded = {str(x) for x in meta["tun"]["route-exclude-address"]}
 lan = ("192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12")
-for subnet in (*lan, "fc00::/7", "100.64.0.0/10", "fd7a:115c:a1e0::/48"):
+for subnet in lan:
     require(subnet in excluded, "missing Mihomo exclusion " + subnet)
+# Tailnet and ULA must enter TUN so their routing rules can take effect.
+for subnet in ("fc00::/7", "100.64.0.0/10", "fd7a:115c:a1e0::/48"):
+    require(subnet not in excluded, "Tailnet/ULA must not bypass Mihomo TUN: " + subnet)
 cf_tunnel_edges = ("198.41.192.0/24", "198.41.200.0/24",
                    "2606:4700:a0::/123", "2606:4700:a8::/123")
 for subnet in cf_tunnel_edges:
@@ -41,7 +44,12 @@ for subnet in ("100.64.0.0/10", "fd7a:115c:a1e0::/48", "fc00::/7"):
     require(subnet not in route, "Shadowrocket native Tailscale route must not bypass TUN: " + subnet)
 for subnet in cf_tunnel_edges:
     require(subnet in route, "Shadowrocket CF Tunnel TUN bypass missing: " + subnet)
-require("IP-CIDR6,fd7a:115c:a1e0::/48,TAILSCALE" in rules, "Shadowrocket native Tailscale IPv6 policy")
+require("Tailnet-Select = select,DIRECT,MYOWN,use=true" in section(sr, "Proxy Group"), "Shadowrocket Tailnet policy group")
+for marker in ("IP-CIDR,100.64.0.0/10,Tailnet-Select,no-resolve",
+               "IP-CIDR6,fd7a:115c:a1e0::/48,Tailnet-Select,no-resolve",
+               "DOMAIN-SUFFIX,ts.net,Tailnet-Select"):
+    require(marker in rules, "Shadowrocket Tailnet routing missing: " + marker)
+require(",TAILSCALE" not in rules, "Shadowrocket reserved TAILSCALE policy must not be used")
 require("IP-CIDR6,2402:4e00:1200:ed00:0:9089:6dac:96b6/128,REJECT-DROP" in rules, "IPv6 module rule type")
 print("Routing invariants OK: CN priority, LAN, CF Tunnel, Tailscale")
 

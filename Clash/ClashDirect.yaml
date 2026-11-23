@@ -23,6 +23,7 @@ payload:
   - IP-CIDR,47.246.0.0/16
   - IP-CIDR,47.251.75.0/24
   - PROCESS-NAME,qbittorrent.exe
+  - PROCESS-NAME,agy
   - DOMAIN-SUFFIX,waditu.com
   - DOMAIN-SUFFIX,mydomain1
   - DOMAIN-SUFFIX,office.net

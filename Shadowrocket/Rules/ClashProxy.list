@@ -10,6 +10,7 @@ IP-CIDR,155.102.54.134/32,no-resolve
 IP-CIDR,155.102.54.135/32,no-resolve
 IP-CIDR,155.102.54.136/32,no-resolve
 DOMAIN-SUFFIX,mydomain2
+DOMAIN,PROCESS-NAME,agy
 DOMAIN-SUFFIX,googleapis.com
 DOMAIN-SUFFIX,msftncsi.com
 DOMAIN-SUFFIX,www.msftconnecttest.com

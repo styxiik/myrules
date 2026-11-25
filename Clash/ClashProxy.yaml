@@ -13,6 +13,7 @@ payload:
   - IP-CIDR,155.102.54.135/32
   - IP-CIDR,155.102.54.136/32
   - DOMAIN-SUFFIX,mydomain2
+  - PROCESS-NAME,agy
   - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,msftncsi.com
   - DOMAIN-SUFFIX,www.msftconnecttest.com
